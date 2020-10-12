@@ -1,5 +1,6 @@
 # SoundByte
 U of R SSE Capstone Project, reccmomending music to mix through machine learning & possible sample generation 
+> [Project Vlog Link - Click to watch](https://youtu.be/1oX0xEtuw2I)
 
 ## Members:
 Brandon Clarke
