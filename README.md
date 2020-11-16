@@ -3,6 +3,8 @@ U of R SSE Capstone Project, reccmomending music to mix through machine learning
 > [Project Vlog Link - Click to watch](https://youtu.be/1oX0xEtuw2I)
 
 > [Project Vlog2 Link - Click to watch](https://youtu.be/2v6TyRrs7hI)
+
+> [Project Vlog2 Link - Click to watch](https://youtu.be/2v6TyRrs7hI)
 ## Members:
 Brandon Clarke
 Jiwoon Kim
