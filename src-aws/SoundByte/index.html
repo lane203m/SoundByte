@@ -1,58 +1,34 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Hello World</title>
-    <!-- Add some CSS to change client UI -->
-    <style>
-    body {
-        background-color: #232F3E;
-        }
-    label, button {
-        color: #FF9900;
-        font-family: Arial, Helvetica, sans-serif;
-        font-size: 20px;
-        margin-left: 40px;
-        }
-     input {
-        color: #232F3E;
-        font-family: Arial, Helvetica, sans-serif;
-        font-size: 20px;
-        margin-left: 20px;
-        }
-    </style>
-    <script>
-        // define the callAPI function that takes a first name and last name as parameters
-        var callAPI = (firstName,lastName)=>{
-            // instantiate a headers object
-            var myHeaders = new Headers();
-            // add content type header to object
-            myHeaders.append("Content-Type", "application/json");
-            // using built in JSON utility package turn object to string and store in a variable
-            var raw = JSON.stringify({"firstName":firstName,"lastName":lastName});
-            // create a JSON object with parameters for API call and store in a variable
-            var requestOptions = {
-                method: 'POST',
-                headers: myHeaders,
-                body: raw,
-                redirect: 'follow'
-            };
-            // make API call with parameters and use promises to get response
-            fetch("https://i6ls7kplo6.execute-api.us-east-2.amazonaws.com/prod", requestOptions)
-            .then(response => response.text())
-            .then(result => alert(JSON.parse(result).body))
-            .catch(error => console.log('error', error));
-        }
-    </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com"> 
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;400;600&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="./mainStyle.css">
+
+    <title>SoundByte</title>
+
 </head>
 <body>
-    <form>
-        <label>First Name :</label>
-        <input type="text" id="fName">
-        <label>Last Name :</label>
-        <input type="text" id="lName">
-        <!-- set button onClick method to call function we defined passing input values as parameters -->
-        <button type="button" onclick="callAPI(document.getElementById('fName').value,document.getElementById('lName').value)">Call API</button>
-    </form>
+
+    <div class="container">
+        <div class="main-logo"><img src="./img/SoundByte-logo.png" width="90%" alt="SoundByte App Logo image"></div>
+        <div class="copywrite">Loyalty free, AI generated sound clips for DJs</div>
+        <div class="nav">
+            <ul>
+                <li><a href="#Suggestions">Suggestions</a></li>
+                <li><a href="#criteria-earch">Criteria Search</a></li>
+                <li><a href="#auto-pairing">Auto Pairing</a></li>
+            </ul>
+
+        </div>
+
+        
+    </div>
+    
+
 </body>
 </html>
