@@ -1,0 +1,63 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    
+}
+
+body {
+    background: url('./img/sky-690293_1920.jpg') center center no-repeat fixed, 
+                linear-gradient(180deg, rgb(5,41,60) 0%, rgb(65,97,99) 75%, rgb(99,129,121) 100%);                
+    background-size: cover;
+
+    font-family: 'Montserrat', sans-serif;
+    color: white;    
+    min-height: 100vh;
+    overflow: hidden;     
+}
+
+.container {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.copywrite {
+    font-size: 0.8rem;
+    letter-spacing: -0.3px;
+    font-weight: 600;
+    color: #033347;
+}
+
+.nav {
+    padding-top: 30px;
+}
+
+.nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+.nav li {
+    float: left;
+}
+
+.nav a {
+
+    font-weight: 600;
+    font-size: 1.3rem;
+    color: #C4E1ED;
+    text-shadow: 1px 2px 2px #000000;
+
+    text-align: center;
+    padding: 16px;
+}
+
+a:link, :hover {
+    text-decoration: none;
+}
