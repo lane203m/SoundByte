@@ -1,1 +1,1 @@
-https://uofr-capstone.storiesonboard.com/m/guidemap 
+https://uofr-capstone.storiesonboard.com/m/guidemap
