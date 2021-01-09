@@ -1,3 +1,8 @@
+#Ignored folders
+Soundbyte-App/node_modules/
+Soundbyte-App/Library/
+Soundbyte-App/out/
+
 OS junk files
 [Tt]humbs.db
 *.DS_Store
@@ -41,6 +46,7 @@ _ReSharper*/
 
 #Subversion files
 .svn
+
 
 # Office Temp Files
 ~$*
