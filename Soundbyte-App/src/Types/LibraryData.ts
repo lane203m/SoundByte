@@ -6,7 +6,7 @@ export class LibraryData {
   songs: Song[];
 
   constructor(){
-    //this.songs = (<any>data).songs;
+    this.songs = (<any>data).songs;
   }
 
   getSong(n: number){
