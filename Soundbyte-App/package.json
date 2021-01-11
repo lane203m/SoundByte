@@ -1,5 +1,5 @@
 {
-  "name": "Soundbyte-App",
+  "name": "soundbyte-app",
   "version": "1.0.0",
   "description": "Soundbyte-App",
   "main": "./Packages/main/main.js",
@@ -9,7 +9,7 @@
     "make": "electron-forge make"
   },
   "keywords": [],
-  "author": "",
+  "author": "Mason Lane, Brandon Clarke, Brian Jiwoun Kim",
   "license": "ISC",
   "devDependencies": {
     "@electron-forge/cli": "^6.0.0-beta.54",
@@ -50,5 +50,13 @@
         }
       ]
     }
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lane203m/SoundByte.git"
+  },
+  "bugs": {
+    "url": "https://github.com/lane203m/SoundByte/issues"
+  },
+  "homepage": "https://github.com/lane203m/SoundByte#readme"
 }
