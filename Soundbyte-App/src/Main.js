@@ -1,28 +1,24 @@
-import { BrowserWindow } from 'electron';
-
-export default class Main {
-    static mainWindow: Electron.BrowserWindow;
-    static application: Electron.App;
-    static BrowserWindow;
-    private static onWindowAllClosed() {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var Main = /** @class */ (function () {
+    function Main() {
+    }
+    Main.onWindowAllClosed = function () {
         if (process.platform !== 'darwin') {
             Main.application.quit();
         }
-    }
-
-    private static onClose() {
+    };
+    Main.onClose = function () {
         // Dereference the window object. 
         Main.mainWindow = null;
-    }
-
-    private static onReady() {
-        Main.mainWindow = new Main.BrowserWindow({ width: 800, height: 600, webPreferences: {nodeIntegration: true} });
+    };
+    Main.onReady = function () {
+        Main.mainWindow = new Main.BrowserWindow({ width: 800, height: 600, webPreferences: { enableRemoteModule: true, nodeIntegration: true } });
         Main.mainWindow
             .loadURL('file://' + __dirname + '/index.html');
         Main.mainWindow.on('closed', Main.onClose);
-    }
-
-    static main(app: Electron.App, browserWindow: typeof BrowserWindow) {
+    };
+    Main.main = function (app, browserWindow) {
         // we pass the Electron.App object and the  
         // Electron.BrowserWindow into this function 
         // so this class has no dependencies. This 
@@ -31,5 +27,8 @@ export default class Main {
         Main.application = app;
         Main.application.on('window-all-closed', Main.onWindowAllClosed);
         Main.application.on('ready', Main.onReady);
-    }
-}
+    };
+    return Main;
+}());
+exports.default = Main;
+//# sourceMappingURL=Main.js.map
