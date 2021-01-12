@@ -1,0 +1,37 @@
+{
+     songs: [
+	{
+		title: "songsong"	
+		author: "billy"	
+		features:{
+			bpm: 72
+			tempo: 113
+			key: "D"
+			scale: "Major"
+			energy: 42
+		}
+	},
+	{
+		title: "songsong"	
+		author: "billy"	
+		features:{
+			bpm: 72
+			tempo: 113
+			key: "D"
+			scale: "Major"
+			energy: 42
+		}
+	},
+	{
+		title: "songsong"	
+		author: "billy"	
+		features:{
+			bpm: 72
+			tempo: 113
+			key: "D"
+			scale: "Major"
+			energy: 42
+		}
+	},	
+	]
+}

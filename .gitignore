@@ -1,3 +1,8 @@
+#Ignored folders
+Soundbyte-App/node_modules/
+Soundbyte-App/Library/
+Soundbyte-App/out/
+
 OS junk files
 [Tt]humbs.db
 *.DS_Store
@@ -41,6 +46,7 @@ _ReSharper*/
 
 #Subversion files
 .svn
+
 
 # Office Temp Files
 ~$*
@@ -12048,3 +12054,7 @@ Soundbyte-App/out/Soundbyte-App-win32-x64/version
 Soundbyte-App/out/Soundbyte-App-win32-x64/vk_swiftshader.dll
 Soundbyte-App/out/Soundbyte-App-win32-x64/vk_swiftshader_icd.json
 Soundbyte-App/out/Soundbyte-App-win32-x64/vulkan-1.dll
+
+
+#songs
+Soundbyte-App/Library/
