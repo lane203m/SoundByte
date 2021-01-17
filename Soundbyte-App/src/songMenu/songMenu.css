@@ -1,3 +1,16 @@
+.songContainer {
+  display: block
+}
+
+.songContainer h1{
+  display: inline
+}
+
+.songContainer p{
+display: inline
+}
+
+
 .songList button{
     background-color: #4CAF50; /* Green background */
     border: 1px solid green; /* Green border */
@@ -6,6 +19,7 @@
     cursor: pointer; /* Pointer/hand icon */
     width: 50%; /* Set a width if needed */
     display: block; /* Make the buttons appear below each other */
+    
 }
 
 .songList button:not(:last-child) {
@@ -13,6 +27,26 @@
   }
   
   /* Add a background color on hover */
-  .songList button:hover {
+.songList button:hover {
     background-color: #3e8e41;
   }
+
+
+  .main{
+    min-height: 100%;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    background: "#70bg32";
+    background-repeat:no-repeat;
+
+    background: linear-gradient(rgba(53, 0, 50,1) ,rgb(126, 65, 105) , rgba(255, 185, 163,1));
+    background-attachment: fixed;
+  }
+
+
+.title{
+  color: white; 
+}
+
