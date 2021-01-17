@@ -13,7 +13,7 @@ var Main = /** @class */ (function () {
         Main.mainWindow = null;
     };
     Main.onReady = function () {
-        Main.mainWindow = new Main.BrowserWindow({ width: 800, height: 600, webPreferences: { enableRemoteModule: true, nodeIntegration: true } });
+        Main.mainWindow = new Main.BrowserWindow({ width: 768, height: 828, webPreferences: { enableRemoteModule: true, nodeIntegration: true } });
         Main.mainWindow
             .loadURL('file://' + __dirname + '/index.html');
         Main.mainWindow.on('closed', Main.onClose);
