@@ -54,6 +54,10 @@
   background-color: #afa780;
 }
 
+.songList .PlayButton:focus {
+  background-color:   #5c3e5c;
+}
+
 .listing{
   display:block;
   margin-bottom: 2.5%
@@ -83,7 +87,7 @@
   }
 
 .songList button:focus {
-    background-color: #7c635d;
+    background-color: #5c3e5c;
   }
 
 
