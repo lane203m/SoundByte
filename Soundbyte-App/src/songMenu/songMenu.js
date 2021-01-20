@@ -1,12 +1,14 @@
 const {LibraryData} = require("../Types/LibraryData");
 const {Song} = require("../Types/Song");
 const {Feature} = require("../Types/Feature");
+var songLibrary = new LibraryData();
+var filteredLibrary = songLibrary;
 
 
 function showSongs() {
-    var songLibrary = new LibraryData();
-    console.log(songLibrary);
-    for (var i = 0; i<songLibrary.songs.length; i++){
+  filteredLibrary = new LibraryData();
+    console.log(filteredLibrary);
+    for (var i = 0; i<filteredLibrary.songs.length; i++){
       var listingDiv = document.createElement("div");
       listingDiv.classList.add("listing");
 
@@ -16,24 +18,24 @@ function showSongs() {
       dataDiv.classList.add("metaDataDiv");
           var div = document.createElement("div");
           div.classList.add("songNameContainer");
-          makeHeaderElement(div, ""+ songLibrary.songs[i].songName);
+          makeHeaderElement(div, ""+ filteredLibrary.songs[i].songName);
           dataDiv.appendChild(div);
 
 
 
           var div = document.createElement("div");
           div.classList.add("songBPMContainer");
-          makeBodyElement(div, "Bpm: "+ songLibrary.songs[i].features.bpm);
+          makeBodyElement(div, "Bpm: "+ filteredLibrary.songs[i].features.bpm);
           dataDiv.appendChild(div);
 
           var div = document.createElement("div");
           div.classList.add("songAuthorContainer");
-          makeHeaderElement(div, "By: "+ songLibrary.songs[i].author);
+          makeHeaderElement(div, "By: "+ filteredLibrary.songs[i].author);
           dataDiv.appendChild(div);
 
           var div = document.createElement("div");
           div.classList.add("songKeyContainer");
-          makeBodyElement(div, "Key: "+ songLibrary.songs[i].features.key + " " + songLibrary.songs[i].features.scale);
+          makeBodyElement(div, "Key: "+ filteredLibrary.songs[i].features.key + " " + filteredLibrary.songs[i].features.scale);
           dataDiv.appendChild(div);
 
 
