@@ -19,7 +19,7 @@ fileInput.addEventListener('input', (e) => {
     pathName = file.path;
   });
   
-  if(process.platform === 'win32') { // windows
+  if(process.platform === 'win32') { // for windows
     tempFileName = pathName.replace(/^.*[\///]/, '');
     fileCustom.innerText = pathName.replace(tempFileName, '').match(/.*\\([^\\]+)\\/)[1];
 
@@ -37,7 +37,11 @@ fileInput.addEventListener('input', (e) => {
 form.addEventListener('submit', (e) => {
   e.preventDefault(); 
 
-  const libraryPath = './Libraries/songLibrary/';
+  let libraryPath = __dirname + '/Libraries/songLibrary/';
+  if(process.platform === 'win32') { // for windows
+    libraryPath = __dirname + '\\Libraries\\songLibrary\\';
+  }
+
   const filename = fileInput.value;
   
  // without giving songLibrary file
@@ -55,7 +59,12 @@ form.addEventListener('submit', (e) => {
   
   //console.log(pathName.replace(tempFileName, ''));
   console.log(data);
-  fs.writeFileSync('./setup/init.json', data);
+  let writePath = './Initialization/init.json';
+  if(process.platform === 'win32') {
+    writePath = __dirname + '\\Initialization\\init.json';
+  }
+
+  fs.writeFileSync(writePath, data);
 
   move("./index.html");
   //console.log("the form has been submitted");

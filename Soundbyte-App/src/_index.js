@@ -4,7 +4,7 @@
 
 const fs = require('electron').remote.require('fs');
 
-const exist = fs.existsSync(`./setup/init.json`);
+const exist = fs.existsSync(`./Initialization/init.json`);
 
 const move = (url) => {
   location.replace(url)
