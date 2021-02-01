@@ -1,108 +1,142 @@
 const {LibraryData} = require("../Types/LibraryData");
+const fs = require('electron').remote.require('fs');
 const {Song} = require("../Types/Song");
 const {Feature} = require("../Types/Feature"); 
 const {SuggestionWSong} = require("../Suggestion/suggestions")
+const contentTarget = document.querySelector(".item-wraper");
+const fileCustom = document.querySelector(".file-custom");
 var songLibrary = new LibraryData();
 var filteredLibrary = songLibrary;
 var selectedSong = "-1";
-//
-function showSongs() {
 
 
- 
-  var form = document.createElement("FORM");
-
-  for (var i = 0; i<filteredLibrary.songs.length; i++){
-    form.appendChild(makeListing(i));
+function sendSelected(){
+  if(selectedSong != -1){
+    var song = filteredLibrary.songs[selectedSong];
+    suggestion = new SuggestionWSong(song);
+    console.log(suggestion);
+    suggestion.beginSuggestion();
+    console.log(suggestion);
   }
+}
+
+
+
+
+
+
+function showSongs() {
+    let songLibrary = new LibraryData();
+    //songLibrary.songs.forEach((i,song) => console.log(songLibrary.songs.indexOf(i)));
+    //console.log(songLibrary.songs);
+    for (let i = 0; i<songLibrary.songs.length; i++){
+        let node = document.createElement("BUTTON");
+        let textnode = document.createTextNode(songLibrary.songs[i].features.bpm);
+        node.appendChild(textnode);
+        document.getElementById("songList").appendChild(node);
+    }
     
-
-      var inputSubmit = document.createElement("div");
-      inputSubmit.classList.add("listing");
-          var node = document.createElement("BUTTON");  
-          node.setAttribute("onClick", "sendSelected()");
-          node.setAttribute("type", "button");
-          node.setAttribute("name", "submit");
-          node.setAttribute("id", "submit");
-          node.setAttribute("value", "Submit");
-              var dataDiv = document.createElement("div");
-              dataDiv.classList.add("metaDataDiv");
-                  var div = document.createElement("div");
-                  div.classList.add("songNameContainer");
-                  makeElement("submitInput", ""+ "submit");
-              dataDiv.appendChild(div);
-          node.appendChild(dataDiv);
-      inputSubmit.appendChild(node);
-  form.appendChild(inputSubmit)
-  document.getElementById("songList").appendChild(form);
 }
 
 
+//Added by Brian
+const listupSongs = () => {   
 
-function makePlayButton(){
-    var node2 = document.createElement("BUTTON");
-    node2.classList.add("PlayButton");
+    let library = new LibraryData();
+    //console.log(library.songs);
 
-        var div = document.createElement("div");
-        div.innerHTML = '&#9658'
+    library.songs.forEach((i, m, song) => {
+        //console.log(song[m]);
+    let node = document.createElement("div");
+    let img = new Image();  
+    let sname = document.createElement("h3");
+    let detailDiv = document.createElement("div");
+    let detailSpan = document.createElement("h4");
+    let durationDiv = document.createElement("div");
+    let checksDiv = document.createElement("div");
+    let checkInput = document.createElement("input");
 
-    node2.appendChild(div);
+    sname.innerText = song[m].songName;
+    img.src = "../img/play-button.png";
+    detailSpan.innerText = song[m].features.bpm + " / " + song[m].features.key + " / " + song[m].features.scale;
+    durationDiv.innerText = "2:32";
 
-    return node2;
+    node.classList.add("item");
+    detailDiv.classList.add("song-detail");
+    durationDiv.classList.add("duration");
+    checkInput.setAttribute("type", "checkbox");
+    checkInput.setAttribute("value", m);
+    
+    checksDiv.appendChild(checkInput);
+    node.appendChild(img);
+    
+    detailDiv.appendChild(sname);
+    detailDiv.appendChild(detailSpan);
+    
+    node.appendChild(detailDiv);
+    node.appendChild(durationDiv);
+    node.appendChild(checksDiv);
+
+    contentTarget.appendChild(node);
+
+        /*
+        //return (`
+        //<div class="item">
+         //   <img src="../img/play-botton.png" alt="sound play button">
+          //      <div class="song-detail">
+        //        <h3>${song.songName}</h3>
+        //        <span>${song.bpm} / ${song.key} / ${song.scale}</span>
+        //        </div>
+        //        <div class="duration">
+        //        </div>
+        //        <div class="checks"><input type="checkbox"></div>        
+        //</div>
+        //`);
+        */
+    });
 }
 
-function makeElement(className, value) {
-    var div = document.createElement("div");
-    div.classList.add(className);
+listupSongs();
 
-        var p = document.createElement("p");
-        p.classList.add("songContainer");
+// Users pick a song from fiel input
+const customSongTarget = document.querySelector("#song-library");
+customSongTarget.addEventListener('input', (e) => {
+    const targetDiv = document.querySelector(".user-song");
+    fileCustom.innerText = e.target.value.replace(/^.*[\\\/]/, '');
+    console.log(e.target.value.replace(/^.*[\\\/]/, ''));
 
-    div.appendChild(p);
+    let node = document.createElement("div");
+    let img = new Image();  
+    let sname = document.createElement("h3");
+    let detailDiv = document.createElement("div");
+    let detailSpan = document.createElement("h4");
+    let durationDiv = document.createElement("div");
+    let checksDiv = document.createElement("div");
+    let checkInput = document.createElement("input");
 
-        var textnode = document.createTextNode(value);
+    sname.innerText = fileCustom.innerText;
+    img.src = "../img/play-button.png";
+    detailSpan.innerText = " bpm / key / scale";
+    durationDiv.innerText = "2:32";
 
-    div.appendChild(textnode);
+    node.classList.add("item");
+    detailDiv.classList.add("song-detail");
+    durationDiv.classList.add("duration");
+    checkInput.setAttribute("type", "checkbox");
+    checkInput.setAttribute("value", 1);
+    
+    checksDiv.appendChild(checkInput);
+    node.appendChild(img);
+    
+    detailDiv.appendChild(sname);
+    detailDiv.appendChild(detailSpan);
+    
+    node.appendChild(detailDiv);
+    node.appendChild(durationDiv);
+    node.appendChild(checksDiv);
 
-    return div;
-}
-
-function makeListing(indexValue){
-  var listingDiv = document.createElement("div");
-  listingDiv.classList.add("listing");
-
-      var node = document.createElement("BUTTON"); 
-      node.setAttribute("type", "button"); 
-      node.setAttribute("name", "inputValue");
-      node.setAttribute("id", indexValue);
-      node.setAttribute("value", indexValue);
-      node.setAttribute("onClick", "buttonSelected(this.value)");
-          
-          var dataDiv = document.createElement("div");
-          dataDiv.classList.add("metaDataDiv");
-          
-              div = makeElement("songNameContainer", ""+ filteredLibrary.songs[indexValue].songName);
-              dataDiv.appendChild(div);
-
-              div = makeElement( "songBPMContainer", "Bpm: "+ filteredLibrary.songs[indexValue].features.bpm);
-              dataDiv.appendChild(div);
-
-              div = makeElement("songAuthorContainer", "By: "+ filteredLibrary.songs[indexValue].author);
-              dataDiv.appendChild(div);
-
-              div = makeElement("songKeyContainer", "Key: "+ filteredLibrary.songs[indexValue].features.key + " " + filteredLibrary.songs[indexValue].features.scale);
-              dataDiv.appendChild(div);
-
-      node.appendChild(dataDiv);
-  listingDiv.appendChild(node);
-
-      node2 = makePlayButton();
-  listingDiv.appendChild(node2);
-
-  return listingDiv
-}
-
-
+    targetDiv.appendChild(node);
+});
 
 
 function buttonSelected(selectedID){
@@ -129,14 +163,3 @@ function deselectExisting(deselectedID){
 function buttonDeselected(){
 
 }
-
-function sendSelected(){
-  if(selectedSong != -1){
-    var song = filteredLibrary.songs[selectedSong];
-    suggestion = new SuggestionWSong(song);
-    console.log(suggestion);
-    suggestion.beginSuggestion();
-    console.log(suggestion);
-  }
-}
-
