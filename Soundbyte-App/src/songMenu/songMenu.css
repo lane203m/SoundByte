@@ -58,6 +58,10 @@
   background-color:   #5c3e5c;
 }
 
+.songList .selected{
+  background-color:   #5c3e5c;
+}
+
 .listing{
   display:block;
   margin-bottom: 2.5%
