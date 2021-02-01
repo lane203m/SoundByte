@@ -1,21 +1,34 @@
 const fs = require('electron').remote.require('fs');
-const ipcRenderer = require('electron').ipcRenderer;
 
 const form = document.querySelector("form");
 const fileInput = document.querySelector("#song-library");
 const fileCustom = document.querySelector(".file-custom"); 
 
+let pathName = "";
+let tempFileName ="";
+
 fileInput.addEventListener('input', (e) => {  
-  let pathName = "";
+  
   //fileCustom.innerHTML = fileInput.webkitRelativePath;
 
   Array.from(e.target.files).forEach(file => {
     pathName = file.path;
   });
+  
+  if(process.platform === 'win32') { // windows
+    tempFileName = pathName.replace(/^.*[\///]/, '');
+    fileCustom.innerText = pathName.replace(tempFileName, '').match(/.*\\([^\\]+)\\/)[1];
 
-  console.log(pathName);
+  } else { // Linux, Unix, Mac, etc
+    tempFileName = pathName.replace(/^.*[\\\/]/, '');
+    fileCustom.innerText = pathName.replace(tempFileName, '').match(/.*\/([^\/]+)\//)[1];
+
+    //console.log(tempFileName);
+    //console.log(pathName.replace(tempFileName, '').match(/.*\/([^\/]+)\//)[1]);
+
+  }
+
 });
-
 
 form.addEventListener('submit', (e) => {
   e.preventDefault(); 
@@ -23,29 +36,22 @@ form.addEventListener('submit', (e) => {
   const libraryPath = './Libraries/songLibrary/';
   const filename = fileInput.value;
   
-  if(filename == ""){ // without giving songLibrary file
-    let configPath = {
-      path: libraryPath + "library.json",
-    };
+ // without giving songLibrary file
+  let configPath = {
+    path: libraryPath + "library.json",
+  };
 
-    let data = JSON.stringify(configPath);
+  let data = JSON.stringify(configPath);
 
-  } else {
-    // with songLibrary file(json)
-      // Step 1. get the file from user input and copy it under setup directory
-    console.log(e.target.song-library.files);
+  if(filename != "") {
+    configPath.path = pathName.replace(tempFileName, '');
+    data = JSON.stringify(configPath);
 
-
-
-    // Step 2. make init.json with "path": "json file name"
-    let configPath = {
-      path: `${fileInput.value.replace(/^.*[\\\/]/, '') }`,
-    };
-
-    let data = JSON.stringify(configPath);
-    
-    fs.writeFileSync('init.json', data);
   }
- 
-  console.log("the form has been submitted");
+  
+  //console.log(pathName.replace(tempFileName, ''));
+  console.log(data);
+  fs.writeFileSync('./setup/init.json', data);
+
+  //console.log("the form has been submitted");
 });
