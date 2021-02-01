@@ -1,10 +1,5 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[2]:
-
-
 import sys
+
 thisdict = {
     "songs": [
         {
@@ -39,13 +34,5 @@ thisdict = {
 
 
 }
-
 print(thisdict)
 sys.stdout.flush()
-
-
-# In[ ]:
-
-
-
-

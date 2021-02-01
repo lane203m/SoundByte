@@ -135,6 +135,8 @@ function sendSelected(){
     var song = filteredLibrary.songs[selectedSong];
     suggestion = new SuggestionWSong(song);
     console.log(suggestion);
+    suggestion.beginSuggestion();
+    console.log(suggestion);
   }
 }
 
