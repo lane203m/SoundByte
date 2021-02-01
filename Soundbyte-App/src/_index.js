@@ -4,7 +4,7 @@
 
 const fs = require('electron').remote.require('fs');
 
-const exist = fs.existsSync(`init.json`);
+const exist = fs.existsSync(`./setup/init.json`);
 
 const move = (url) => {
   location.replace(url)
@@ -12,6 +12,8 @@ const move = (url) => {
 
 if(!exist) { // When init.json file does not exist, move to setup page
   move(`./setupSongLibrary.html`);
+  //console.log("./setup/init.json does not exist!");
 } else {
   move(`./songMenu/songMenu.html`);
+  //console.log("You have ./setup/init.json !");
 }
