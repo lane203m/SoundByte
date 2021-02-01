@@ -4,6 +4,10 @@ const form = document.querySelector("form");
 const fileInput = document.querySelector("#song-library");
 const fileCustom = document.querySelector(".file-custom"); 
 
+const move = (url) => {
+  location.replace(url)
+}
+
 let pathName = "";
 let tempFileName ="";
 
@@ -53,5 +57,6 @@ form.addEventListener('submit', (e) => {
   console.log(data);
   fs.writeFileSync('./setup/init.json', data);
 
+  move("./index.html");
   //console.log("the form has been submitted");
 });
