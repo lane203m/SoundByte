@@ -31,7 +31,7 @@ Our goal is to create a machine learning algorithm which can recommend tracks to
 
 In most cases, a DJ will manage their library of songs - curating a list that will mixes well together. From their tastes and by reading the room, they mix tracks accordingly. Our goal is to provide a utility which recommends ideal candidates - this may streamline a DJ’s workflow. For performers, this would run on-the-job; assisting creators as they scanned through a track list. It would also help aspiring mixers build out their library. We aim to acomplish this through machine learning algorithms and general search criteria. While the final decision comes down to the artist, our application will eliminate unlikely candidates & make coming to a decision easier.
 
-## Description of the business need or opportunity (innovation) that we envision
+## Description of the business need or opportunity
 
 As stated in our golden circle, this would aid hobbyists and performers while maintaining a level of needed oversight to ensure quality. If an algorithm can predict complementary tracks, this could provide users with inspiration or solutions to those with less musical familiarity or means.
 
