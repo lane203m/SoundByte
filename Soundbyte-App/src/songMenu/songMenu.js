@@ -10,15 +10,6 @@ var filteredLibrary = songLibrary;
 var selectedSong = "-1";
 
 
-function sendSelected(){
-  if(selectedSong != -1){
-    var song = filteredLibrary.songs[selectedSong];
-    suggestion = new SuggestionWSong(song);
-    console.log(suggestion);
-    suggestion.beginSuggestion();
-    console.log(suggestion);
-  }
-}
 
 
 
@@ -42,10 +33,10 @@ function showSongs() {
 //Added by Brian
 const listupSongs = () => {   
 
-    let library = new LibraryData();
+    //let library = new LibraryData();
     //console.log(library.songs);
 
-    library.songs.forEach((i, m, song) => {
+    filteredLibrary.songs.forEach((i, m, song) => {
         //console.log(song[m]);
     let node = document.createElement("div");
     let img = new Image();  
@@ -66,7 +57,8 @@ const listupSongs = () => {
     durationDiv.classList.add("duration");
     checkInput.setAttribute("type", "checkbox");
     checkInput.setAttribute("value", m);
-    
+    checkInput.setAttribute("id", m);
+    checkInput.setAttribute("onClick", "buttonSelected(this.id)");
     checksDiv.appendChild(checkInput);
     node.appendChild(img);
     
@@ -149,7 +141,7 @@ function buttonSelected(selectedID){
   }
   else{
     selectedSong = selectedID;
-    document.getElementById(selectedSong).classList.add("selected");
+    document.getElementById(selectedSong).checked = true;
   }
 
   
@@ -157,9 +149,20 @@ function buttonSelected(selectedID){
 }
 
 function deselectExisting(deselectedID){
-  document.getElementById(deselectedID).classList.remove("selected");
+  document.getElementById(deselectedID).checked = false;
 }
 
 function buttonDeselected(){
 
+}
+
+
+function sendSelected(){
+  if(selectedSong != -1){
+    var song = filteredLibrary.songs[selectedSong];
+    suggestion = new SuggestionWSong(song);
+    console.log(suggestion);
+    suggestion.beginSuggestion();
+    console.log(suggestion);
+  }
 }

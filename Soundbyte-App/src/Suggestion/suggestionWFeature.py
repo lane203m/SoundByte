@@ -1,4 +1,5 @@
 import sys
+import json
 
 thisdict = {
     "songs": [
@@ -35,5 +36,6 @@ thisdict = {
 
 }
 
-print(thisdict)
+output = json.dumps(thisdict)
+print(output)
 sys.stdout.flush()

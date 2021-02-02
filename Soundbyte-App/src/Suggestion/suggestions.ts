@@ -1,6 +1,8 @@
 import {Feature} from "../Types/Feature";
 import {Song} from "../Types/Song";
 import {LibraryData} from "../Types/LibraryData";
+import {ResultsData} from "../Types/ResultsData";
+
 var pyshell =  require('python-shell');
 
 
@@ -11,7 +13,7 @@ var pyshell =  require('python-shell');
 
 
 export class Suggestion{
-    results: Song[];
+    results: ResultsData;
     constructor(){
       }    
 }
@@ -23,54 +25,54 @@ export class SuggestionWSong extends Suggestion{
         super();
         this.input = song;
       }  
-
-    /*sendToPython() {
-      var python = require('child_process').spawn('python', ['./py/calc.py', this.input]);
-      python.stdout.on('data', function (data) {
-        console.log("Python response: ", data.toString('utf8'));
-        result.textContent = data.toString('utf8');
-      });
-    
-      python.stderr.on('data', (data) => {
-        console.error(`stderr: ${data}`);
-      });
-    
-      python.on('close', (code) => {
-        console.log(`child process exited with code ${code}`);
-      });
-    
-    }
-   
-   */
   
-      
-    beginSuggestion(){
-      var result;
-      pyshell.PythonShell.run('suggestionWSong.py', null, function  (err, results)  {
-        if  (err)  throw err;
-        console.log('hello.py finished.');
-        console.log('results', results);
-        result = results[0];
-      });
-      this.results.push(result);
+    public async getSuggestion(){
+      this.beginSuggestion();
+
     }
-    /*
-      console.log("starting");
-      let pyshell = new PythonShell('Suggestion/suggestionWSong.py');
-      let value = null;
-      console.log(pyshell.on('message', function(message) {
-          value = message
-          console.log(message);
-      }));
-      console.log(value);
-      pyshell.end(function (err) {
-        if (err){
-            console.log(err);
-            throw err;
-        };
-        console.log('finished');
-      });
-    }*/
+
+    public async runPythonShell(){
+        return new Promise((resolve, reject)=>{
+          pyshell.PythonShell.run('./Suggestion/suggestionWSong.py', null, function  (err, results)  {
+              if  (err){
+                console.log('fail');
+                reject(err);
+              }  
+              else {
+                resolve(results[0]);
+          }
+           });
+          
+        });
+    }
+    public async beginSuggestion(){
+      var output = JSON.parse(<string>await this.runPythonShell());
+      //console.log(output.songs);
+      this.results = new ResultsData(output.songs);
+/*
+      var tempResult = await this.runPythonShell();
+      console.log("00");
+      console.log(JSON.parse(<string>tempResult));
+      //tempResult = JSON.parse(<string>tempResult);
+      console.log("BB");
+
+      console.log((<any>tempResult).songs);
+      console.log("CC");
+      console.log(tempResult[0]);
+      this.results = new ResultsData(tempResult);
+      console.log("AA");
+      console.log(this.results);
+      console.log("DD");
+      console.log(this.results.songs);
+      console.log("FF")
+      console.log(this.input.songName);
+      console.log("GG");
+      console.log(typeof(this.results.songs));
+      console.log("ff");
+      console.log(JSON.parse(this.results.songs));
+*/
+      
+    }
 
 }
 
