@@ -65,14 +65,6 @@ var SuggestionWSong = /** @class */ (function (_super) {
         _this.input = song;
         return _this;
     }
-    SuggestionWSong.prototype.getSuggestion = function () {
-        return __awaiter(this, void 0, void 0, function () {
-            return __generator(this, function (_a) {
-                this.beginSuggestion();
-                return [2 /*return*/];
-            });
-        });
-    };
     SuggestionWSong.prototype.runPythonShell = function () {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
@@ -100,7 +92,6 @@ var SuggestionWSong = /** @class */ (function (_super) {
                         return [4 /*yield*/, this.runPythonShell()];
                     case 1:
                         output = _b.apply(_a, [_c.sent()]);
-                        //console.log(output.songs);
                         this.results = new ResultsData_1.ResultsData(output.songs);
                         return [2 /*return*/];
                 }
@@ -117,18 +108,37 @@ var SuggestionWFeature = /** @class */ (function (_super) {
         _this.input = features;
         return _this;
     }
-    SuggestionWFeature.prototype.beginSuggestion = function () {
-        var pyshell = new PythonShell('suggestionWFeature.py');
-        pyshell.on('message', function (message) {
-            console.log(message);
-            this.results = message;
+    SuggestionWFeature.prototype.runPythonShell = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                return [2 /*return*/, new Promise(function (resolve, reject) {
+                        pyshell.PythonShell.run('./Suggestion/suggestionWSong.py', null, function (err, results) {
+                            if (err) {
+                                console.log('fail');
+                                reject(err);
+                            }
+                            else {
+                                resolve(results[0]);
+                            }
+                        });
+                    })];
+            });
         });
-        pyshell.end(function (err) {
-            if (err) {
-                throw err;
-            }
-            ;
-            console.log('finished');
+    };
+    SuggestionWFeature.prototype.beginSuggestion = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var output, _a, _b;
+            return __generator(this, function (_c) {
+                switch (_c.label) {
+                    case 0:
+                        _b = (_a = JSON).parse;
+                        return [4 /*yield*/, this.runPythonShell()];
+                    case 1:
+                        output = _b.apply(_a, [_c.sent()]);
+                        this.results = new ResultsData_1.ResultsData(output.songs);
+                        return [2 /*return*/];
+                }
+            });
         });
     };
     return SuggestionWFeature;

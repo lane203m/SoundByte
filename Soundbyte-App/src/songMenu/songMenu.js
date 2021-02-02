@@ -11,11 +11,6 @@ var selectedSong = "-1";
 
 
 
-
-
-
-
-
 function showSongs() {
     let songLibrary = new LibraryData();
     //songLibrary.songs.forEach((i,song) => console.log(songLibrary.songs.indexOf(i)));
