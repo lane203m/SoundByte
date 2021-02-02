@@ -4,22 +4,22 @@ In most cases, a DJ will manage their library of songs - curating a list that wi
 
 ## Our Project
 
- [SoundByte On Github](https://github.com/lane203m/SoundByte)
+[SoundByte On Github](https://github.com/lane203m/SoundByte)
 
 
 ## Meet the Team
 
 Brandon Clarke:
-        ML component. Science, Research
-        ML development
+ML component. Science, Research
+ML development
 Jiwoun Kim:
-        frontend design & development
-        backend development
+frontend design & development
+backend development
 Mason Lane
-        Scrum Master
-        backend/frontend architecture
-        backend development
-        ML advisory
+Scrum Master
+backend/frontend architecture
+backend development
+ML advisory
 
 
 ## Vlogs
