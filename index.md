@@ -12,11 +12,13 @@ In most cases, a DJ will manage their library of songs - curating a list that wi
 ### Brandon Clarke:
 - ML component. Science, Research
 - ML development
+
 ### Mason Lane:
 - Scrum Master
 - backend/frontend architecture
 - backend development
 - ML advisory
+
 ### Jiwoun Kim:
 - frontend design & development
 - backend development
