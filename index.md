@@ -26,15 +26,19 @@ In most cases, a DJ will manage their library of songs - curating a list that wi
 
 ## Vlogs
 ###Project Vlog Intro Link
-[![Project Vlog Intro Link - Click to watch](https://youtu.be/1oX0xEtuw2I/0.jpg)](https://youtu.be/1oX0xEtuw2I)
+
+[![Project Vlog Intro Link - Click to watch](https://img.youtube.com/vi/1oX0xEtuw2I/maxresdefault.jpg)](https://youtu.be/1oX0xEtuw2I)
 
 ###Project Vlog1
-[![Project Vlog1 Link - Click to watch](https://youtu.be/jK9QYWRWPuQ/0.jpg)](https://youtu.be/jK9QYWRWPuQ)
+
+[![Project Vlog1 Link - Click to watch](https://img.youtube.com/vi/jK9QYWRWPuQ/maxresdefault.jpg)](https://youtu.be/jK9QYWRWPuQ)
 
 ###Project Vlog2
-[![Project Vlog2 Link - Click to watch](https://youtu.be/2v6TyRrs7hI/0.jpg)](https://youtu.be/2v6TyRrs7hI)
+
+[![Project Vlog2 Link - Click to watch](https://img.youtube.com/vi/2v6TyRrs7hI/maxresdefault.jpg)](https://youtu.be/2v6TyRrs7hI)
 
 ###Project Vlog3
-[![Project Vlog3 Link - Click to watch](https://youtu.be/zlUKr5duDy0/0.jpg)](https://youtu.be/zlUKr5duDy0)
+
+[![Project Vlog3 Link - Click to watch](https://img.youtube.com/vi/zlUKr5duDy0/maxresdefault.jpg)](https://youtu.be/zlUKr5duDy0)
 
 
