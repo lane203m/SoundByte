@@ -1,37 +1,18 @@
-## Welcome to GitHub Pages
+## We're Helping Artists 
 
-You can use the [editor on GitHub](https://github.com/lane203m/SoundByte/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
+Often times, a DJ will manage a library of songs - curating a list that will mix well together. From their tastes and by reading the room, they mix tracks accordingly. Our goal is to provide a utility, which recommends ideal candidates - this may streamline a DJ's workflow. For performers, this would be an on-the-job utility; assisting creators as they sifted through a track list. It would also help aspiring mixers build out their library. We aim to acomplish this, through machine learning algorithms and general search criteria. While the final decision comes down to the artist, our application will eliminate unlikely candidates & make coming to a decision easier. 
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+## Our Project
 
-### Markdown
+## Meet the Team
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
 
-```markdown
-Syntax highlighted code block
+## Vlogs
 
-# Header 1
-## Header 2
-### Header 3
+ [Project Vlog Intro Link - Click to watch](https://youtu.be/1oX0xEtuw2I)
 
-- Bulleted
-- List
+ [Project Vlog1 Link - Click to watch](https://youtu.be/2v6TyRrs7hI)
 
-1. Numbered
-2. List
+ [Project Vlog2 Link - Click to watch](https://youtu.be/2v6TyRrs7hI)
 
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
-```
-
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/lane203m/SoundByte/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.
+ [Project Vlog3 Link - Click to watch](https://youtu.be/zlUKr5duDy0)
