@@ -1,11 +1,11 @@
 import {Song} from "./Song"
 import * as data from "../Libraries/songLibrary/library.json"
 
-export class LibraryData {
+export class ResultsData {
   songs: Song[];
 
-  constructor(){
-    this.songs = (<any>data).songs;
+  constructor(songs){
+    this.songs = songs;
   }
 
   getSong(n: number){

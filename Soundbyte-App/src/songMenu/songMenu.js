@@ -1,10 +1,14 @@
 const {LibraryData} = require("../Types/LibraryData");
 const fs = require('electron').remote.require('fs');
 const {Song} = require("../Types/Song");
-const {Feature} = require("../Types/Feature");
-
+const {Feature} = require("../Types/Feature"); 
+const {SuggestionWSong} = require("../Suggestion/suggestions")
 const contentTarget = document.querySelector(".item-wraper");
 const fileCustom = document.querySelector(".file-custom");
+var songLibrary = new LibraryData();
+var filteredLibrary = songLibrary;
+var selectedSong = "-1";
+
 
 
 function showSongs() {
@@ -24,10 +28,10 @@ function showSongs() {
 //Added by Brian
 const listupSongs = () => {   
 
-    let library = new LibraryData();
+    //let library = new LibraryData();
     //console.log(library.songs);
 
-    library.songs.forEach((i, m, song) => {
+    filteredLibrary.songs.forEach((i, m, song) => {
         //console.log(song[m]);
     let node = document.createElement("div");
     let img = new Image();  
@@ -48,7 +52,8 @@ const listupSongs = () => {
     durationDiv.classList.add("duration");
     checkInput.setAttribute("type", "checkbox");
     checkInput.setAttribute("value", m);
-    
+    checkInput.setAttribute("id", m);
+    checkInput.setAttribute("onClick", "buttonSelected(this.id)");
     checksDiv.appendChild(checkInput);
     node.appendChild(img);
     
@@ -79,7 +84,6 @@ const listupSongs = () => {
 }
 
 listupSongs();
-
 
 // Users pick a song from fiel input
 const customSongTarget = document.querySelector("#song-library");
@@ -120,3 +124,40 @@ customSongTarget.addEventListener('input', (e) => {
 
     targetDiv.appendChild(node);
 });
+
+
+function buttonSelected(selectedID){
+  if(selectedSong != -1){
+    deselectExisting(selectedSong);
+  }
+
+  if(selectedSong == selectedID){
+    selectedSong = -1;
+  }
+  else{
+    selectedSong = selectedID;
+    document.getElementById(selectedSong).checked = true;
+  }
+
+  
+
+}
+
+function deselectExisting(deselectedID){
+  document.getElementById(deselectedID).checked = false;
+}
+
+function buttonDeselected(){
+
+}
+
+
+function sendSelected(){
+  if(selectedSong != -1){
+    var song = filteredLibrary.songs[selectedSong];
+    suggestion = new SuggestionWSong(song);
+    console.log(suggestion);
+    suggestion.beginSuggestion();
+    console.log(suggestion);
+  }
+}

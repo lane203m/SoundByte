@@ -3,7 +3,7 @@
     padding: 0;
     box-sizing:border-box;
   
-  },
+  }
 *:before,
 *:after {
   -webkit-box-sizing: border-box;
@@ -12,7 +12,7 @@
 }
   
   body {
-      min-height: 100vh;
+      min-height: 100%;
       background: linear-gradient(180deg, rgb(7,7,15) 0%, rgb(103, 19, 78) 45%, rgb(246, 126, 125) 90%,  rgb(255,185,151) 100%);              
       background-size: cover;
   
@@ -21,7 +21,7 @@
       font-size: 0.8rem;
       color: white;    
       
-      overflow: hidden;    
+ 
   }
 
 nav {
