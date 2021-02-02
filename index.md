@@ -10,16 +10,16 @@ In most cases, a DJ will manage their library of songs - curating a list that wi
 ## Meet the Team
 
 Brandon Clarke:
-ML component. Science, Research
-ML development
-Jiwoun Kim:
-frontend design & development
-backend development
-Mason Lane
-Scrum Master
-backend/frontend architecture
-backend development
-ML advisory
+ -ML component. Science, Research
+ -ML development
+ Jiwoun Kim:
+ -frontend design & development
+ -backend development
+ Mason Lane
+ -Scrum Master
+ -backend/frontend architecture
+ -backend development
+ -ML advisory
 
 
 ## Vlogs
