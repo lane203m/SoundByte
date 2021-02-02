@@ -42,14 +42,14 @@ As stated in our golden circle, this would aid hobbyists and performers while ma
 
 ### Project Vlog1
 
-[![Project Vlog1 Link - Click to watch](https://img.youtube.com/vi/jK9QYWRWPuQ/maxresdefault.jpg)](https://youtu.be/jK9QYWRWPuQ)
+[![Project Vlog1 Link - Click to watch](https://img.youtube.com/vi/jK9QYWRWPuQ/hqdefault.jpg)](https://youtu.be/jK9QYWRWPuQ)
 
 ### Project Vlog2
 
-[![Project Vlog2 Link - Click to watch](https://img.youtube.com/vi/2v6TyRrs7hI/maxresdefault.jpg)](https://youtu.be/2v6TyRrs7hI)
+[![Project Vlog2 Link - Click to watch](https://img.youtube.com/vi/2v6TyRrs7hI/hqdefault.jpg)](https://youtu.be/2v6TyRrs7hI)
 
 ### Project Vlog3
 
-[![Project Vlog3 Link - Click to watch](https://img.youtube.com/vi/zlUKr5duDy0/maxresdefault.jpg)](https://youtu.be/zlUKr5duDy0)
+[![Project Vlog3 Link - Click to watch](https://img.youtube.com/vi/zlUKr5duDy0/hqdefault.jpg)](https://youtu.be/zlUKr5duDy0)
 
 
