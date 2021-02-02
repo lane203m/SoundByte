@@ -1,6 +1,6 @@
 ## We're Helping Artists 
 
-    In most cases, a DJ will manage their library of songs - curating a list that will mixes well together. From their tastes and by reading the room, they mix tracks accordingly. Our goal is to provide a utility which recommends ideal candidates - this may streamline a DJ's workflow. For performers, this would run on-the-job; assisting creators as they scanned through a track list. It would also help aspiring mixers build out their library. We aim to acomplish this through machine learning algorithms and general search criteria. While the final decision comes down to the artist, our application will eliminate unlikely candidates & make coming to a decision easier. 
+   In most cases, a DJ will manage their library of songs - curating a list that will mixes well together. From their tastes and by reading the room, they mix tracks accordingly. Our goal is to provide a utility which recommends ideal candidates - this may streamline a DJ's workflow. For performers, this would run on-the-job; assisting creators as they scanned through a track list. It would also help aspiring mixers build out their library. We aim to acomplish this through machine learning algorithms and general search criteria. While the final decision comes down to the artist, our application will eliminate unlikely candidates & make coming to a decision easier. 
 
 ## Our Project
 
@@ -9,13 +9,13 @@
 
 ## Meet the Team
 
-    Brandon Clarke:
+   Brandon Clarke:
         ML component. Science, Research
         ML development
-    Jiwoun Kim:
+   Jiwoun Kim:
         frontend design & development
         backend development
-    Mason Lane
+   Mason Lane
         Scrum Master
         backend/frontend architecture
         backend development
