@@ -27,7 +27,7 @@ In most cases, a DJ will manage their library of songs - curating a list that wi
 ## Vlogs
 ###Project Vlog Intro Link
 
-[![Project Vlog Intro Link - Click to watch](https://img.youtube.com/vi/1oX0xEtuw2I/maxresdefault.jpg)](https://youtu.be/1oX0xEtuw2I)
+[![Project Vlog Intro Link - Click to watch](https://img.youtube.com/vi/1oX0xEtuw2I/hqdefault.jpg)](https://youtu.be/1oX0xEtuw2I)
 
 ###Project Vlog1
 
