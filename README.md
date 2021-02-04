@@ -44,3 +44,6 @@ As stated in our golden circle, this would aid hobbyists and performers while ma
 ### Project Vlog3
 
 [![Project Vlog3 Link - Click to watch](https://img.youtube.com/vi/zlUKr5duDy0/hqdefault.jpg)](https://youtu.be/zlUKr5duDy0)
+
+### Project Vlog4
+[![Project Vlog4 Link - Click to watch](https://img.youtube.com/vi/OTT5XUbj-8Q/hqdefault.jpg)](https://www.youtube.com/watch?v=OTT5XUbj-8Q)
