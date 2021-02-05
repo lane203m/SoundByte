@@ -11,7 +11,7 @@ const move = (url) => {
 }
 
 if(!exist) { // When init.json file does not exist, move to setup page
-  move(`./setupSongLibrary.html`);
+  move(`./initialization/index.html`);
   //console.log("./setup/init.json does not exist!");
 } else {
   move(`./songMenu/songMenu.html`);

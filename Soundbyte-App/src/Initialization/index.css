@@ -39,9 +39,9 @@
   z-index: 6;
   display: block;
   content: "Browse";
-  height: 2.5rem;
+  height: 1.4rem;
   padding: .5rem 1rem;
-  line-height: 1.5;
+  line-height: 1.5rem;
   color: #555;
   background-color: #eee;
   border: .075rem solid #ddd;
