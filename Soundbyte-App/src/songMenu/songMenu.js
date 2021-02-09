@@ -81,6 +81,11 @@ const listupSongs = () => {
 listupSongs();
 
 
+//Added by brian
+const suggestSongs = () => {
+
+}
+
 // Users pick a song from fiel input
 const customSongTarget = document.querySelector("#song-library");
 customSongTarget.addEventListener('input', (e) => {
