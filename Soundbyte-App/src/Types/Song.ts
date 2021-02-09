@@ -6,6 +6,14 @@ export class Song {
   songFile: string;
   features: Feature;
 
+  constructor(songName: string, author: string, songFile: string, features: Feature){
+    this.songName = songName;
+    this.author = author;
+    this.songFile = songFile;
+    this.features = features;
+
+  }
+
   getSongName(){
     return this.songName;
   }
@@ -21,5 +29,5 @@ export class Song {
   getFeatures(){
     return this.features;
   }
-    
+
 }

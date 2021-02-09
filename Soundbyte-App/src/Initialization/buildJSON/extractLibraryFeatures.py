@@ -5,10 +5,11 @@
 
 
 import sys
+import json
 thisdict = {
     "songs": [
         {
-            "songName": "song1New",
+            "songName": "songE",
             "author": "auth1",
             "features": {
                 "bpm": 100,
@@ -17,7 +18,7 @@ thisdict = {
             }
         },
         {
-            "songName": "song2New",
+            "songName": "song2",
             "author": "auth2",
             "features": {
                 "bpm": 200,
@@ -26,7 +27,7 @@ thisdict = {
             }
         },
         {
-            "songName": "song3New",
+            "songName": "song3",
             "author": "auth3",
             "features": {
                 "bpm": 300,
@@ -40,7 +41,9 @@ thisdict = {
 
 }
 
-print(thisdict)
+
+output = json.dumps(thisdict)
+print(output)
 sys.stdout.flush()
 
 

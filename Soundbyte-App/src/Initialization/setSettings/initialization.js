@@ -1,8 +1,9 @@
 const fs = require('electron').remote.require('fs');
-
+const {LibraryBuilder} = require("../buildJSON/LibraryBuilder");
 const form = document.querySelector("form");
 const fileInput = document.querySelector("#song-library");
 const fileCustom = document.querySelector(".file-custom"); 
+path = require('path')
 
 const move = (url) => {
   location.replace(url)
@@ -10,6 +11,14 @@ const move = (url) => {
 
 let currentPathName = "";
 let filename ="";
+
+//var seekInit = '../init.json';
+//var seekLibrary = '../../Libraries/songLibrary/library.json';
+//if( fs.existsSync(seekInit) && fs.existsSync(seekLibrary)){
+//  move("../../index.html");
+//}
+
+
 
 fileInput.addEventListener('input', (e) => { 
   // description: 
@@ -21,6 +30,10 @@ fileInput.addEventListener('input', (e) => {
     const node = target.files[0];
     if(process.platform === 'win32') {
       currentPathName = node.path.split(node.webkitRelativePath)[0] + node.webkitRelativePath.match(/([^\/]+)/)[0] + '\\';
+      
+      //ensures only paths are being saved - not files. 
+      var onlyPath = require('path').dirname(currentPathName);
+      currentPathName = onlyPath;
     } else {
       currentPathName = node.path.split(node.webkitRelativePath)[0] + node.webkitRelativePath.match(/([^\/]+)/)[0] + '/';
     }
@@ -33,6 +46,7 @@ fileInput.addEventListener('input', (e) => {
   }
 
 });
+
 
 form.addEventListener('submit', (e) => {
   // Description:
@@ -57,9 +71,9 @@ form.addEventListener('submit', (e) => {
   
   //console.log(configPath);
   //console.log(data);
-  let writePath = __dirname + '/init.json';
+  let writePath = path.join(__dirname , '/..','/init.json');
   if(process.platform === 'win32') {
-    writePath = __dirname + '\\init.json';
+    writePath = path.join(__dirname , '\\..','\\init.json');
   }
 
   //console.log(writePath);
@@ -67,8 +81,43 @@ form.addEventListener('submit', (e) => {
 
   fs.writeFileSync(writePath, data);
 
-  move("../index.html");
+  let libraryJSON = path.join(__dirname , '/../../Libraries/songLibrary/library.json');
+  if(process.platform === 'win32') {
+    libraryJSON = path.join(__dirname , '\\..\\..\\Libraries\\songLibrary\\library.json');
+  }
+
+
+  //let myPromise = new Promise(function(myResolve, myReject) {
+    // "Producing Code" (May take some time)
+
+      //while (outcome != 0) {
+
+     // }
+      //if (outcome == 0) myResolve(); // when successful
+      //else myReject();  // when error
+    //});
+
+    //myPromise.then(
+      //function(value) {  move("../../index.html") },
+      //function(error) {  move("./initialization.html") }
+    //);
+
+  writeLibrary(writePath, libraryJSON, openIndex);
+
+  //move("../../index.html")
   //console.log("the form has been submitted");
   //console.log(configPath);  
   return;
 });
+
+function writeLibrary(writePath, libraryJSON, callback){
+  libraryBuilder = new LibraryBuilder(writePath, libraryJSON);
+  var outcome = libraryBuilder.buildLibrary();
+  callback(outcome);
+}
+
+function openIndex(out){
+  console.log(out);
+  setTimeout(() => {  move("../../index.html"); }, 1000);
+  
+}

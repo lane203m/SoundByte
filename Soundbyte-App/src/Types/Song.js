@@ -2,7 +2,11 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Song = void 0;
 var Song = /** @class */ (function () {
-    function Song() {
+    function Song(songName, author, songFile, features) {
+        this.songName = songName;
+        this.author = author;
+        this.songFile = songFile;
+        this.features = features;
     }
     Song.prototype.getSongName = function () {
         return this.songName;
