@@ -5,6 +5,7 @@ const {Feature} = require("../Types/Feature");
 const {SuggestionWSong} = require("../Suggestion/suggestions")
 const contentTarget = document.querySelector(".item-wraper");
 const fileCustom = document.querySelector(".file-custom");
+
 var songLibrary = new LibraryData();
 var filteredLibrary = songLibrary;
 var selectedSong = "-1";
@@ -152,12 +153,16 @@ function buttonDeselected(){
 }
 
 
-function sendSelected(){
+function sendSelected(callback){
   if(selectedSong != -1){
     var song = filteredLibrary.songs[selectedSong];
     suggestion = new SuggestionWSong(song);
-    console.log(suggestion);
     suggestion.beginSuggestion();
     console.log(suggestion);
+    callback();
   }
+}
+
+function timeOutCallback(){
+  setTimeout(() => { console.log("calling back"); }, 3000);
 }
