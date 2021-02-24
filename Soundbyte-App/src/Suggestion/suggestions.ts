@@ -25,8 +25,9 @@ export class SuggestionWSong extends Suggestion{
         this.input = song;
       }  
   
-    public async runPythonShell(){
+    public async runPythonShell(SongLibrary: LibraryData){
         return new Promise((resolve, reject)=>{
+<<<<<<< .mine
           let options = { 
             mode: 'text', 
             pythonOptions: ['-u'], // get print results in real-time 
@@ -35,6 +36,16 @@ export class SuggestionWSong extends Suggestion{
 
 
           pyshell.PythonShell.run('./Suggestion/suggestionWSong.py', options, function  (err, results)  {
+=======
+          let options = {
+            mode: 'json' ,
+            args: [JSON.stringify(this.input.getFeatures),JSON.stringify(SongLibrary)]
+          };
+          pyshell.PythonShell.run('./Suggestion/suggestionWSong.py', options, function  (err, results)  {
+
+
+
+>>>>>>> .theirs
               if  (err){
                 console.log('fail');
                 reject(err);
@@ -46,8 +57,8 @@ export class SuggestionWSong extends Suggestion{
           
         });
     }
-    public async beginSuggestion(){
-      var output = JSON.parse(<string>await this.runPythonShell());
+    public async beginSuggestion(SongLibrary: LibraryData){
+      var output = JSON.parse(<string>await this.runPythonShell(SongLibrary));
       this.results = new ResultsData(output.songs);
     }
 

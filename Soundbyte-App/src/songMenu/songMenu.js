@@ -157,7 +157,7 @@ function sendSelected(callback){
   if(selectedSong != -1){
     var song = filteredLibrary.songs[selectedSong];
     suggestion = new SuggestionWSong(song);
-    suggestion.beginSuggestion();
+    suggestion.beginSuggestion(songLibrary);
     console.log(suggestion);
     callback();
   }

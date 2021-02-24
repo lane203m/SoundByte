@@ -32,6 +32,9 @@ thisdict = {
 
     ]
 
+sys.argv[1]
+
+
 
 }
 output = json.dumps(thisdict)
