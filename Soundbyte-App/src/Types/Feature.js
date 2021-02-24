@@ -13,6 +13,15 @@ var Feature = /** @class */ (function () {
     Feature.prototype.getScale = function () {
         return this.scale;
     };
+    Feature.prototype.setBpm = function (bpm) {
+        this.bpm = bpm;
+    };
+    Feature.prototype.setKey = function (key) {
+        this.key = key;
+    };
+    Feature.prototype.setScale = function (scale) {
+        this.scale = scale;
+    };
     return Feature;
 }());
 exports.Feature = Feature;

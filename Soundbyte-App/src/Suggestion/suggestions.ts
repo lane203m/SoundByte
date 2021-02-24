@@ -27,7 +27,14 @@ export class SuggestionWSong extends Suggestion{
   
     public async runPythonShell(){
         return new Promise((resolve, reject)=>{
-          pyshell.PythonShell.run('./Suggestion/suggestionWSong.py', null, function  (err, results)  {
+          let options = { 
+            mode: 'text', 
+            pythonOptions: ['-u'], // get print results in real-time 
+            args: ['shubhamk314'] //An argument which can be accessed in the script using sys.argv[1] 
+          }; 
+
+
+          pyshell.PythonShell.run('./Suggestion/suggestionWSong.py', options, function  (err, results)  {
               if  (err){
                 console.log('fail');
                 reject(err);
