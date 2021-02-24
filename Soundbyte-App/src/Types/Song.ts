@@ -32,6 +32,10 @@ export class Song {
     return this.features;
   }
 
+  getDuration(){
+    return this.songLength;
+  }
+
   setSongName(songName: string){
     this.songName = songName;
   }
