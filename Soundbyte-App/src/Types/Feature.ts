@@ -1,3 +1,6 @@
+//Feature Object - Mason Lane
+
+//feature class. contains extracted song features. 
 export class Feature {
     bpm: number;
     key: string;

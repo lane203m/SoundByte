@@ -119,8 +119,6 @@ form.addEventListener('submit', (e) => {
 
 function writeLibrary(writePath, libraryJSON, filePath, callback){
   libraryBuilder = new LibraryBuilder(writePath, libraryJSON, filePath);
-  //libraryBuilder.getFiles();
-  //libraryBuilder.readSongs();
   var outcome = libraryBuilder.buildLibrary().then(()=>{
     console.log("done");
   });

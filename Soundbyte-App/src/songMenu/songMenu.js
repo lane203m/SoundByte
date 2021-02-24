@@ -15,7 +15,6 @@ console.log(songLibrary);
 function showSongs() {
     let songLibrary = new LibraryData();
     //songLibrary.songs.forEach((i,song) => console.log(songLibrary.songs.indexOf(i)));
-    //console.log(songLibrary.songs);
     for (let i = 0; i<songLibrary.songs.length; i++){
         let node = document.createElement("BUTTON");
         let textnode = document.createTextNode(songLibrary.songs[i].features.bpm);
@@ -131,7 +130,6 @@ function buttonSelected(selectedID){
   if(selectedSong != -1){
     deselectExisting(selectedSong);
   }
-
   if(selectedSong == selectedID){
     selectedSong = -1;
   }
@@ -139,9 +137,6 @@ function buttonSelected(selectedID){
     selectedSong = selectedID;
     document.getElementById(selectedSong).checked = true;
   }
-
-  
-
 }
 
 function deselectExisting(deselectedID){
@@ -151,7 +146,6 @@ function deselectExisting(deselectedID){
 function buttonDeselected(){
 
 }
-
 
 function sendSelected(callback){
   if(selectedSong != -1){

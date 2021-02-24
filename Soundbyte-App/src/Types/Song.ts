@@ -1,5 +1,8 @@
+//Song object - Mason Lane
+
 import {Feature} from "./Feature"
 
+//Song object. Contains song information and feature object.
 export class Song {
   songName: string;
   author: string;
