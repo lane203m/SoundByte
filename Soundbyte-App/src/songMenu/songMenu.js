@@ -10,7 +10,7 @@ var songLibrary = new LibraryData();
 var filteredLibrary = songLibrary;
 var selectedSong = "-1";
 
-
+console.log(songLibrary);
 
 function showSongs() {
     let songLibrary = new LibraryData();

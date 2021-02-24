@@ -69,7 +69,12 @@ var SuggestionWSong = /** @class */ (function (_super) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 return [2 /*return*/, new Promise(function (resolve, reject) {
-                        pyshell.PythonShell.run('./Suggestion/suggestionWSong.py', null, function (err, results) {
+                        var options = {
+                            mode: 'text',
+                            pythonOptions: ['-u'],
+                            args: ['shubhamk314'] //An argument which can be accessed in the script using sys.argv[1] 
+                        };
+                        pyshell.PythonShell.run('./Suggestion/suggestionWSong.py', options, function (err, results) {
                             if (err) {
                                 console.log('fail');
                                 reject(err);

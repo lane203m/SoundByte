@@ -15,4 +15,16 @@ export class Feature {
       return this.scale;
     }
 
+    setBpm(bpm: number){
+      this.bpm = bpm;
+    }
+  
+    setKey(key: string){
+      this.key = key;
+    }
+  
+    setScale(scale: string){
+      this.scale = scale;
+    }
+
   }

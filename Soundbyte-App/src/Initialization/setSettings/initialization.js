@@ -66,6 +66,14 @@ form.addEventListener('submit', (e) => {
   if(currentPathName != '') { // this means if a user gives a library path or the configPath will be used as it was.
     configPath.path = currentPathName;
   }
+
+
+  if(process.platform === 'win32') {
+    configPath.path = path.join(configPath.path , '\\');
+  }
+  else{
+    configPath.path = path.join(configPath.path , '/');
+  }
   
   let data = JSON.stringify(configPath);
   
@@ -101,8 +109,7 @@ form.addEventListener('submit', (e) => {
       //function(value) {  move("../../index.html") },
       //function(error) {  move("./initialization.html") }
     //);
-
-  writeLibrary(writePath, libraryJSON, openIndex);
+  writeLibrary(writePath, libraryJSON, configPath.path, openIndex);
 
   //move("../../index.html")
   //console.log("the form has been submitted");
@@ -110,14 +117,18 @@ form.addEventListener('submit', (e) => {
   return;
 });
 
-function writeLibrary(writePath, libraryJSON, callback){
-  libraryBuilder = new LibraryBuilder(writePath, libraryJSON);
-  var outcome = libraryBuilder.buildLibrary();
+function writeLibrary(writePath, libraryJSON, filePath, callback){
+  libraryBuilder = new LibraryBuilder(writePath, libraryJSON, filePath);
+  //libraryBuilder.getFiles();
+  //libraryBuilder.readSongs();
+  var outcome = libraryBuilder.buildLibrary().then(()=>{
+    console.log("done");
+  });
   callback(outcome);
 }
 
 function openIndex(out){
   console.log(out);
-  setTimeout(() => {  move("../../index.html"); }, 1000);
+  setTimeout(() => {  move("../../index.html"); }, 4000);
   
 }
