@@ -6,7 +6,7 @@
 //let essentia = new Essentia(EssentiaWASM);
 
 //console.log(essentia.version);
-import { expose } from "comlink";
+//import { expose } from "comlink";
 import Essentia from '../../essentia/essentia-wasm.web.js';
 import {EssentiaWASM} from '../../essentia/essentia.js-core.js';
 //import {test} from './test.js';
@@ -28,7 +28,7 @@ function timedCount() {
 }
 
 timedCount();*/
-
+/*
 const sum = async (a, b) =>
   new Promise(async resolve => {
     essentia = new Essentia(EssentiaWASM);
@@ -36,4 +36,5 @@ const sum = async (a, b) =>
     resolve((a+b));
   });
 
-expose(sum);
+expose(sum);*/
+
