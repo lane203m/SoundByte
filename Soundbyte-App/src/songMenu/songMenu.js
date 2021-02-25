@@ -10,7 +10,6 @@ var songLibrary = new LibraryData();
 var filteredLibrary = songLibrary;
 var selectedSong = "-1";
 
-
 //Playback function by Bian on Feb 24, 2021
 const addPlayback = (target) => {
   target.childNodes.forEach(childNode => {
@@ -21,7 +20,8 @@ const addPlayback = (target) => {
   });
 }
 
-//console.log(songLibrary);
+console.log(songLibrary);
+
 
 function showSongs() {
     let songLibrary = new LibraryData();
