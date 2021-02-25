@@ -40,7 +40,6 @@ exports.LibraryBuilder = void 0;
 //Library Builder, generates JSON data for each song. By: Mason Lane
 var Feature_1 = require("../../Types/Feature");
 var Song_1 = require("../../Types/Song");
-var comlink_1 = require("comlink");
 var fs = require('fs');
 var path = require('path');
 //const essentia = require("essentia.js");
@@ -59,8 +58,6 @@ var getAudioDurationInSeconds = require('get-audio-duration').getAudioDurationIn
 //const buffer = require('audio-lena/mp3');
 //console.log(fooWorker);
 var WavDecoder = require("wav-decoder");
-var essentiaWorker_js_1 = require("../buildJSON/workers/primes/essentiaWorker.js");
-var wasmWorker = comlink_1.wrap(new essentiaWorker_js_1.default());
 //const primes = require('./workers/primes');
 //primes.getPrimes(100).then(primes => {
 //  console.log('The first 100 prime numbers are:');
@@ -138,28 +135,21 @@ var LibraryBuilder = /** @class */ (function () {
                                     });
                                 }); }).then(function (audioData) {
                                     return __awaiter(this, void 0, void 0, function () {
-                                        var result, features;
+                                        var worker, features;
                                         return __generator(this, function (_a) {
-                                            switch (_a.label) {
-                                                case 0: return [4 /*yield*/, this.wasmWorker(1, 4)];
-                                                case 1:
-                                                    result = _a.sent();
-                                                    //var worker = await new Worker('../buildJSON/workers/primes/essentiaWorker.js', { type : 'module' });
-                                                    //worker.onmessage = function(event){
-                                                    //  console.log(event.data);
-                                                    //}
-                                                    //worker function to be called here, with audioData passed as input
-                                                    console.log(result);
-                                                    alert(result);
-                                                    console.log(audioData);
-                                                    console.log("working1");
-                                                    features = new Feature_1.Feature();
-                                                    features.bpm = 50;
-                                                    features.scale = "Major";
-                                                    features.key = "B";
-                                                    song.setFeatures(features);
-                                                    return [2 /*return*/];
-                                            }
+                                            worker = new Worker('../buildJSON/workers/primes/essentiaWorker.js', { type: 'module' });
+                                            worker.onmessage = function (event) {
+                                                console.log(event.data);
+                                            };
+                                            //worker function to be called here, with audioData passed as input
+                                            console.log(audioData);
+                                            console.log("working1");
+                                            features = new Feature_1.Feature();
+                                            features.bpm = 50;
+                                            features.scale = "Major";
+                                            features.key = "B";
+                                            song.setFeatures(features);
+                                            return [2 /*return*/];
                                         });
                                     });
                                 });
