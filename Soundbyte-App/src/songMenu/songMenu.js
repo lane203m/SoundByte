@@ -10,7 +10,18 @@ var songLibrary = new LibraryData();
 var filteredLibrary = songLibrary;
 var selectedSong = "-1";
 
-console.log(songLibrary);
+
+//Playback function by Bian on Feb 24, 2021
+const addPlayback = (target) => {
+  target.childNodes.forEach(childNode => {
+    childNode.addEventListener('click', () => {
+      // temporary returns: need to be completed with real working code
+      console.log(childNode.firstChild.nextSibling.firstChild.innerText);
+    });
+  });
+}
+
+//console.log(songLibrary);
 
 function showSongs() {
     let songLibrary = new LibraryData();
@@ -27,12 +38,13 @@ function showSongs() {
 
 
 //Added by Brian
-const listupSongs = () => {   
+const listupSongs = (library, isSuggestion) => {   
 
     //let library = new LibraryData();
     //console.log(library.songs);
+    //console.log(library);
 
-    filteredLibrary.songs.forEach((i, m, song) => {
+    library.songs.forEach((i, m, song) => {
         //console.log(song[m]);
     let node = document.createElement("div");
     let img = new Image();  
@@ -45,19 +57,23 @@ const listupSongs = () => {
 
     sname.innerText = song[m].songName;
     img.src = "../img/play-button.png";
-    detailSpan.innerText = song[m].features.bpm + " / " + song[m].features.key + " / " + song[m].features.scale;
+    detailSpan.innerText = song[m].features.bpm + " bpm / " + song[m].features.key + " key / " + song[m].features.scale + " scale";
     durationDiv.innerText = "2:32";
 
     node.classList.add("item");
     detailDiv.classList.add("song-detail");
     durationDiv.classList.add("duration");
-    checkInput.setAttribute("type", "checkbox");
-    checkInput.setAttribute("value", m);
-    checkInput.setAttribute("id", m);
-    checkInput.setAttribute("onClick", "buttonSelected(this.id)");
-    checksDiv.appendChild(checkInput);
-    node.appendChild(img);
     
+    if(!isSuggestion) {
+      checkInput.setAttribute("type", "checkbox");
+      checkInput.setAttribute("value", m);
+      checkInput.setAttribute("id", m);
+      checkInput.setAttribute("onClick", "buttonSelected(this.id)");
+      checksDiv.appendChild(checkInput);
+    }
+    
+    node.appendChild(img);    
+        
     detailDiv.appendChild(sname);
     detailDiv.appendChild(detailSpan);
     
@@ -82,9 +98,11 @@ const listupSongs = () => {
         //`);
         */
     });
+
+    addPlayback(contentTarget);
 }
 
-listupSongs();
+listupSongs(filteredLibrary, false);
 
 
 //Added by brian
@@ -130,6 +148,8 @@ customSongTarget.addEventListener('input', (e) => {
     node.appendChild(checksDiv);
 
     targetDiv.appendChild(node);
+
+    addPlayback(contentTarget);
 });
 
 
@@ -159,16 +179,35 @@ function buttonDeselected(){
 }
 
 
-function sendSelected(callback){
+const sendSelected = async() => {
   if(selectedSong != -1){
-    var song = filteredLibrary.songs[selectedSong];
+    let song = filteredLibrary.songs[selectedSong];
     suggestion = new SuggestionWSong(song);
-    suggestion.beginSuggestion();
-    console.log(suggestion);
-    callback();
+    await suggestion.beginSuggestion();
+    
+    //console.log(suggestion);
+    //console.log(suggestion.results);
+    document.querySelector(".item-title.item-library").innerHTML = "Suggestions";
+    document.querySelector(".button").removeChild(document.querySelector(".button").firstChild);
+
+    while(contentTarget.firstChild) {
+      contentTarget.removeChild(contentTarget.firstChild);
+    }
+
+    listupSongs(suggestion.results, true);
+
   }
 }
 
 function timeOutCallback(){
   setTimeout(() => { console.log("calling back"); }, 3000);
 }
+
+
+//Navigation
+document.querySelectorAll(".navButton")[0].addEventListener('click', () => {
+  location.replace('./songMenu.html');
+});
+
+
+
