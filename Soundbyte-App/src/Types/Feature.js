@@ -1,6 +1,8 @@
 "use strict";
+//Feature Object - Mason Lane
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Feature = void 0;
+//feature class. contains extracted song features. 
 var Feature = /** @class */ (function () {
     function Feature() {
     }

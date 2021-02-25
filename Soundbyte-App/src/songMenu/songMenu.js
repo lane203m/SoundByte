@@ -26,7 +26,6 @@ console.log(songLibrary);
 function showSongs() {
     let songLibrary = new LibraryData();
     //songLibrary.songs.forEach((i,song) => console.log(songLibrary.songs.indexOf(i)));
-    //console.log(songLibrary.songs);
     for (let i = 0; i<songLibrary.songs.length; i++){
         let node = document.createElement("BUTTON");
         let textnode = document.createTextNode(songLibrary.songs[i].features.bpm);
@@ -57,8 +56,10 @@ const listupSongs = (library, isSuggestion) => {
 
     sname.innerText = song[m].songName;
     img.src = "../img/play-button.png";
+
     detailSpan.innerText = song[m].features.bpm + " bpm / " + song[m].features.key + " key / " + song[m].features.scale + " scale";
-    durationDiv.innerText = "2:32";
+    durationDiv.innerText = song[m].songLength;
+
 
     node.classList.add("item");
     detailDiv.classList.add("song-detail");
@@ -157,7 +158,6 @@ function buttonSelected(selectedID){
   if(selectedSong != -1){
     deselectExisting(selectedSong);
   }
-
   if(selectedSong == selectedID){
     selectedSong = -1;
   }
@@ -165,9 +165,6 @@ function buttonSelected(selectedID){
     selectedSong = selectedID;
     document.getElementById(selectedSong).checked = true;
   }
-
-  
-
 }
 
 function deselectExisting(deselectedID){
@@ -178,30 +175,31 @@ function buttonDeselected(){
 
 }
 
-
-const sendSelected = async() => {
+async function sendSelected(callback){
   if(selectedSong != -1){
     let song = filteredLibrary.songs[selectedSong];
     suggestion = new SuggestionWSong(song);
     await suggestion.beginSuggestion();
+    console.log(suggestion);
+    console.log(suggestion.results);
+    callback();
     
     //console.log(suggestion);
     //console.log(suggestion.results);
     document.querySelector(".item-title.item-library").innerHTML = "Suggestions";
     document.querySelector(".button").removeChild(document.querySelector(".button").firstChild);
-
     while(contentTarget.firstChild) {
       contentTarget.removeChild(contentTarget.firstChild);
     }
 
     listupSongs(suggestion.results, true);
-
   }
 }
 
 function timeOutCallback(){
   setTimeout(() => { console.log("calling back"); }, 3000);
 }
+
 
 
 //Navigation

@@ -1,3 +1,5 @@
+//Main startup for electron applicaiton & nodeJS integration -Mason 
+
 import { BrowserWindow } from 'electron';
 
 export default class Main {
