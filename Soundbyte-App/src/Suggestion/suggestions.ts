@@ -41,8 +41,17 @@ export class SuggestionWSong extends Suggestion{
     });
   }
   public async beginSuggestion(){
-    var output = JSON.parse(<string>await this.runPythonShell()); //parse python results into object.
-    this.results = new ResultsData(output.songs); //load results with our python output.
+    alert("starting");
+    var output;
+    await this.runPythonShell().then(data => {
+      output = JSON.parse(<string>data);
+      alert("done");
+      console.log("done");
+    })
+    console.log("done2");
+    console.log(this.results);
+    this.results = new ResultsData(output.songs);
+  
   }
 
 }
@@ -70,7 +79,14 @@ export class SuggestionWFeature extends Suggestion{
     });
   }
   public async beginSuggestion(){
-    var output = JSON.parse(<string>await this.runPythonShell());
+    alert("starting");
+    var output;
+    await this.runPythonShell().then(data => {
+      output = JSON.parse(<string>data);
+      alert("done");
+      console.log("done");
+    })
+    console.log("done2");
     this.results = new ResultsData(output.songs);
   }
 }

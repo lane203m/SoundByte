@@ -1,4 +1,5 @@
 "use strict";
+//Main startup for electron applicaiton & nodeJS integration -Mason 
 Object.defineProperty(exports, "__esModule", { value: true });
 var Main = /** @class */ (function () {
     function Main() {

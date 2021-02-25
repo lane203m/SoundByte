@@ -45,7 +45,7 @@ const listupSongs = () => {
     sname.innerText = song[m].songName;
     img.src = "../img/play-button.png";
     detailSpan.innerText = song[m].features.bpm + " / " + song[m].features.key + " / " + song[m].features.scale;
-    durationDiv.innerText = "2:32";
+    durationDiv.innerText = song[m].songLength;
 
     node.classList.add("item");
     detailDiv.classList.add("song-detail");
@@ -147,12 +147,13 @@ function buttonDeselected(){
 
 }
 
-function sendSelected(callback){
+async function sendSelected(callback){
   if(selectedSong != -1){
     var song = filteredLibrary.songs[selectedSong];
     suggestion = new SuggestionWSong(song);
-    suggestion.beginSuggestion();
+    await suggestion.beginSuggestion();
     console.log(suggestion);
+    console.log(suggestion.results);
     callback();
   }
 }

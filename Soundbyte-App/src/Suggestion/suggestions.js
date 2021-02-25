@@ -52,12 +52,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.SuggestionWRandom = exports.SuggestionWFeature = exports.SuggestionWSong = exports.Suggestion = void 0;
 var ResultsData_1 = require("../Types/ResultsData");
 var pyshell = require('python-shell');
+//A suggestion will run and expects to fill results with data.
 var Suggestion = /** @class */ (function () {
     function Suggestion() {
     }
     return Suggestion;
 }());
 exports.Suggestion = Suggestion;
+//suggestions with songs will require an aditional variable - input: Song. 
 var SuggestionWSong = /** @class */ (function (_super) {
     __extends(SuggestionWSong, _super);
     function SuggestionWSong(song) {
@@ -65,6 +67,7 @@ var SuggestionWSong = /** @class */ (function (_super) {
         _this.input = song;
         return _this;
     }
+    //Call a python shell, send options to python for parameters. Await results. 
     SuggestionWSong.prototype.runPythonShell = function () {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
@@ -89,14 +92,20 @@ var SuggestionWSong = /** @class */ (function (_super) {
     };
     SuggestionWSong.prototype.beginSuggestion = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var output, _a, _b;
-            return __generator(this, function (_c) {
-                switch (_c.label) {
+            var output;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
                     case 0:
-                        _b = (_a = JSON).parse;
-                        return [4 /*yield*/, this.runPythonShell()];
+                        alert("starting");
+                        return [4 /*yield*/, this.runPythonShell().then(function (data) {
+                                output = JSON.parse(data);
+                                alert("done");
+                                console.log("done");
+                            })];
                     case 1:
-                        output = _b.apply(_a, [_c.sent()]);
+                        _a.sent();
+                        console.log("done2");
+                        console.log(this.results);
                         this.results = new ResultsData_1.ResultsData(output.songs);
                         return [2 /*return*/];
                 }
@@ -106,6 +115,7 @@ var SuggestionWSong = /** @class */ (function (_super) {
     return SuggestionWSong;
 }(Suggestion));
 exports.SuggestionWSong = SuggestionWSong;
+//same as above, only now python will recieve features as input instead of a song. 
 var SuggestionWFeature = /** @class */ (function (_super) {
     __extends(SuggestionWFeature, _super);
     function SuggestionWFeature(features) {
@@ -132,14 +142,19 @@ var SuggestionWFeature = /** @class */ (function (_super) {
     };
     SuggestionWFeature.prototype.beginSuggestion = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var output, _a, _b;
-            return __generator(this, function (_c) {
-                switch (_c.label) {
+            var output;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
                     case 0:
-                        _b = (_a = JSON).parse;
-                        return [4 /*yield*/, this.runPythonShell()];
+                        alert("starting");
+                        return [4 /*yield*/, this.runPythonShell().then(function (data) {
+                                output = JSON.parse(data);
+                                alert("done");
+                                console.log("done");
+                            })];
                     case 1:
-                        output = _b.apply(_a, [_c.sent()]);
+                        _a.sent();
+                        console.log("done2");
                         this.results = new ResultsData_1.ResultsData(output.songs);
                         return [2 /*return*/];
                 }
@@ -149,6 +164,7 @@ var SuggestionWFeature = /** @class */ (function (_super) {
     return SuggestionWFeature;
 }(Suggestion));
 exports.SuggestionWFeature = SuggestionWFeature;
+//send a random song for suggestion.
 var SuggestionWRandom = /** @class */ (function (_super) {
     __extends(SuggestionWRandom, _super);
     function SuggestionWRandom(libraryData) {

@@ -82,7 +82,10 @@ export class LibraryBuilder{
       readFile(fileName).then(async (buffer) => {
         return WavDecoder.decode(buffer);
       }).then(async function(audioData) {
-
+        var worker = new Worker('../buildJSON/workers/primes/essentiaWorker.js', { type : 'module' });
+        worker.onmessage = function(event){
+          console.log(event.data);
+        }
         //worker function to be called here, with audioData passed as input
         console.log(audioData);
         console.log("working1");
