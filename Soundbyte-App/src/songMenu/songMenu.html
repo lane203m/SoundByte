@@ -48,16 +48,38 @@
                 <div class="item-title item-library">Song Library</div>
                 <div class="item-wraper"></div>  
                 <!--<div class="songList" id="songList"></div>  -->
-                <div class="button"><button type='button' onclick="sendSelected(timeOutCallback)" >Submit</button>
-                </div>  
+                <div class="button"><button type='button' onclick="sendSelected(timeOutCallback)" >Submit</button></div>  
+
+                <div class="time-control">
+                    <div class="track">
+                        <input 
+                            min=0 
+                            max=0
+                            value=0 
+                            onChange=""
+                            type="range" 
+                        />
+                        <div class="animate-track"></div>
+                    </div>
+                </div>
             </div>
-            <div>
-                
-            </div>
+
+            
+
         </div>
     </div>
     
     
+    <audio
+        class='player'
+        onTimeUpdate=''
+        onLoadedMetadata=''
+        ref='' 
+        src=''
+        onEnded=''
+    ></audio>  
+    </div>
+
 
     <script src="./songMenu.js" type="text/javascript"></script> 
 </body>
