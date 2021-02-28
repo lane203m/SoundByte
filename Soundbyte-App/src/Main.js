@@ -1,4 +1,5 @@
 "use strict";
+//Main startup for electron applicaiton & nodeJS integration -Mason 
 Object.defineProperty(exports, "__esModule", { value: true });
 var Main = /** @class */ (function () {
     function Main() {
@@ -13,7 +14,7 @@ var Main = /** @class */ (function () {
         Main.mainWindow = null;
     };
     Main.onReady = function () {
-        Main.mainWindow = new Main.BrowserWindow({ width: 768, height: 838, webPreferences: { nodeIntegration: true, enableRemoteModule: true } });
+        Main.mainWindow = new Main.BrowserWindow({ width: 800, height: 600, webPreferences: { nodeIntegration: true, enableRemoteModule: true } });
         Main.mainWindow
             .loadURL('file://' + __dirname + '/index.html');
         Main.mainWindow.on('closed', Main.onClose);

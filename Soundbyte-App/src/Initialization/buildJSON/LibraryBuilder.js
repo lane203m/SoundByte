@@ -37,12 +37,11 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.LibraryBuilder = void 0;
+//Library Builder, generates JSON data for each song. By: Mason Lane
 var Feature_1 = require("../../Types/Feature");
 var Song_1 = require("../../Types/Song");
 var fs = require('fs');
 var path = require('path');
-//var pyshell =  require('python-shell');
-//const essentia = require('essentia.js');
 //const essentia = require("essentia.js");
 //const fooWorker = new essentia();
 //const essentiaWorker = new Worker("essentia.js");
@@ -71,6 +70,7 @@ var LibraryBuilder = /** @class */ (function () {
         this.fileDirectory = filePath;
         console.log(filePath);
     }
+    //Get all required data from a song given a file name with path
     LibraryBuilder.prototype.buildSong = function (fileName) {
         return __awaiter(this, void 0, void 0, function () {
             var writeTo, iniDir, fileDir, song;
@@ -81,15 +81,14 @@ var LibraryBuilder = /** @class */ (function () {
                 return [2 /*return*/, new Promise(function (resolve, reject) {
                         return __awaiter(this, void 0, void 0, function () {
                             return __generator(this, function (_a) {
-                                setTimeout(function () { return resolve(song); }, 1000); // (*)
+                                setTimeout(function () { return resolve(song); }, 1000);
                                 return [2 /*return*/];
                             });
                         });
                     }).then(function (song) {
                         return __awaiter(this, void 0, void 0, function () {
                             return __generator(this, function (_a) {
-                                song = new Song_1.Song(null, null, null, null, null);
-                                //alert(song); // 1
+                                song = new Song_1.Song(null, null, null, null, null); //new Song object
                                 return [2 /*return*/, song];
                             });
                         });
@@ -97,7 +96,6 @@ var LibraryBuilder = /** @class */ (function () {
                         return __awaiter(this, void 0, void 0, function () {
                             return __generator(this, function (_a) {
                                 song.setAuthor("author_placeholder");
-                                //alert(song.author); // 2
                                 return [2 /*return*/, song];
                             });
                         });
@@ -105,7 +103,6 @@ var LibraryBuilder = /** @class */ (function () {
                         return __awaiter(this, void 0, void 0, function () {
                             return __generator(this, function (_a) {
                                 song.setSongName("name_placeholder");
-                                //alert(song.songName); // 2
                                 return [2 /*return*/, song];
                             });
                         });
@@ -113,7 +110,6 @@ var LibraryBuilder = /** @class */ (function () {
                         return __awaiter(this, void 0, void 0, function () {
                             return __generator(this, function (_a) {
                                 song.setSongFile(path.basename(fileName));
-                                //alert(song.songFile); // 2
                                 return [2 /*return*/, song];
                             });
                         });
@@ -132,15 +128,20 @@ var LibraryBuilder = /** @class */ (function () {
                                         });
                                     });
                                 };
-                                //var fileName=path.join(this.fileDir,files[i]);
+                                //get buffer and then extract features
                                 readFile(fileName).then(function (buffer) { return __awaiter(_this, void 0, void 0, function () {
                                     return __generator(this, function (_a) {
                                         return [2 /*return*/, WavDecoder.decode(buffer)];
                                     });
                                 }); }).then(function (audioData) {
                                     return __awaiter(this, void 0, void 0, function () {
-                                        var features;
+                                        var worker, features;
                                         return __generator(this, function (_a) {
+                                            worker = new Worker('../buildJSON/workers/primes/essentiaWorker.js', { type: 'module' });
+                                            worker.onmessage = function (event) {
+                                                console.log(event.data);
+                                            };
+                                            //worker function to be called here, with audioData passed as input
                                             console.log(audioData);
                                             console.log("working1");
                                             features = new Feature_1.Feature();
@@ -152,7 +153,6 @@ var LibraryBuilder = /** @class */ (function () {
                                         });
                                     });
                                 });
-                                //alert(song.features); // 2
                                 return [2 /*return*/, song];
                             });
                         });
@@ -160,26 +160,24 @@ var LibraryBuilder = /** @class */ (function () {
                         return __awaiter(this, void 0, void 0, function () {
                             return __generator(this, function (_a) {
                                 switch (_a.label) {
-                                    case 0: // (***)
+                                    case 0: // Get song length using get-audio-duration
                                     return [4 /*yield*/, getAudioDurationInSeconds(fileName).then(function (result) {
                                             song.setLength(result);
                                         })];
                                     case 1:
                                         _a.sent();
-                                        //alert(song.songLength); // 2
                                         return [2 /*return*/, song];
                                 }
                             });
                         });
                     }).then(function (song) {
-                        //alert(song); // 4
-                        //fs.writeFileSync(writeTo, JSON.stringify(song)) 
                         console.log(song);
                         return song;
                     })];
             });
         });
     };
+    //Write a library object to JSON after building said library with getSongs.
     LibraryBuilder.prototype.buildLibrary = function () {
         return __awaiter(this, void 0, void 0, function () {
             var writeTo;
@@ -198,6 +196,7 @@ var LibraryBuilder = /** @class */ (function () {
             });
         });
     };
+    //Read all files in a directory, run extraction only for .wav files.
     LibraryBuilder.prototype.getSongs = function () {
         return __awaiter(this, void 0, void 0, function () {
             var fileDir, songs, files, i, fileName, _a, _b, library;
@@ -226,7 +225,7 @@ var LibraryBuilder = /** @class */ (function () {
                         return [3 /*break*/, 2];
                     case 5:
                         library = { songs: songs };
-                        alert(library.songs[1].songLength); // 4
+                        alert("Reading Done, songs read: " + library.songs.length); //inform of completion
                         return [2 /*return*/, library];
                 }
             });

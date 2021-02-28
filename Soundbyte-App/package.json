@@ -6,7 +6,8 @@
   "scripts": {
     "start": "electron-forge start",
     "package": "electron-forge package",
-    "make": "electron-forge make"
+    "make": "electron-forge make",
+    "build": "webpack"
   },
   "keywords": [],
   "author": "Mason Lane, Brandon Clarke, Brian Jiwoun Kim",
@@ -18,10 +19,14 @@
     "@electron-forge/maker-squirrel": "^6.0.0-beta.54",
     "@electron-forge/maker-zip": "^6.0.0-beta.54",
     "electron": "^11.1.1",
+    "file-loader": "^6.2.0",
+    "webpack": "^5.24.2",
+    "webpack-cli": "^4.5.0",
     "worker-loader": "^3.0.8"
   },
   "dependencies": {
     "audio-decode": "^1.4.0",
+    "comlink": "^4.3.0",
     "electron-squirrel-startup": "^1.0.0",
     "essentia.js": "^0.1.0",
     "get-audio-duration": "^2.0.3",

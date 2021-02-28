@@ -1,6 +1,8 @@
 "use strict";
+//Song object - Mason Lane
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Song = void 0;
+//Song object. Contains song information and feature object.
 var Song = /** @class */ (function () {
     function Song(songName, author, songFile, features, songLength) {
         this.songName = songName;
@@ -20,6 +22,9 @@ var Song = /** @class */ (function () {
     };
     Song.prototype.getFeatures = function () {
         return this.features;
+    };
+    Song.prototype.getDuration = function () {
+        return this.songLength;
     };
     Song.prototype.setSongName = function (songName) {
         this.songName = songName;
