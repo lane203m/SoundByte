@@ -59,7 +59,7 @@ const addPlayback = (target) => {
         childNode.firstChild.src = "../img/play-button.png";
         childNode.nextSibling.style.visibility='hidden';
       } else {
-        console.log(songPath + childNode.getAttribute("data-filename"));
+        // console.log(songPath + childNode.getAttribute("data-filename"));
         childNode.firstChild.src = "../img/stop-button.png";
         childNode.parentNode.insertBefore(player, childNode.nextSibling);
         childNode.nextSibling.style.visibility='visible';
@@ -232,7 +232,7 @@ async function sendSelected(callback){
     let song = filteredLibrary.songs[selectedSong];
     suggestion = new SuggestionWSong(song);
     await suggestion.beginSuggestion();
-    console.log(suggestion);
+    // console.log(suggestion);
     console.log(suggestion.results);
     callback();
     
