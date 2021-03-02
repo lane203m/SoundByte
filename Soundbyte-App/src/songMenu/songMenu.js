@@ -58,7 +58,8 @@ const listupSongs = (library, isSuggestion) => {
     img.src = "../img/play-button.png";
 
     detailSpan.innerText = song[m].features.bpm + " bpm / " + song[m].features.key + " key / " + song[m].features.scale + " scale";
-    durationDiv.innerText = song[m].songLength;
+    var time = calculateTime(song[m].songLength);
+    durationDiv.innerText = time[0]+":"+time[1];
 
 
     node.classList.add("item");
@@ -207,5 +208,11 @@ document.querySelectorAll(".navButton")[0].addEventListener('click', () => {
   location.replace('./songMenu.html');
 });
 
-
+function calculateTime(time){
+  var minutes = Math.floor(time / 60);
+  var seconds = Math.floor(time - (minutes*60));
+  console.log(minutes);
+  console.log(seconds);
+  return [minutes, seconds];
+}
 
