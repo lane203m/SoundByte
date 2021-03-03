@@ -39,6 +39,7 @@ const changeState = (state) => {
 const addPlayback = (target) => {
   const playerTarget = document.querySelector(".player");
   let player = playback.cloneNode(true);
+  let playerUrl = "";
   
   //console.log(player.style.visibility);
   target.childNodes.forEach(childNode => {    
@@ -64,8 +65,15 @@ const addPlayback = (target) => {
         childNode.parentNode.insertBefore(player, childNode.nextSibling);
         childNode.nextSibling.style.visibility='visible';
         
-        playerTarget.src = songPath + childNode.getAttribute("data-filename");
-        playerTarget.play();
+        playerUrl = songPath + childNode.getAttribute("data-filename");
+        //playerTarget.src = playerUrl.match(/(\/[^\/].*?\/)((?:[^\/]|\\\/)+?)(?:(?<!\\)\s|$)/gm)[0];
+        //console.log(playerUrl.match(/(\/[^\/].*?\/)((?:[^\/]|\\\/)+?)(?:(<!\\)\s|$)/gm)[0]);
+        //playerTarget.src = playerUrl.match(/(\/[^\/].*?\/)((?:[^\/]|\\\/)+?)(?:(<!\\)\s|$)/gm)[0];
+        //playerTarget.play();
+      
+        console.log(playerUrl);
+        const audio = new Audio(playerUrl);
+        audio.play();
       }
 
     });
@@ -105,20 +113,19 @@ const listupSongs = (library, isSuggestion) => {
     let checksDiv = document.createElement("div");
     let checkInput = document.createElement("input");
 
-    let songLength = convertMinSec(song[m].songLength);
-
     //console.log(song[m].songFile);
 
     sname.innerText = song[m].songName;
     node.setAttribute("data-filename", song[m].songFile);
     img.src = "../img/play-button.png";
 
-
+    durationDiv.innerText = convertMinSec(song[m].songLength);
+/* 
+    Brian: below works the same with the above please check this out
     detailSpan.innerText = Math.floor(song[m].features.bpm) + " bpm / " + song[m].features.key + " key / " + song[m].features.scale + " scale";
-    var time = calculateTime(song[m].songLength);
+    let time = calculateTime(song[m].songLength);
     durationDiv.innerText = time[0]+":"+time[1];
-
-
+*/
 
     node.classList.add("item");
     node.setAttribute("data-isPlay", 0);
