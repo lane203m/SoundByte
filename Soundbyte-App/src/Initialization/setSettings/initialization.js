@@ -12,14 +12,6 @@ const move = (url) => {
 let currentPathName = "";
 let filename ="";
 
-//var seekInit = '../init.json';
-//var seekLibrary = '../../Libraries/songLibrary/library.json';
-//if( fs.existsSync(seekInit) && fs.existsSync(seekLibrary)){
-//  move("../../index.html");
-//}
-
-
-
 fileInput.addEventListener('input', (e) => { 
   // description: 
   // this function retrieves and returns directory name(absolute path) 
@@ -39,8 +31,7 @@ fileInput.addEventListener('input', (e) => {
     }
 
     fileCustom.innerText = node.webkitRelativePath.match(/([^\/]+)/)[0] + '/';
-    //console.log(currentPathName);
-    //console.log(node.path.split(node.webkitRelativePath)[0] + node.webkitRelativePath.match(/([^\/]+)/)[0] + '/');
+
   } else {
     console.log(error, "error :");
   }
@@ -60,9 +51,6 @@ form.addEventListener('submit', (e) => {
     path: './Libraries/songLibrary/library.json',
   };
 
-  //console.log(currentPathName);
-  //return;
-
   if(currentPathName != '') { // this means if a user gives a library path or the configPath will be used as it was.
     configPath.path = currentPathName;
   }
@@ -77,55 +65,32 @@ form.addEventListener('submit', (e) => {
   
   let data = JSON.stringify(configPath);
   
-  //console.log(configPath);
-  //console.log(data);
   let writePath = path.join(__dirname , '/..','/init.json');
   if(process.platform === 'win32') {
     writePath = path.join(__dirname , '\\..','\\init.json');
   }
 
-  //console.log(writePath);
-  //return;
+ fs.writeFileSync(writePath, data);   //write directory to our init file
 
- fs.writeFileSync(writePath, data);
-
-  let libraryJSON = path.join(__dirname , '/../../Libraries/songLibrary/library.json');
+  let libraryJSON = path.join(__dirname , '/../../Libraries/songLibrary/library.json');       //library json. where we save song data. implemented so that user may select their own in the future
   if(process.platform === 'win32') {
     libraryJSON = path.join(__dirname , '\\..\\..\\Libraries\\songLibrary\\library.json');
   }
 
+  writeLibrary(writePath, libraryJSON, configPath.path, openIndex);   //get data, write to json, return to index.
 
-  //let myPromise = new Promise(function(myResolve, myReject) {
-    // "Producing Code" (May take some time)
-
-      //while (outcome != 0) {
-
-     // }
-      //if (outcome == 0) myResolve(); // when successful
-      //else myReject();  // when error
-    //});
-
-    //myPromise.then(
-      //function(value) {  move("../../index.html") },
-      //function(error) {  move("./initialization.html") }
-    //);
-  writeLibrary(writePath, libraryJSON, configPath.path, openIndex);
-
-  //move("../../index.html")
-  //console.log("the form has been submitted");
-  //console.log(configPath);  
   return;
 });
 
 function writeLibrary(writePath, libraryJSON, filePath, callback){
-  libraryBuilder = new LibraryBuilder(writePath, libraryJSON, filePath);
-  var outcome = libraryBuilder.buildLibrary().then(()=>{
-    console.log("done");
+  libraryBuilder = new LibraryBuilder(writePath, libraryJSON, filePath);  //build the library builder class with paths to use
+  var outcome = libraryBuilder.buildLibrary().then(()=>{                  //build the library
+    console.log("done");                                                  
   });
-  callback(outcome);
+  callback(outcome);                                                      //once finished, handle callback
 }
 
-function openIndex(out){
+function openIndex(out){                                                  //log status, wait 4000, restart (will enter song menu if correct)
   console.log(out);
   setTimeout(() => {  move("../../index.html"); }, 4000);
   

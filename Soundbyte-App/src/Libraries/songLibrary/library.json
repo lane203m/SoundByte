@@ -1,1 +1,26 @@
-{"songs":[{"songName":"name_placeholder","author":"author_placeholder","songFile":"01 - Splish Splash.wav","features":{"bpm":50,"scale":"Major","key":"B"},"songLength":171.467755},{"songName":"name_placeholder","author":"author_placeholder","songFile":"06 - Mack The Knife.wav","features":{"bpm":50,"scale":"Major","key":"B"},"songLength":230.347755}]}
+{
+  "songs": [
+    {
+      "songName": "Splish Splash",
+      "author": "Bobby Darin",
+      "songFile": "01 - Splish Splash.wav",
+      "features": {
+        "bpm": 100.73563385009766,
+        "key": "C",
+        "scale": "major"
+      },
+      "songLength": 171.467755
+    },
+    {
+      "songName": "Mack The Knife",
+      "author": "Bobby Darin",
+      "songFile": "06 - Mack The Knife.wav",
+      "features": {
+        "bpm": 82.9272689819336,
+        "key": "C",
+        "scale": "minor"
+      },
+      "songLength": 230.347755
+    }
+  ]
+}

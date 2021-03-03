@@ -113,9 +113,11 @@ const listupSongs = (library, isSuggestion) => {
     node.setAttribute("data-filename", song[m].songFile);
     img.src = "../img/play-button.png";
 
-    detailSpan.innerText = song[m].features.bpm + " bpm / " + song[m].features.key + " key / " + song[m].features.scale + " scale";
+
+    detailSpan.innerText = Math.floor(song[m].features.bpm) + " bpm / " + song[m].features.key + " key / " + song[m].features.scale + " scale";
     var time = calculateTime(song[m].songLength);
     durationDiv.innerText = time[0]+":"+time[1];
+
 
 
     node.classList.add("item");
