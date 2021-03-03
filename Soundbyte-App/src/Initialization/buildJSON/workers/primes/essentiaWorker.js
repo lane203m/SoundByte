@@ -7,11 +7,36 @@
 
 //console.log(essentia.version);
 //import { expose } from "comlink";
-import Essentia from '../../essentia/essentia-wasm.web.js';
-import {EssentiaWASM} from '../../essentia/essentia.js-core.js';
+//import Essentia from '../../essentia/essentia.js-core.js';
+//import {EssentiaWASM} from '../../essentia/essentia-wasm.web.js';
+//const essentia = new Essentia(EssentiaWASM);
 //import {test} from './test.js';
 /*var i;
+*/
 
+const essentia = require('essentia.js');
+
+addEventListener('message', e => {
+  console.log(e.data);
+  console.log(essentia.version);
+  let audio = e.data.channelData[0];
+  let inputSignalVector = essentia.arrayToVector(audio);
+  let key = essentia.KeyExtractor(inputSignalVector);
+  let bpm = essentia.RhythmExtractor(inputSignalVector);
+  
+
+  let data = {
+      bpm : bpm.bpm, 
+      key : key.key,
+      scale : key.scale
+    }
+  console.log("working");
+  console.log(data);
+
+  postMessage(data);
+
+});
+/*
 function timedCount() {
 
     //var essentia = new Essentia(EssentiaWASM);
@@ -37,4 +62,10 @@ const sum = async (a, b) =>
   });
 
 expose(sum);*/
+//import { sayHello } from './greet.js';
+/*addEventListener('message', e => {
+  console.log("workerTest");
+  postMessage("test");
+  
+});*/
 

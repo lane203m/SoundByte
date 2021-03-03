@@ -87,7 +87,7 @@ form.addEventListener('submit', (e) => {
   //console.log(writePath);
   //return;
 
- //fs.writeFileSync(writePath, data);
+ fs.writeFileSync(writePath, data);
 
   let libraryJSON = path.join(__dirname , '/../../Libraries/songLibrary/library.json');
   if(process.platform === 'win32') {
@@ -127,6 +127,6 @@ function writeLibrary(writePath, libraryJSON, filePath, callback){
 
 function openIndex(out){
   console.log(out);
-  setTimeout(() => {  /*move("../../index.html");*/ }, 4000);
+  setTimeout(() => {  move("../../index.html"); }, 4000);
   
 }

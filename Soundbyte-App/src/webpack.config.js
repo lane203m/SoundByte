@@ -1,4 +1,4 @@
-module.exports = {
+/*module.exports = {
     entry: "./Initialization/LibraryBuilder.js",
     output: {
       filename: "bundle.js",
@@ -17,7 +17,7 @@ module.exports = {
         {
           test: /\.wasm$/,
           type:
-            "javascript/auto" /** this disables webpacks default handling of wasm */,
+            "javascript/auto" /** this disables webpacks default handling of wasm *//*,
           use: [
             {
               loader: "file-loader",
@@ -30,4 +30,14 @@ module.exports = {
         }
       ]
     }
-  };
+  };*/
+  {
+    module: {
+      rules: [
+        {
+          test: /\.worker\.js$/,
+          use: { loader: 'worker-loader' }
+        }
+      ]
+    }
+  }

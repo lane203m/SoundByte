@@ -37,10 +37,10 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.LibraryBuilder = void 0;
-//Library Builder, generates JSON data for each song. By: Mason Lane
-var Feature_1 = require("../../Types/Feature");
 var Song_1 = require("../../Types/Song");
-var comlink_1 = require("comlink");
+var musicDataExtractor = require("music-metadata");
+//mport PromiseWorker from 'promise-worker';
+// Worker from 'worker-loader!./worker.js';
 var fs = require('fs');
 var path = require('path');
 //const essentia = require("essentia.js");
@@ -59,8 +59,6 @@ var getAudioDurationInSeconds = require('get-audio-duration').getAudioDurationIn
 //const buffer = require('audio-lena/mp3');
 //console.log(fooWorker);
 var WavDecoder = require("wav-decoder");
-var essentiaWorker_js_1 = require("../buildJSON/workers/primes/essentiaWorker.js");
-var wasmWorker = comlink_1.wrap(new essentiaWorker_js_1.default());
 //const primes = require('./workers/primes');
 //primes.getPrimes(100).then(primes => {
 //  console.log('The first 100 prime numbers are:');
@@ -71,7 +69,7 @@ var LibraryBuilder = /** @class */ (function () {
         this.iniDirectory = iniPath;
         this.writingDirectory = writePath;
         this.fileDirectory = filePath;
-        console.log(filePath);
+        //console.log(filePath);
     }
     //Get all required data from a song given a file name with path
     LibraryBuilder.prototype.buildSong = function (fileName) {
@@ -97,73 +95,63 @@ var LibraryBuilder = /** @class */ (function () {
                         });
                     }).then(function (song) {
                         return __awaiter(this, void 0, void 0, function () {
+                            var metadata;
                             return __generator(this, function (_a) {
-                                song.setAuthor("author_placeholder");
-                                return [2 /*return*/, song];
+                                switch (_a.label) {
+                                    case 0: return [4 /*yield*/, musicDataExtractor.parseFile(fileName)];
+                                    case 1:
+                                        metadata = _a.sent();
+                                        metadata.common.artist ?
+                                            song.setAuthor(metadata.common.artist) :
+                                            song.setAuthor("N/A");
+                                        metadata.common.title ?
+                                            song.setSongName(metadata.common.title) :
+                                            song.setSongName(path.basename(fileName));
+                                        song.setSongFile(path.basename(fileName));
+                                        //console.log(metadata.format); 
+                                        //console.log(song); 
+                                        return [2 /*return*/, song];
+                                }
                             });
                         });
                     }).then(function (song) {
                         return __awaiter(this, void 0, void 0, function () {
+                            var readFile, buffer, audioData, worker;
                             return __generator(this, function (_a) {
-                                song.setSongName("name_placeholder");
-                                return [2 /*return*/, song];
-                            });
-                        });
-                    }).then(function (song) {
-                        return __awaiter(this, void 0, void 0, function () {
-                            return __generator(this, function (_a) {
-                                song.setSongFile(path.basename(fileName));
-                                return [2 /*return*/, song];
-                            });
-                        });
-                    }).then(function (song) {
-                        return __awaiter(this, void 0, void 0, function () {
-                            var readFile;
-                            var _this = this;
-                            return __generator(this, function (_a) {
-                                readFile = function (filepath) {
-                                    return new Promise(function (resolve, reject) {
-                                        fs.readFile(filepath, function (err, buffer) {
-                                            if (err) {
-                                                return reject(err);
-                                            }
-                                            return resolve(buffer);
-                                        });
-                                    });
-                                };
-                                //get buffer and then extract features
-                                readFile(fileName).then(function (buffer) { return __awaiter(_this, void 0, void 0, function () {
-                                    return __generator(this, function (_a) {
-                                        return [2 /*return*/, WavDecoder.decode(buffer)];
-                                    });
-                                }); }).then(function (audioData) {
-                                    return __awaiter(this, void 0, void 0, function () {
-                                        var result, features;
-                                        return __generator(this, function (_a) {
-                                            switch (_a.label) {
-                                                case 0: return [4 /*yield*/, this.wasmWorker(1, 4)];
-                                                case 1:
-                                                    result = _a.sent();
-                                                    //var worker = await new Worker('../buildJSON/workers/primes/essentiaWorker.js', { type : 'module' });
-                                                    //worker.onmessage = function(event){
-                                                    //  console.log(event.data);
-                                                    //}
-                                                    //worker function to be called here, with audioData passed as input
-                                                    console.log(result);
-                                                    alert(result);
-                                                    console.log(audioData);
-                                                    console.log("working1");
-                                                    features = new Feature_1.Feature();
-                                                    features.bpm = 50;
-                                                    features.scale = "Major";
-                                                    features.key = "B";
-                                                    song.setFeatures(features);
-                                                    return [2 /*return*/];
-                                            }
-                                        });
-                                    });
-                                });
-                                return [2 /*return*/, song];
+                                switch (_a.label) {
+                                    case 0:
+                                        readFile = function (filepath) {
+                                            return new Promise(function (resolve, reject) {
+                                                fs.readFile(filepath, function (err, buffer) {
+                                                    if (err) {
+                                                        return reject(err);
+                                                    }
+                                                    return resolve(buffer);
+                                                });
+                                            });
+                                        };
+                                        return [4 /*yield*/, readFile(fileName)];
+                                    case 1:
+                                        buffer = _a.sent();
+                                        return [4 /*yield*/, WavDecoder.decode(buffer)];
+                                    case 2:
+                                        audioData = _a.sent();
+                                        worker = new Worker('../buildJSON/workers/primes/essentiaWorker.js', { type: 'module' });
+                                        return [4 /*yield*/, worker.postMessage(audioData)];
+                                    case 3:
+                                        _a.sent();
+                                        //worker.onmessage = ({ data }) => {
+                                        //  console.log(`page got message: ${data}`);
+                                        //};
+                                        return [2 /*return*/, new Promise(function (resolve) {
+                                                var worker = new Worker('../buildJSON/workers/primes/essentiaWorker.js', { type: 'module' });
+                                                worker.postMessage(audioData);
+                                                worker.onmessage = function (event) {
+                                                    song.setFeatures(event.data);
+                                                    resolve(song);
+                                                };
+                                            })];
+                                }
                             });
                         });
                     }).then(function (song) {
@@ -196,8 +184,8 @@ var LibraryBuilder = /** @class */ (function () {
                     case 0:
                         writeTo = this.writingDirectory;
                         return [4 /*yield*/, this.getSongs().then(function (library) {
-                                fs.writeFileSync(writeTo, JSON.stringify(library));
-                                console.log(library);
+                                fs.writeFileSync(writeTo, JSON.stringify(library, null, 2));
+                                //console.log(library);
                             })];
                     case 1:
                         _a.sent();
@@ -223,7 +211,6 @@ var LibraryBuilder = /** @class */ (function () {
                     case 2:
                         if (!(i < files.length)) return [3 /*break*/, 5];
                         fileName = path.join(this.fileDirectory, files[i]);
-                        console.log(fileName);
                         if (!(fileName.indexOf('wav') >= 0)) return [3 /*break*/, 4];
                         _b = (_a = songs).push;
                         return [4 /*yield*/, this.buildSong(fileName)];

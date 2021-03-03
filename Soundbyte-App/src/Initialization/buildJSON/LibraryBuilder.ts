@@ -1,6 +1,9 @@
 //Library Builder, generates JSON data for each song. By: Mason Lane
 import { Feature } from "../../Types/Feature";
 import {Song} from "../../Types/Song";
+import * as musicDataExtractor from 'music-metadata';
+//mport PromiseWorker from 'promise-worker';
+// Worker from 'worker-loader!./worker.js';
 const fs = require('fs');
 var path = require('path');
 //const essentia = require("essentia.js");
@@ -36,7 +39,7 @@ export class LibraryBuilder{
     this.iniDirectory = iniPath;
     this.writingDirectory = writePath;
     this.fileDirectory = filePath;
-    console.log(filePath);
+    //console.log(filePath);
   }
 
     
@@ -53,18 +56,22 @@ export class LibraryBuilder{
       return song;
 
     }).then(async function(song) {                // Read ID3 tags for author  
-      song.setAuthor("author_placeholder");
-      return song;
+      const metadata = await musicDataExtractor.parseFile(fileName);
+      
+      metadata.common.artist? 
+          song.setAuthor(metadata.common.artist): 
+          song.setAuthor("N/A");
+      metadata.common.title? 
+          song.setSongName(metadata.common.title): 
+          song.setSongName(path.basename(fileName));
 
-    }).then(async function(song) {                // Read ID3 tags for song name 
-        song.setSongName("name_placeholder");     
-        return song;
-
-    }).then(async function(song) {                // Get file name
       song.setSongFile(path.basename(fileName));  
+
+      //console.log(metadata.format); 
+      //console.log(song); 
       return song;
 
-    }). then(async function(song) {               // Get features from essentia
+    }).then(async function(song) {               // Get features from essentia
 
       //readfile gets a buffer for essentia to analyse. 
       const readFile = (filepath) => {
@@ -78,30 +85,70 @@ export class LibraryBuilder{
         });
       };
 
+
+      let buffer = await readFile(fileName);
+      let audioData = await WavDecoder.decode(buffer);
+      const worker = new Worker('../buildJSON/workers/primes/essentiaWorker.js', { type: 'module' });
+      await worker.postMessage(audioData);
+
+      
+      //worker.onmessage = ({ data }) => {
+      //  console.log(`page got message: ${data}`);
+        
+      //};
+
+      return new Promise(function(resolve) {
+        const worker = new Worker('../buildJSON/workers/primes/essentiaWorker.js', { type: 'module' });
+        worker.postMessage(audioData);
+        worker.onmessage = function(event){           
+            song.setFeatures(event.data);
+            resolve(song);
+        };
+      });
+/*
       //get buffer and then extract features
       readFile(fileName).then(async (buffer) => {
         return WavDecoder.decode(buffer);
       }).then(async function(audioData) {
-        var worker = new Worker('../buildJSON/workers/primes/essentiaWorker.js', { type : 'module' });
-        worker.onmessage = function(event){
-          console.log(event.data);
-        }
+        const worker = new Worker('../buildJSON/workers/primes/essentiaWorker.js', { type: 'module' });
+        //worker.addEventListener(e => {
+        //  console.log(e.data);
+        //});
+        await worker.postMessage(audioData);
+        //worker.onmessage = function (msg) {console.log(msg)};
+
+        worker.onmessage = ({ data }) => {
+          console.log(`page got message: ${data}`);
+          
+        };
+        var data = await worker.onmessage;
+        //worker.addEventListener("message", (event) => console.log(event));
+        //worker.postMessage('hello');
+        //console.log(e.data);
+        //worker.onmessage = function({event}){
+        //  console.log("working");
+        //  console.log(event.data);
+        //}
+
+        //worker.addEventListener(e => {console.log(e.data);});
+        //worker.postMessage('hello');
+
         //worker function to be called here, with audioData passed as input
-        console.log(audioData);
-        console.log("working1");
-        var features: Feature = new Feature();
+        //console.log(audioData);
+        //console.log("working1");
+        var features: Feature = await new Feature();
         features.bpm = 50;
         features.scale = "Major";
         features.key = "B"
-        song.setFeatures(features);
-      });
-      return song;
+        await song.setFeatures(features);
+      });*/
+      //return song;
 
-    }).then(async function(song) {                // Get song length using get-audio-duration
-      await getAudioDurationInSeconds(fileName).then((result) => {
-        song.setLength(result);
-      });
-      return song;
+    }).then(async function(song: Song) {                // Get song length using get-audio-duration
+        await getAudioDurationInSeconds(fileName).then((result) => {
+          song.setLength(result);
+        });
+        return song;
     
     }).then(function(song) {                      //return final object
       console.log(song);
@@ -113,8 +160,8 @@ export class LibraryBuilder{
   public async buildLibrary(){                      
     var writeTo = this.writingDirectory;
     await this.getSongs().then((library) => {
-      fs.writeFileSync(writeTo, JSON.stringify(library));
-      console.log(library);
+      fs.writeFileSync(writeTo, JSON.stringify(library, null, 2));
+      //console.log(library);
     }); 
     return 1;
   }
@@ -127,7 +174,7 @@ export class LibraryBuilder{
       
       for (var i = 0; i< files.length; i++){    //for each file
         var fileName=path.join(this.fileDirectory,files[i]);
-        console.log(fileName);
+        //console.log(fileName);
         if (fileName.indexOf('wav')>=0) {       //if the file is a wav, run and push to songs
           songs.push(await this.buildSong(fileName)); 
         }

@@ -57,7 +57,7 @@ const listupSongs = (library, isSuggestion) => {
     sname.innerText = song[m].songName;
     img.src = "../img/play-button.png";
 
-    detailSpan.innerText = song[m].features.bpm + " bpm / " + song[m].features.key + " key / " + song[m].features.scale + " scale";
+    detailSpan.innerText = Math.floor(song[m].features.bpm) + " bpm / " + song[m].features.key + " key / " + song[m].features.scale + " scale";
     durationDiv.innerText = song[m].songLength;
 
 
