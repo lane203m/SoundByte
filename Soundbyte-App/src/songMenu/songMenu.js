@@ -20,10 +20,6 @@ var songLibrary = new LibraryData();
 var filteredLibrary = songLibrary;
 var selectedSong = "-1";
 
-//songLength helper function
-const convertMinSec = (miliSec) => {
-  return Math.floor(miliSec/60) + ":" +Math.floor(miliSec % 60);
-}
 
 
 //Playback functions by Bian on Feb 24, 2021
@@ -118,14 +114,8 @@ const listupSongs = (library, isSuggestion) => {
     sname.innerText = song[m].songName;
     node.setAttribute("data-filename", song[m].songFile);
     img.src = "../img/play-button.png";
-
-    durationDiv.innerText = convertMinSec(song[m].songLength);
-/* 
-    Brian: below works the same with the above please check this out
     detailSpan.innerText = Math.floor(song[m].features.bpm) + " bpm / " + song[m].features.key + " key / " + song[m].features.scale + " scale";
-    let time = calculateTime(song[m].songLength);
-    durationDiv.innerText = time[0]+":"+time[1];
-*/
+    durationDiv.innerText = convertMinSec(song[m].songLength);
 
     node.classList.add("item");
     node.setAttribute("data-isPlay", 0);
@@ -276,11 +266,7 @@ document.querySelectorAll(".navButton")[0].addEventListener('click', () => {
   location.replace('./songMenu.html');
 });
 
-function calculateTime(time){
-  var minutes = Math.floor(time / 60);
-  var seconds = Math.floor(time - (minutes*60));
-  console.log(minutes);
-  console.log(seconds);
-  return [minutes, seconds];
+//songLength helper function
+function convertMinSec(miliSec){
+  return (Math.floor(miliSec/60) + ":" +Math.floor(miliSec % 60));
 }
-
