@@ -1,40 +1,26 @@
-//var essentia = require('../../essentia/essentia-wasm.web.js');
-//var EssentiaWASM = require('../../essentia/essentia.js-core.js');
+//Essentia worker
+//Mason Lane
+//2021-03-03
+//since we use electron, workers may import node modules
+//we use the essentiaJS node module to extract features
+//from a given decoded audioData
 
-//importScripts("../../essentia/essentia-wasm.web.js");
-//importScripts("../../essentia/essentia.js-core.js");
-//let essentia = new Essentia(EssentiaWASM);
+const essentia = require('essentia.js');
 
-//console.log(essentia.version);
-//import { expose } from "comlink";
-import Essentia from '../../essentia/essentia-wasm.web.js';
-import {EssentiaWASM} from '../../essentia/essentia.js-core.js';
-//import {test} from './test.js';
-/*var i;
 
-function timedCount() {
+addEventListener('message', e => {
+  let audio = e.data.channelData[0];                      //make essentia readable (js does not have vectors, 
+  let inputSignalVector = essentia.arrayToVector(audio);  //but c++ does. essentia needs vector)                                                     
 
-    //var essentia = new Essentia(EssentiaWASM);
-    console.log(essentia.verison);
-  i = {
-      bpm: 25,
-      key: "A",
-      scale: "Major"
-  }
-  console.log(i);
-  //setTimeout(() => {  move("../../index.html"); }, 4000);
-  postMessage(i);
-  //setTimeout("timedCount()",500);
-}
+  let key = essentia.KeyExtractor(inputSignalVector);     
+  let bpm = essentia.RhythmExtractor(inputSignalVector);
 
-timedCount();*/
-/*
-const sum = async (a, b) =>
-  new Promise(async resolve => {
-    essentia = new Essentia(EssentiaWASM);
+  //our object (same format as feature object)
+  let data = {
+      bpm : bpm.bpm, 
+      key : key.key,
+      scale : key.scale
+    }
 
-    resolve((a+b));
-  });
-
-expose(sum);*/
-
+  postMessage(data);
+});
