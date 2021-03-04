@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>SoundByte</title>
+    <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline';" />
+
+    <link rel="preconnect" href="https://fonts.gstatic.com"> 
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="../index.css" />
+    <link rel="stylesheet" type="text/css" href="./index.css" />   
+    
+</head>
+<body>
+    <div id=container>
+        <nav>            
+            <img src="../img/SoundByte-logo___.png" class="logo" alt="site log" />
+            
+            <ul>
+                <li>
+                    <div class="navButton">Suggestion</div>
+                </li>
+                <li>
+                    <span class="navButton">Criteria Search</span>
+                </li>
+                <li>
+                    <span class="navButton active">Auto Pairing</span>
+                </li>
+            </ul>
+        </nav> 
+        
+        <div class="main-section-wrapper" >
+            <div class="main-section">
+                <div class="item-title">Auto Pairing</div>
+                <div class="user-input">                    
+                    
+                    <button class="temp">Start Auto Pairing</button>
+
+                </div>
+                <div class="item-title item-library">Results</div>
+                <div class="item-wraper"></div>
+                <!--<div class="item-title item-library">Song Library</div>
+                <div class="item-wraper"></div> -->
+                <!--<div class="songList" id="songList"></div>  -->
+                <!--<div class="button"><button type='button' onclick="sendSelected(timeOutCallback)" >Submit</button></div> --> 
+
+                
+            </div>
+
+            
+
+        </div>
+    </div>
+    
+    <div class="time-control">
+        <div class="track">
+            <input 
+                min=0 
+                max=0
+                value=0 
+                onChange=""
+                type="range" 
+            />
+            <div class="animate-track"></div>
+        </div>
+    </div>
+
+    <audio
+        class='player'
+        onTimeUpdate=''
+        onLoadedMetadata=''
+        ref='' 
+        src=''
+        onEnded=''
+    ></audio>  
+    </div>
+
+    <script src="../nav.js" type="text/javascript"></script> 
+    <script src="./index.js" type="text/javascript"></script>     
+</body>
+</html>

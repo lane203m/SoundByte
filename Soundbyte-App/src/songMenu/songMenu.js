@@ -20,7 +20,10 @@ var songLibrary = new LibraryData();
 var filteredLibrary = songLibrary;
 var selectedSong = "-1";
 
-
+//songLength helper function
+function convertMinSec(miliSec){
+  return (Math.floor(miliSec/60) + ":" +Math.floor(miliSec % 60));
+}
 
 //Playback functions by Bian on Feb 24, 2021
 // Change the player status each
@@ -50,8 +53,6 @@ const addPlayback = (target) => {
       
       changeState(childNode);
 
-      //console.log(childNode.getAttribute("data-isPlay"));
-      //console.log(childNode.getAttribute("data-isPlay"));
       if(childNode.getAttribute("data-isPlay") == 0) {
         childNode.firstChild.src = "../img/play-button.png";
         childNode.nextSibling.style.visibility='hidden';
@@ -140,21 +141,6 @@ const listupSongs = (library, isSuggestion) => {
     node.appendChild(checksDiv);
 
     contentTarget.appendChild(node);
-
-        /*
-        //return (`
-        //<div class="item">
-         //   <img src="../img/play-botton.png" alt="sound play button">
-          //      <div class="song-detail">
-        //        <h3>${song.songName}</h3>
-        //        <span>${song.bpm} / ${song.key} / ${song.scale}</span>
-        //        </div>
-        //        <div class="duration">
-        //        </div>
-        //        <div class="checks"><input type="checkbox"></div>        
-        //</div>
-        //`);
-        */
     });
 
     addPlayback(contentTarget);
@@ -266,7 +252,6 @@ document.querySelectorAll(".navButton")[0].addEventListener('click', () => {
   location.replace('./songMenu.html');
 });
 
-//songLength helper function
-function convertMinSec(miliSec){
-  return (Math.floor(miliSec/60) + ":" +Math.floor(miliSec % 60));
-}
+
+
+
