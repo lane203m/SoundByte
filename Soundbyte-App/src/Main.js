@@ -1,6 +1,8 @@
 "use strict";
 //Main startup for electron applicaiton & nodeJS integration -Mason 
 Object.defineProperty(exports, "__esModule", { value: true });
+var app = require('electron').app;
+var ProgressBar = require('electron-progressbar');
 var Main = /** @class */ (function () {
     function Main() {
     }

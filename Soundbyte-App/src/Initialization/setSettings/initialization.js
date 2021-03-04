@@ -82,9 +82,9 @@ form.addEventListener('submit', (e) => {
   return;
 });
 
-function writeLibrary(writePath, libraryJSON, filePath, callback){
+async function writeLibrary(writePath, libraryJSON, filePath, callback){
   libraryBuilder = new LibraryBuilder(writePath, libraryJSON, filePath);  //build the library builder class with paths to use
-  var outcome = libraryBuilder.buildLibrary().then(()=>{                  //build the library
+  var outcome = await libraryBuilder.buildLibrary().then(()=>{                  //build the library
     console.log("done");                                                  
   });
   callback(outcome);                                                      //once finished, handle callback
@@ -92,6 +92,7 @@ function writeLibrary(writePath, libraryJSON, filePath, callback){
 
 function openIndex(out){                                                  //log status, wait 4000, restart (will enter song menu if correct)
   console.log(out);
-  setTimeout(() => {  move("../../index.html"); }, 4000);
+  move("../../index.html");
+  //setTimeout(() => {  move("../../index.html"); }, 1000);
   
 }

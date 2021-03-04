@@ -52,6 +52,9 @@ var fs = require('fs');
 var path = require('path');
 var getAudioDurationInSeconds = require('get-audio-duration').getAudioDurationInSeconds; //used incase metadata does not have duration
 var WavDecoder = require("wav-decoder"); //used to decode audio buffer of a wav. Will need mp3 equiv. mp3 is harder
+var _a = require('electron'), app = _a.app, BrowserWindow = _a.BrowserWindow, ipcMain = _a.ipcMain;
+var remote = require('electron').remote;
+var ProgressBar = require('electron-progressbar');
 var LibraryBuilder = /** @class */ (function () {
     function LibraryBuilder(iniPath, writePath, filePath) {
         this.iniDirectory = iniPath;
@@ -79,7 +82,7 @@ var LibraryBuilder = /** @class */ (function () {
     //Read all files in a directory, run extraction only for .wav files.
     LibraryBuilder.prototype.getSongs = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var fileDir, songs, files, library, filePath, i, _a, _b;
+            var fileDir, songs, files, library, filePath, numValidFiles, i, progressBar, i, _a, _b;
             return __generator(this, function (_c) {
                 switch (_c.label) {
                     case 0:
@@ -88,21 +91,59 @@ var LibraryBuilder = /** @class */ (function () {
                         return [4 /*yield*/, fs.readdirSync(fileDir)];
                     case 1:
                         files = _c.sent();
+                        numValidFiles = 0;
+                        for (i = 0; i < files.length; i++) { //for each file  
+                            filePath = path.join(fileDir, files[i]);
+                            if (filePath.indexOf('wav') >= 0) { //if the file is a wav, run and push the song to songs
+                                numValidFiles++;
+                            }
+                        }
+                        progressBar = new ProgressBar({
+                            indeterminate: false,
+                            text: 'Preparing data...',
+                            detail: 'Wait...',
+                            maxValue: numValidFiles,
+                            closeOnComplete: true,
+                            remoteWindow: remote.BrowserWindow
+                            //browserWindow: {
+                            // webPreferences: {
+                            //   nodeIntegration: true
+                            // }
+                        });
+                        progressBar
+                            .on('completed', function () {
+                            console.info("completed...");
+                            progressBar.detail = 'Task completed. Exiting...';
+                        })
+                            .on('aborted', function (value) {
+                            console.info("aborted... " + value);
+                        })
+                            .on('progress', function (value) {
+                            progressBar.detail = "Value " + value + " out of " + progressBar.getOptions().maxValue + "...";
+                        });
+                        // launch a task and set the value of the progress bar each time a part of the task is done;
+                        // the progress bar will be set as completed when it reaches its maxValue (default maxValue: 100);
+                        // ps: setInterval is used here just to simulate a task being done
+                        progressBar.value = 0;
                         i = 0;
                         _c.label = 2;
                     case 2:
-                        if (!(i < files.length)) return [3 /*break*/, 5];
+                        if (!(i < files.length)) return [3 /*break*/, 6];
                         filePath = path.join(fileDir, files[i]);
-                        if (!(filePath.indexOf('wav') >= 0)) return [3 /*break*/, 4];
+                        if (!(filePath.indexOf('wav') >= 0)) return [3 /*break*/, 5];
+                        console.log(i);
                         _b = (_a = songs).push;
                         return [4 /*yield*/, this.buildSong(filePath)];
-                    case 3:
-                        _b.apply(_a, [_c.sent()]);
-                        _c.label = 4;
+                    case 3: return [4 /*yield*/, _b.apply(_a, [_c.sent()])];
                     case 4:
+                        _c.sent();
+                        progressBar.value++;
+                        _c.label = 5;
+                    case 5:
                         i++;
                         return [3 /*break*/, 2];
-                    case 5:
+                    case 6:
+                        progressBar.setCompleted();
                         library = { songs: songs };
                         alert("Reading Done, songs read: " + library.songs.length); //inform of completion. To be replaced with loading popup
                         return [2 /*return*/, library];
