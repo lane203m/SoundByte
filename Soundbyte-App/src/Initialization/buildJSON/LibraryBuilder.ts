@@ -12,7 +12,7 @@ import { Feature } from "../../Types/Feature";        //types
 import {Song} from "../../Types/Song";
 import * as musicDataExtractor from 'music-metadata'; //reading metadata. works for wav/mp3/etc
 const fs = require('fs');
-var path = require('path');
+const path = require('path');
 const { getAudioDurationInSeconds } = require('get-audio-duration'); //used incase metadata does not have duration
 const WavDecoder = require("wav-decoder");            //used to decode audio buffer of a wav. Will need mp3 equiv. mp3 is harder
 const {app, BrowserWindow, ipcMain} = require('electron');

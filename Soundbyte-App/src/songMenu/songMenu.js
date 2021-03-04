@@ -21,10 +21,9 @@ var filteredLibrary = songLibrary;
 var selectedSong = "-1";
 
 //songLength helper function
-const convertMinSec = (miliSec) => {
-  return Math.floor(miliSec/60) + ":" +Math.floor(miliSec % 60);
+function convertMinSec(miliSec){
+  return (Math.floor(miliSec/60) + ":" +Math.floor(miliSec % 60));
 }
-
 
 //Playback functions by Bian on Feb 24, 2021
 // Change the player status each
@@ -39,6 +38,7 @@ const changeState = (state) => {
 const addPlayback = (target) => {
   const playerTarget = document.querySelector(".player");
   let player = playback.cloneNode(true);
+  let playerUrl = "";
   
   //console.log(player.style.visibility);
   target.childNodes.forEach(childNode => {    
@@ -53,8 +53,6 @@ const addPlayback = (target) => {
       
       changeState(childNode);
 
-      //console.log(childNode.getAttribute("data-isPlay"));
-      //console.log(childNode.getAttribute("data-isPlay"));
       if(childNode.getAttribute("data-isPlay") == 0) {
         childNode.firstChild.src = "../img/play-button.png";
         childNode.nextSibling.style.visibility='hidden';
@@ -64,8 +62,15 @@ const addPlayback = (target) => {
         childNode.parentNode.insertBefore(player, childNode.nextSibling);
         childNode.nextSibling.style.visibility='visible';
         
-        playerTarget.src = songPath + childNode.getAttribute("data-filename");
-        playerTarget.play();
+        playerUrl = songPath + childNode.getAttribute("data-filename");
+        //playerTarget.src = playerUrl.match(/(\/[^\/].*?\/)((?:[^\/]|\\\/)+?)(?:(?<!\\)\s|$)/gm)[0];
+        //console.log(playerUrl.match(/(\/[^\/].*?\/)((?:[^\/]|\\\/)+?)(?:(<!\\)\s|$)/gm)[0]);
+        //playerTarget.src = playerUrl.match(/(\/[^\/].*?\/)((?:[^\/]|\\\/)+?)(?:(<!\\)\s|$)/gm)[0];
+        //playerTarget.play();
+      
+        console.log(playerUrl);
+        const audio = new Audio(playerUrl);
+        audio.play();
       }
 
     });
@@ -105,20 +110,13 @@ const listupSongs = (library, isSuggestion) => {
     let checksDiv = document.createElement("div");
     let checkInput = document.createElement("input");
 
-    let songLength = convertMinSec(song[m].songLength);
-
     //console.log(song[m].songFile);
 
     sname.innerText = song[m].songName;
     node.setAttribute("data-filename", song[m].songFile);
     img.src = "../img/play-button.png";
-
-
     detailSpan.innerText = Math.floor(song[m].features.bpm) + " bpm / " + song[m].features.key + " key / " + song[m].features.scale + " scale";
-    var time = calculateTime(song[m].songLength);
-    durationDiv.innerText = time[0]+":"+time[1];
-
-
+    durationDiv.innerText = convertMinSec(song[m].songLength);
 
     node.classList.add("item");
     node.setAttribute("data-isPlay", 0);
@@ -143,21 +141,6 @@ const listupSongs = (library, isSuggestion) => {
     node.appendChild(checksDiv);
 
     contentTarget.appendChild(node);
-
-        /*
-        //return (`
-        //<div class="item">
-         //   <img src="../img/play-botton.png" alt="sound play button">
-          //      <div class="song-detail">
-        //        <h3>${song.songName}</h3>
-        //        <span>${song.bpm} / ${song.key} / ${song.scale}</span>
-        //        </div>
-        //        <div class="duration">
-        //        </div>
-        //        <div class="checks"><input type="checkbox"></div>        
-        //</div>
-        //`);
-        */
     });
 
     addPlayback(contentTarget);
@@ -269,11 +252,6 @@ document.querySelectorAll(".navButton")[0].addEventListener('click', () => {
   location.replace('./songMenu.html');
 });
 
-function calculateTime(time){
-  var minutes = Math.floor(time / 60);
-  var seconds = Math.floor(time - (minutes*60));
-  console.log(minutes);
-  console.log(seconds);
-  return [minutes, seconds];
-}
+
+
 
