@@ -63,7 +63,7 @@ export class SuggestionWFeature extends Suggestion{
 
     public async runPythonShell(){
         return new Promise((resolve, reject)=>{
-          pyshell.PythonShell.run('./Suggestion/suggestionWSong.py', null, function  (err, results)  {
+          pyshell.PythonShell.run('./suggestionWSong.py', null, function  (err, results)  {
               if  (err){
                 console.log('fail');
                 reject(err);

@@ -7,6 +7,8 @@ var __extends = (this && this.__extends) || (function () {
         return extendStatics(d, b);
     };
     return function (d, b) {
+        if (typeof b !== "function" && b !== null)
+            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
         extendStatics(d, b);
         function __() { this.constructor = d; }
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -65,14 +67,14 @@ var SuggestionWSong = /** @class */ (function (_super) {
         _this.input = song;
         return _this;
     }
-    SuggestionWSong.prototype.runPythonShell = function () {
+    SuggestionWSong.prototype.runPythonShell = function (SongLibrary) {
         return __awaiter(this, void 0, void 0, function () {
+            var _this = this;
             return __generator(this, function (_a) {
                 return [2 /*return*/, new Promise(function (resolve, reject) {
                         var options = {
-                            mode: 'text',
-                            pythonOptions: ['-u'],
-                            args: ['shubhamk314'] //An argument which can be accessed in the script using sys.argv[1] 
+                            mode: 'json',
+                            args: [JSON.stringify(_this.input.getFeatures), JSON.stringify(SongLibrary)]
                         };
                         pyshell.PythonShell.run('./Suggestion/suggestionWSong.py', options, function (err, results) {
                             if (err) {
@@ -87,14 +89,14 @@ var SuggestionWSong = /** @class */ (function (_super) {
             });
         });
     };
-    SuggestionWSong.prototype.beginSuggestion = function () {
+    SuggestionWSong.prototype.beginSuggestion = function (SongLibrary) {
         return __awaiter(this, void 0, void 0, function () {
             var output, _a, _b;
             return __generator(this, function (_c) {
                 switch (_c.label) {
                     case 0:
                         _b = (_a = JSON).parse;
-                        return [4 /*yield*/, this.runPythonShell()];
+                        return [4 /*yield*/, this.runPythonShell(SongLibrary)];
                     case 1:
                         output = _b.apply(_a, [_c.sent()]);
                         this.results = new ResultsData_1.ResultsData(output.songs);
@@ -117,7 +119,7 @@ var SuggestionWFeature = /** @class */ (function (_super) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 return [2 /*return*/, new Promise(function (resolve, reject) {
-                        pyshell.PythonShell.run('./Suggestion/suggestionWSong.py', null, function (err, results) {
+                        pyshell.PythonShell.run('./suggestionWSong.py', null, function (err, results) {
                             if (err) {
                                 console.log('fail');
                                 reject(err);
