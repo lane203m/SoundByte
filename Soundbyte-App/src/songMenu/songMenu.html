@@ -7,7 +7,7 @@
 
     <link rel="preconnect" href="https://fonts.gstatic.com"> 
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="../_index.css" />
+    <link rel="stylesheet" type="text/css" href="../index.css" />
     <link rel="stylesheet" href="./songMenu.css">
     
     
@@ -19,7 +19,7 @@
             
             <ul>
                 <li>
-                    <span class="navButton active">Suggestion</span>
+                    <div class="navButton active">Suggestion</div>
                 </li>
                 <li>
                     <span class="navButton">Criteria Search</span>
@@ -32,7 +32,7 @@
         
         <div class="main-section-wrapper" >
             <div class="main-section">
-                <div class="subtitle-with-underbar"><p>Custom Input</p> <br/></div>
+                <div class="item-title item-underlined">Custom Input</div>
                 <div class="user-input">                    
                     <p>Pick a song from the available list, or open one from the exploere.<p/>
                     
@@ -45,19 +45,43 @@
                     </div>
                     <div class="user-song"></div>
                 </div>
-                <div class="subtitle"><p>Suggestions</p></div>
+                <div class="item-title item-library">Song Library</div>
                 <div class="item-wraper"></div>  
                 <!--<div class="songList" id="songList"></div>  -->
-                <div><button type='button' onclick="sendSelected(timeOutCallback)" >Submit</button></div>  
+                <div class="button"><button type='button' onclick="sendSelected(timeOutCallback)" >Submit</button></div>  
+
+                <div class="time-control">
+                    <div class="track">
+                        <input 
+                            min=0 
+                            max=0
+                            value=0 
+                            onChange=""
+                            type="range" 
+                        />
+                        <div class="animate-track"></div>
+                    </div>
+                </div>
             </div>
-            <div>
-                
-            </div>
+
+            
+
         </div>
     </div>
     
     
+    <audio
+        class='player'
+        onTimeUpdate=''
+        onLoadedMetadata=''
+        ref='' 
+        src=''
+        onEnded=''
+    ></audio>  
+    </div>
 
+
+    <script src="../nav.js" type="text/javascript"></script> 
     <script src="./songMenu.js" type="text/javascript"></script> 
 </body>
 </html>

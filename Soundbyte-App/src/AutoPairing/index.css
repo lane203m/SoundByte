@@ -1,0 +1,14 @@
+.main-section {
+  display: flex;
+  flex-direction: column;
+  justify-content:flex-start;
+  align-items: center;
+}
+
+.item-title {
+  display:flex;
+  height: 7vh;
+  width: 527px;
+  font-weight: 600;
+  font-size: 0.9rem;
+}

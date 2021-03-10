@@ -1,14 +1,19 @@
-function startup() {
-    //if cfg has needed settings. Go to main. Else, start initialization
+/* 
+** app setup sequence by Brian 
+*/
 
+const fs = require('electron').remote.require('fs');
 
-     startMain();
-  }
+const exist = fs.existsSync(`./Initialization/init.json`);
 
-function startInitialization() {
-    location.replace("./Inititalization/initialization.html")
-  }
+const move = (url) => {
+  location.replace(url)
+}
 
-  function startMain() {
-    location.replace("./songMenu/songMenu.html")
-  }
+if(!exist) { // When init.json file does not exist, move to setup page
+  move(`./initialization/setSettings/initialization.html`);
+  //console.log("./setup/init.json does not exist!");
+} else {
+  move(`./songMenu/songMenu.html`);
+  //console.log("You have ./setup/init.json !");
+}

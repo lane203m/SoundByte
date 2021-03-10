@@ -139,3 +139,151 @@ button:hover {
   background-color: #B95C66;
   border-color: #B95C66;
 }
+
+.file {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  height: 2.5rem;
+}
+
+.file input {
+  min-width: 24rem;
+  margin: 0;
+  filter: alpha(opacity=0);
+  opacity: 0;
+}
+
+.file-custom {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 5;
+  height: 2.5rem;
+  padding: .5rem 1rem;
+  line-height: 1.5;
+  color: #555;
+  background-color: #fff;
+  border: .075rem solid #ddd;
+  border-radius: .25rem;
+  box-shadow: inset 0 .2rem .4rem rgba(0,0,0,.05);
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.file-custom:before {
+  position: absolute;
+  top: -.075rem;
+  right: -.075rem;
+  bottom: -.075rem;
+  z-index: 6;
+  display: block;
+  content: "Browse";
+  height: 2.5rem;
+  padding: .5rem 1rem;
+  line-height: 1.5;
+  color: #555;
+  background-color: #eee;
+  border: .075rem solid #ddd;
+  border-radius: 0 .25rem .25rem 0;
+  
+}
+
+/* Focus */
+.file input:focus ~ .file-custom {
+  box-shadow: 0 0 0 .075rem #fff, 0 0 0 .2rem #0074d9;
+}
+
+
+/* Audio player */
+.time-control {
+  width: 527px;
+  display: flex;
+  flex-direction: row;
+  align-items: space-around;
+  visibility: hidden;
+}
+
+.time-control input {
+  width: 100%;
+  -webkit-appearance: none;
+  background: transparent;
+  cursor: pointer;
+
+}
+
+.track {
+  background: lightpink;
+  width: 100%;
+  height: 0.2rem;
+  position: relative;
+  border-radius: 0.2rem;
+  overflow: hidden;
+}
+
+.animate-track {
+  background: #cccccc;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: translateX(0%);
+  pointer-events: none;
+}
+
+.item img {
+  width: 40px;
+  height: 45px;
+  padding: 0.5rem 0.2rem;
+  cursor: pointer;
+}
+
+.main-section {
+  display: flex;
+  flex-direction: column;
+  justify-content:flex-start;
+  align-items: center;
+}
+
+.item-wraper {
+  border-top: 1px solid #cccccc;
+
+}
+
+.item-title {
+  display:flex;
+  height: 7vh;
+  width: 527px;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.item-library {
+  margin-top: 3rem;
+}
+
+.item-underlined {
+  border-bottom: 1px solid #cccccc;
+  margin-top: 2rem;
+}
+
+.item {
+  width: 527px;
+  display: flex;
+  align-items: center;
+  padding: 1rem 2rem 1rem 2rem;
+  border-bottom: 1px solid #cccccc;
+
+}
+
+.user-input {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 0.5rem;
+}

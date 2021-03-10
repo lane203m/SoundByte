@@ -1,3 +1,5 @@
+//Main startup for electron applicaiton & nodeJS integration -Mason 
+
 import { BrowserWindow } from 'electron';
 
 export default class Main {
@@ -16,7 +18,7 @@ export default class Main {
     }
 
     private static onReady() {
-        Main.mainWindow = new Main.BrowserWindow({ width: 800, height: 600, webPreferences: {nodeIntegration: true, enableRemoteModule: true} });
+        Main.mainWindow = new Main.BrowserWindow({ width: 800, height: 600, webPreferences: {nodeIntegration: true, enableRemoteModule: true, nodeIntegrationInWorker: true} });
         Main.mainWindow
             .loadURL('file://' + __dirname + '/index.html');
         Main.mainWindow.on('closed', Main.onClose);
