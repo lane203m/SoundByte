@@ -17,7 +17,7 @@ testSong.setFeatures(testFeat);
 
 var suggesty = new SuggestionWSong(testSong);
 
-suggesty.runPythonShell(testLibrary);
-var suggestionList = suggesty.beginSuggestion(testLibrary);
+suggesty.runPythonShell();
+var suggestionList = suggesty.beginSuggestion();
 
 console.log("test end");
