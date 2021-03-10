@@ -47,7 +47,12 @@ export class SuggestionWSong extends Suggestion{
         });
     }
     public async beginSuggestion(SongLibrary: LibraryData){
-      var output = JSON.parse(<string>await this.runPythonShell(SongLibrary));
+      var output;
+      await this.runPythonShell(SongLibrary).then(data => {
+        output = data;
+        alert("done");
+        console.log("done");
+      })
       this.results = new ResultsData(output.songs);
     }
 
