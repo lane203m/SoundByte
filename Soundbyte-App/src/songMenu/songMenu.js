@@ -11,12 +11,34 @@ const path = require('path');
 
 // get Initial library and the song path in the library
 // caution for the current directory ./ is equivalent to src/ directory
-
 const libraryPath = path.resolve("./Initialization/init.json"); 
+if(libraryPath == undefined || libraryPath == null){
+  console.log(libraryPath);
+  console.log(fs.existsSync(libraryPath.path));
+  console.log(libraryPath.path);
+  fs.unlinkSync('./initialization/init.json');
+  alert("No Initialization File Found");
+  location.replace('../index.html');
+}
 const songLibraryJSON = JSON.parse(fs.readFileSync(libraryPath));
+
 var songPath = songLibraryJSON.path;
+if(songPath == undefined || songPath == null || songPath == "" || !fs.existsSync(songPath)){
+  fs.unlinkSync('./initialization/init.json');
+  alert("Invalid Folder in ini");
+  location.replace('../index.html');
+}
 
 var songLibrary = new LibraryData();
+
+
+if(songLibrary == undefined || songLibrary == null || songLibrary.songs == null || songLibrary.songs == undefined || songLibrary.songs.length <=0){
+  fs.unlinkSync('./initialization/init.json');
+  alert("No songs in library");
+  location.replace('../index.html');
+}
+
+
 var filteredLibrary = songLibrary;
 var selectedSong = "-1";
 
@@ -67,7 +89,7 @@ const addPlayback = (target) => {
         //console.log(playerUrl.match(/(\/[^\/].*?\/)((?:[^\/]|\\\/)+?)(?:(<!\\)\s|$)/gm)[0]);
         //playerTarget.src = playerUrl.match(/(\/[^\/].*?\/)((?:[^\/]|\\\/)+?)(?:(<!\\)\s|$)/gm)[0];
         //playerTarget.play();
-      
+        
         console.log(playerUrl);
         const audio = new Audio(playerUrl);
         audio.play();
@@ -223,7 +245,7 @@ async function sendSelected(callback){
     await suggestion.beginSuggestion();
     console.log(suggestion);
     callback();
-    songPath = path.resolve("./Libraries/songLibraries");
+    //let songLibraryPath = path.resolve("./Libraries/songLibraries");
     // console.log(songPath);
 
     document.querySelector(".item-title.item-library").innerHTML = "Suggestions";
@@ -248,7 +270,7 @@ async function sendSelected(callback){
     // song path has to be changed according to the context(in this case, it should be suggestion library)
     // again the relative direcotry './' means 'src/' please notice this
     // songPath = getLibraryPath("./Libraries/songLibrary/library.json");
-    songPath = path.resolve("./Libraries/songLibraries");
+    //songLibraryPath = path.resolve("./Libraries/songLibraries");
     // console.log(songPath);
 
     document.querySelector(".item-title.item-library").innerHTML = "Suggestions";

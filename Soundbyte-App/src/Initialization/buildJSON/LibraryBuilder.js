@@ -70,6 +70,7 @@ var LibraryBuilder = /** @class */ (function () {
                     case 0:
                         writeTo = this.writingDirectory;
                         return [4 /*yield*/, this.getSongs().then(function (library) {
+                                alert("Reading Done, songs read: " + library.songs.length); //inform of completion. To be replaced with loading popup
                                 fs.writeFileSync(writeTo, JSON.stringify(library, null, 2));
                             })];
                     case 1:
@@ -104,6 +105,8 @@ var LibraryBuilder = /** @class */ (function () {
                             detail: 'Wait...',
                             maxValue: numValidFiles,
                             closeOnComplete: true,
+                            abortOnError: true,
+                            closable: true,
                             remoteWindow: remote.BrowserWindow
                             //browserWindow: {
                             // webPreferences: {
@@ -117,6 +120,14 @@ var LibraryBuilder = /** @class */ (function () {
                         })
                             .on('aborted', function (value) {
                             console.info("aborted... " + value);
+                            try {
+                                fs.unlinkSync('./initialization/init.json');
+                            }
+                            catch (err) {
+                                console.log(err);
+                                alert("error");
+                            }
+                            location.replace('../../index.html');
                         })
                             .on('progress', function (value) {
                             progressBar.detail = "Value " + value + " out of " + progressBar.getOptions().maxValue + "...";
@@ -144,8 +155,10 @@ var LibraryBuilder = /** @class */ (function () {
                         return [3 /*break*/, 2];
                     case 6:
                         progressBar.setCompleted();
+                        return [4 /*yield*/, progressBar.close()];
+                    case 7:
+                        _c.sent();
                         library = { songs: songs };
-                        alert("Reading Done, songs read: " + library.songs.length); //inform of completion. To be replaced with loading popup
                         return [2 /*return*/, library];
                 }
             });

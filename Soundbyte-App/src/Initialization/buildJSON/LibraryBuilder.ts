@@ -35,6 +35,7 @@ export class LibraryBuilder{
     var writeTo = this.writingDirectory;
 
     await this.getSongs().then((library) => {
+      alert("Reading Done, songs read: " + library.songs.length); //inform of completion. To be replaced with loading popup
       fs.writeFileSync(writeTo, JSON.stringify(library, null, 2));
     }); 
 
@@ -62,6 +63,8 @@ export class LibraryBuilder{
       detail: 'Wait...',
       maxValue: numValidFiles,
       closeOnComplete: true,
+      abortOnError: true,
+      closable: true,
       remoteWindow: remote.BrowserWindow
       //browserWindow: {
        // webPreferences: {
@@ -76,6 +79,14 @@ export class LibraryBuilder{
       })
       .on('aborted', function(value) {
           console.info(`aborted... ${value}`);
+          try{
+            fs.unlinkSync('./initialization/init.json');
+          }catch(err){
+            console.log(err)
+            alert("error");
+          }
+          
+          location.replace('../../index.html');
       })
       .on('progress', function(value) {
           progressBar.detail = `Value ${value} out of ${progressBar.getOptions().maxValue}...`;
@@ -99,9 +110,10 @@ export class LibraryBuilder{
       
     }
     progressBar.setCompleted();
+    await progressBar.close();
 
     library = {songs};
-    alert("Reading Done, songs read: " + library.songs.length); //inform of completion. To be replaced with loading popup
+    
 
     return library;                                 
   }
