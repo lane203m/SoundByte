@@ -15,11 +15,14 @@ export class Suggestion{
 export class SuggestionWSong extends Suggestion{
   input: Song;
   constructor(song: Song){
+    console.log(song);
     super();
     this.input = song;
+    console.log(this.input);
   }  
     //Call a python shell, send options to python for parameters. Await results. 
   public async runPythonShell(){
+    console.log(this.input);
     return new Promise((resolve, reject)=>{
       let options = { 
         mode: 'json', 
@@ -93,6 +96,6 @@ export class SuggestionWFeature extends Suggestion{
 //send a random song for suggestion.
 export class SuggestionWRandom extends SuggestionWSong{
   constructor(libraryData: LibraryData){
-    super(libraryData.getSong(Math.random()));
+    super(libraryData.getSong(Math.floor(Math.random() * libraryData.songs.length)));
   }    
 }

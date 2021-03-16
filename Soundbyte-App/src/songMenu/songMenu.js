@@ -2,7 +2,7 @@ const {LibraryData} = require("../Types/LibraryData");
 const fs = require('electron').remote.require('fs');
 const {Song} = require("../Types/Song");
 const {Feature} = require("../Types/Feature"); 
-const {SuggestionWSong} = require("../Suggestion/suggestions")
+const {SuggestionWSong, SuggestionWRandom} = require("../Suggestion/suggestions")
 const contentTarget = document.querySelector(".item-wraper");
 const fileCustom = document.querySelector(".file-custom");
 const playback = document.querySelector(".time-control")
@@ -194,12 +194,15 @@ customSongTarget.addEventListener('input', (e) => {
 
 function buttonSelected(selectedID){
   if(selectedSong != -1){
+    
     deselectExisting(selectedSong);
   }
   if(selectedSong == selectedID){
+    document.getElementById('startButton').innerHTML = "Auto";
     selectedSong = -1;
   }
   else{
+    document.getElementById('startButton').innerHTML = "Start";
     selectedSong = selectedID;
     document.getElementById(selectedSong).checked = true;
   }
@@ -214,12 +217,29 @@ function buttonDeselected(){
 }
 
 async function sendSelected(callback){
-  if(selectedSong != -1){
+  if(selectedSong == -1){
+    console.log("doing random");
+    suggestion = new SuggestionWRandom(filteredLibrary);
+    await suggestion.beginSuggestion();
+    console.log(suggestion);
+    callback();
+    songPath = path.resolve("./Libraries/songLibraries");
+    // console.log(songPath);
+
+    document.querySelector(".item-title.item-library").innerHTML = "Suggestions";
+    document.querySelector(".button").removeChild(document.querySelector(".button").firstChild);
+    while(contentTarget.firstChild) {
+      contentTarget.removeChild(contentTarget.firstChild);
+    }
+
+    listupSongs(suggestion.results, true);
+  }
+  else if(selectedSong != -1){
     let song = filteredLibrary.songs[selectedSong];
     suggestion = new SuggestionWSong(song);
     await suggestion.beginSuggestion();
     // console.log(suggestion);
-    console.log(suggestion.results);
+    console.log(suggestion);
     callback();
     
     // console.log(suggestion);
