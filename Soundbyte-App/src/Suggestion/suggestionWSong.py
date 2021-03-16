@@ -35,6 +35,11 @@ thisdict = {
 
 
 }
+
+with open('./Libraries/songLibrary/library.json') as f:
+        data = json.load(f)
+
+
 output = json.dumps(thisdict)
 print(output)
 sys.stdout.flush()

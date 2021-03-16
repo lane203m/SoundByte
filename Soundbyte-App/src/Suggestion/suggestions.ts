@@ -4,7 +4,6 @@ import {Song} from "../Types/Song";
 import {LibraryData} from "../Types/LibraryData";
 import {ResultsData} from "../Types/ResultsData";
 var pyshell =  require('python-shell');
-
 //A suggestion will run and expects to fill results with data.
 export class Suggestion{
   results: ResultsData;
@@ -23,7 +22,7 @@ export class SuggestionWSong extends Suggestion{
   public async runPythonShell(){
     return new Promise((resolve, reject)=>{
       let options = { 
-        mode: 'text', 
+        mode: 'json', 
         pythonOptions: ['-u'], // get print results in real-time 
         args: ['shubhamk314'] //An argument which can be accessed in the script using sys.argv[1] 
       }; 
@@ -44,7 +43,7 @@ export class SuggestionWSong extends Suggestion{
     alert("starting");
     var output;
     await this.runPythonShell().then(data => {
-      output = JSON.parse(<string>data);
+      output = data;
       alert("done");
       console.log("done");
     })
