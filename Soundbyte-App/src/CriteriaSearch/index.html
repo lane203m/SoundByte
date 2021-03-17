@@ -30,25 +30,41 @@
         </nav> 
         
         <div class="main-section-wrapper" >
+            
             <div class="main-section">
-                <div class="item-title item-underlined">Criteria inputs</div>
+                <div class="top-left"><button class="setup-button">set-up</button></div>
+                <div class="item-title item-underlined">Criteria inputs </div>
                 <div class="user-input">                    
                     <p>Input your criteria on each input forms below</p>
                     
                     <div class="criteria">
                         <div class="input">               
-                            <label >tempo</label>
+                            <label >tempo (bpm)</label>
                             <input type="text" class="tempo"/>
                         </div>
 
                         <div class="input">               
                             <label >key</label>
-                            <input type="text" class="key"/>
+                            <select class="key" >
+                                <option value="C">C</option>
+                                <option value="D">D</option>
+                                <option value="E">E</option>
+                                <option value="F">F</option>
+                                <option value="G">G</option>
+                                <option value="A">A</option>
+                                <option value="B">B</option>
+
+                            </select>
+                            <!--<input type="text" class="key"/>-->
                         </div>
 
                         <div class="input">               
                             <label >scale</label>
-                            <input type="text" class="scale"/>
+                            <select class="scale">
+                                <option value="Major">Major</option>
+                                <option value="Minor">Minor</option>
+                            </select>
+                            <!--<input type="text" class="scale"/>-->
                         </div>
                     </div>
 
@@ -58,35 +74,31 @@
                 <div class="item-wraper"></div>  
                 <!--  <div class="songList" id="songList"></div>  -->
                 
-
+                <div class="time-control">
+                    <div class="track">
+                        <input 
+                            min=0 
+                            max=0
+                            value=0 
+                            onChange=""
+                            type="range" 
+                        />
+                        <div class="animate-track"></div>
+                    </div>
+                </div>
+                <audio
+                    class='player'
+                    onTimeUpdate=''
+                    onLoadedMetadata=''
+                    ref='' 
+                    src=''
+                    onEnded=''
+                ></audio>
                 
             </div>           
         </div>
-
-        <div class="time-control">
-            <div class="track">
-                <input 
-                    min=0 
-                    max=0
-                    value=0 
-                    onChange=""
-                    type="range" 
-                />
-                <div class="animate-track"></div>
-            </div>
-        </div>
-        <audio
-            class='player'
-            onTimeUpdate=''
-            onLoadedMetadata=''
-            ref='' 
-            src=''
-            onEnded=''
-        ></audio>
-
     </div>
 </div>
-
 
     <script src="../nav.js" type="text/javascript"></script> 
     <script src="./index.js" type="text/javascript"></script> 

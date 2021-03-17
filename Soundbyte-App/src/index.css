@@ -74,13 +74,13 @@ nav .navButton {
   display: flex;
   flex-direction: column;
   margin: auto;    
-  padding: 0 1rem 0 1rem;
+  padding: 0 1.5rem 0 1.5rem;
 }
 
 .main-section {
   width: 100%;
   min-height: 90vh;
-  padding: 2rem 1.5rem 0 1.5rem;
+  
 
   border-radius: 9px 9px 0 0;
   background: #ffffff;
@@ -256,6 +256,7 @@ button:hover {
 
 .item-title {
   display:flex;
+  justify-content: space-between;
   height: 7vh;
   width: 527px;
   font-weight: 600;
@@ -268,7 +269,7 @@ button:hover {
 
 .item-underlined {
   border-bottom: 1px solid #cccccc;
-  margin-top: 2rem;
+  
 }
 
 .item {
@@ -286,4 +287,24 @@ button:hover {
   align-items: center;
   justify-content: center;
   margin-top: 0.5rem;
+}
+
+.top-left {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  padding: 0.9rem 0.9rem 0 0;
+}
+
+.setup-button {
+  font-size: 0.8rem;
+  border-radius: 1.3rem;
+  border: 0;
+  margin: 0;
+}
+
+.setup-button:focus {
+  outline: none;
+  box-shadow: none;
 }
