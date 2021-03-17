@@ -47,3 +47,8 @@
   font-family:'Montserrat', sans-serif;
 }
 
+.filter {
+  width: 527px;
+  display: flex;
+  justify-content: space-between;
+}

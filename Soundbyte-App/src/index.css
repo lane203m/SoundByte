@@ -25,13 +25,13 @@
   }
 
 nav {
-    width: 100%;
+    width: 800px;
     min-height: 10vh;
     display: flex;
     margin: auto;
     justify-content: space-between; 
     align-items: baseline;
-    padding: 1rem 1rem 0.5rem 1rem;
+    padding: 1rem 0 0 1rem;
 }
 
 nav ul {
@@ -282,6 +282,7 @@ button:hover {
 }
 
 .user-input {
+  width: 527px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -289,11 +290,10 @@ button:hover {
   margin-top: 0.5rem;
 }
 
-.top-left {
+.top-right {
   width: 100%;
+  margin: 0 0 0 1.5rem;
   display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
   padding: 0.9rem 0.9rem 0 0;
 }
 
