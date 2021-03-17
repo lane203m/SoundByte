@@ -25,13 +25,13 @@
   }
 
 nav {
-    width: 100%;
+    width: 800px;
     min-height: 10vh;
     display: flex;
     margin: auto;
     justify-content: space-between; 
     align-items: baseline;
-    padding: 1rem 1rem 0.5rem 1rem;
+    padding: 1rem 0 0 1rem;
 }
 
 nav ul {
@@ -74,13 +74,13 @@ nav .navButton {
   display: flex;
   flex-direction: column;
   margin: auto;    
-  padding: 0 1rem 0 1rem;
+  padding: 0 1.5rem 0 1.5rem;
 }
 
 .main-section {
   width: 100%;
   min-height: 90vh;
-  padding: 2rem 1.5rem 0 1.5rem;
+  
 
   border-radius: 9px 9px 0 0;
   background: #ffffff;
@@ -256,6 +256,7 @@ button:hover {
 
 .item-title {
   display:flex;
+  justify-content: space-between;
   height: 7vh;
   width: 527px;
   font-weight: 600;
@@ -268,7 +269,7 @@ button:hover {
 
 .item-underlined {
   border-bottom: 1px solid #cccccc;
-  margin-top: 2rem;
+  
 }
 
 .item {
@@ -281,9 +282,29 @@ button:hover {
 }
 
 .user-input {
+  width: 527px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   margin-top: 0.5rem;
+}
+
+.top-right {
+  width: 100%;
+  margin: 0 0 0 1.5rem;
+  display: flex;
+  padding: 0.9rem 0.9rem 0 0;
+}
+
+.setup-button {
+  font-size: 0.8rem;
+  border-radius: 1.3rem;
+  border: 0;
+  margin: 0;
+}
+
+.setup-button:focus {
+  outline: none;
+  box-shadow: none;
 }

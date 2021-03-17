@@ -294,6 +294,11 @@ document.querySelectorAll(".navButton")[0].addEventListener('click', () => {
   location.replace('./songMenu.html');
 });
 
+// configuration nav
+document.querySelector(".setup-button").addEventListener('click', () => {
+  location.replace('../initialization/setSettings/config.html');
+});
+
 
 
 
