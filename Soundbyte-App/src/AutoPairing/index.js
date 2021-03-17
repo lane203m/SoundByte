@@ -11,3 +11,8 @@ resultTarget.style.visibility = 'hidden';
 document.querySelectorAll(".navButton")[2].addEventListener('click', () => {
   location.replace('./index.html');
 });
+
+// configuration nav
+document.querySelector(".setup-button").addEventListener('click', () => {
+  location.replace('../initialization/setSettings/config.html');
+});

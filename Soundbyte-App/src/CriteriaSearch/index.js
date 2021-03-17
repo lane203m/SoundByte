@@ -8,7 +8,12 @@ const resultTarget = document.querySelector(".item-title.item-library");
 resultTarget.style.visibility = 'hidden';
 
 
-//Navigation - calibration the url
+//Navigation - calibration the url ( the other navigation defined on /src/index.js )
 document.querySelectorAll(".navButton")[1].addEventListener('click', () => {
   location.replace('./index.html');
+});
+
+// configuration nav
+document.querySelector(".setup-button").addEventListener('click', () => {
+  location.replace('../initialization/setSettings/config.html');
 });
