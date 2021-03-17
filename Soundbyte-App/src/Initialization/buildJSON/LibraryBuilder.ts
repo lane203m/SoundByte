@@ -66,10 +66,6 @@ export class LibraryBuilder{
       abortOnError: true,
       closable: true,
       remoteWindow: remote.BrowserWindow
-      //browserWindow: {
-       // webPreferences: {
-       //   nodeIntegration: true
-       // }
     });
   
     progressBar
