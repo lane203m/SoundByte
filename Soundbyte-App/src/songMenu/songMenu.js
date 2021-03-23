@@ -123,7 +123,7 @@ const addPlayback = (target) => {
 } */
 
 //Added by Brian
-const listupSongs = (library, isSuggestion) => {   
+const listupSongs = (library, isSuggestion, inputType) => {   
 
     //let library = new LibraryData();
     //console.log(library.songs);
@@ -186,7 +186,7 @@ const listupSongs = (library, isSuggestion) => {
     addPlayback(contentTarget);
 }
 
-listupSongs(filteredLibrary, false);
+listupSongs(filteredLibrary, false, 0);
 
 /*
 // Users pick a song from fiel input
@@ -274,7 +274,7 @@ async function sendSelected(callback){
       contentTarget.removeChild(contentTarget.firstChild);
     }
 
-    listupSongs(suggestion.results, true);
+    listupSongs(suggestion.results, true, 1);
   }
   else if(selectedSong == -2){
     let features = new Feature(); 
@@ -293,7 +293,7 @@ async function sendSelected(callback){
       contentTarget.removeChild(contentTarget.firstChild);
     }
 
-    listupSongs(suggestion.results, true);
+    listupSongs(suggestion.results, true, 1);
   }
   else if(selectedSong >= 0){
     let song = filteredLibrary.songs[selectedSong];
@@ -309,7 +309,7 @@ async function sendSelected(callback){
       contentTarget.removeChild(contentTarget.firstChild);
     }
 
-    listupSongs(suggestion.results, true);
+    listupSongs(suggestion.results, true, 2);
   }
 }
 
