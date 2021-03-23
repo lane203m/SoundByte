@@ -1,15 +1,22 @@
 .criteria {
   width: 527px;
+  width: 527px;
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  margin: 2rem 0rem;
+  align-items: center;
+  padding: 1rem 2rem 1rem 2rem;
 }
 
 .criteria .input {  
   height: 4rem; 
   display: flex;
   flex-direction: column;
+}
+
+.criteria .checkbox {  
+  height: 4rem; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .criteria .input label {
@@ -45,6 +52,7 @@
   -moz-appearance: none;
   appearance: none;
   font-family:'Montserrat', sans-serif;
+  
 }
 
 .filter {

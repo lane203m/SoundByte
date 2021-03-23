@@ -42,6 +42,10 @@ if(songLibrary == undefined || songLibrary == null || songLibrary.songs == null 
 var filteredLibrary = songLibrary;
 var selectedSong = "-1";
 
+//for the checkbox
+const lastCheckbox = document.querySelector(".checkbox");
+var lastCountM = 0;
+
 //songLength helper function
 function convertMinSec(miliSec){
   return (Math.floor(miliSec/60) + ":" +Math.floor(miliSec % 60));
@@ -78,6 +82,7 @@ const addPlayback = (target) => {
       if(childNode.getAttribute("data-isPlay") == 0) {
         childNode.firstChild.src = "../img/play-button.png";
         childNode.nextSibling.style.visibility='hidden';
+        audio.stop();
       } else {
         // console.log(songPath + childNode.getAttribute("data-filename"));
         childNode.firstChild.src = "../img/stop-button.png";
@@ -120,6 +125,8 @@ const listupSongs = (library, isSuggestion) => {
     //let library = new LibraryData();
     //console.log(library.songs);
     //console.log(library);
+    // initialize the count for 0 in order to get eligible id for criteria checkbox
+    lastCountM = 0;
 
     library.songs.forEach((i, m, song) => {
         //console.log(song[m]);
@@ -131,6 +138,8 @@ const listupSongs = (library, isSuggestion) => {
     let durationDiv = document.createElement("div");
     let checksDiv = document.createElement("div");
     let checkInput = document.createElement("input");
+
+    
 
     //console.log(song[m].songFile);
 
@@ -151,6 +160,7 @@ const listupSongs = (library, isSuggestion) => {
       checkInput.setAttribute("id", m);
       checkInput.setAttribute("onClick", "buttonSelected(this.id)");
       checksDiv.appendChild(checkInput);
+      lastCountM += 1;
     }
     
     node.appendChild(img);    
@@ -164,6 +174,11 @@ const listupSongs = (library, isSuggestion) => {
 
     contentTarget.appendChild(node);
     });
+
+    if (lastCountM > 0 ) {
+      lastCheckbox.firstElementChild.value = lastCountM;
+      lastCheckbox.firstElementChild.id = lastCountM;
+    }
 
     addPlayback(contentTarget);
 }
@@ -295,9 +310,12 @@ document.querySelectorAll(".navButton")[0].addEventListener('click', () => {
 });
 
 // configuration nav
-document.querySelector(".setup-button").addEventListener('click', () => {
-  location.replace('../initialization/setSettings/config.html');
-});
+
+
+lastCheckbox.firstElementChild.value = lastCountM;
+lastCheckbox.firstElementChild.id = lastCountM;
+//console.log(lastCheckbox.firstElementChild);
+
 
 
 
