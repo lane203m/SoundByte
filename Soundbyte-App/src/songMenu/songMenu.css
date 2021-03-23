@@ -1,3 +1,9 @@
+input[type=image] {
+  object-fit: contain;
+  padding: 12px;
+}
+
+
 
 .songNameContainer{
   display: inline-block;

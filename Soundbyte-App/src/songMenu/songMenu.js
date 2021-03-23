@@ -130,6 +130,7 @@ const addPlayback = (target) => {
 } */
 
 //Added by Brian
+
 const listupSongs = (library, isSuggestion, inputType) => {   
 
     //let library = new LibraryData();
@@ -196,6 +197,8 @@ const listupSongs = (library, isSuggestion, inputType) => {
 }
 
 listupSongs(filteredLibrary, false, 0);
+sortByName(document.getElementById("name"));
+
 
 /*
 // Users pick a song from fiel input
@@ -284,6 +287,7 @@ async function sendSelected(callback){
     }
 
     listupSongs(suggestion.results, true, 1);
+    sortByName(document.getElementById("name"));
   }
   else if(selectedSong == -2){
     let features = new Feature(); 
@@ -303,6 +307,7 @@ async function sendSelected(callback){
     }
 
     listupSongs(suggestion.results, true, 1);
+    sortByName(document.getElementById("name"));
   }
   else if(selectedSong >= 0){
     let song = filteredLibrary.songs[selectedSong];
@@ -319,6 +324,7 @@ async function sendSelected(callback){
     }
 
     listupSongs(suggestion.results, true, 2);
+    sortByName(document.getElementById("name"));
   }
 }
 
@@ -341,10 +347,19 @@ lastCheckbox.firstElementChild.id = -2;
 //console.log(lastCheckbox.firstElementChild);
 
 
+function toggleImage(value){
+  let sortImg = new Image();
+  if(value == 1){
+    return "../img/sort-up.png"; 
+  }
+  else{
+    return "../img/sort-down.png"; 
+  }
+}
 
 
-
-function sortByBpm(ascending){
+function sortByBpm(element){
+  var ascending = element.value; 
   console.log(document.getElementById("libState").value);
   if(document.getElementById("libState").value == 0){
     prepareSortedLib()
@@ -356,10 +371,16 @@ function sortByBpm(ascending){
     suggestion.results.songs.sort((a,b) => (a.features.bpm > b.features.bpm) ? ascending: ascending*-1);
     listupSongs(suggestion.results, true, document.getElementById("libState").value)
   }
+
+  //element.style.background="url('../img/sort-down.png')";
+  
+  element.src = toggleImage(element.value);
+  element.value = element.value * -1;
+  
 }
 
-function sortByKey(ascending){
-  console.log(document.getElementById("libState").value);
+function sortByKey(element){
+  var ascending = element.value; 
   if(document.getElementById("libState").value == 0){
     prepareSortedLib()
     filteredLibrary.songs.sort((a,b) => (a.features.key > b.features.key) ? ascending: ascending*-1);
@@ -370,10 +391,12 @@ function sortByKey(ascending){
     suggestion.results.songs.sort((a,b) => (a.features.key > b.features.key) ? ascending: ascending*-1);
     listupSongs(suggestion.results, true, document.getElementById("libState").value)
   }
+  element.src = toggleImage(element.value);
+  element.value = element.value * -1;
 }
 
-function sortByScale(ascending){
-  console.log(document.getElementById("libState").value);
+function sortByScale(element){
+  var ascending = element.value; 
   if(document.getElementById("libState").value == 0){
     prepareSortedLib()
     filteredLibrary.songs.sort((a,b) => (a.features.scale > b.features.scale) ? ascending: ascending*-1);
@@ -384,10 +407,12 @@ function sortByScale(ascending){
     suggestion.results.songs.sort((a,b) => (a.features.scale > b.features.scale) ? ascending: ascending*-1);
     listupSongs(suggestion.results, true, document.getElementById("libState").value)
   }
+  element.src = toggleImage(element.value);
+  element.value = element.value * -1;
 }
 
-function sortByTime(ascending){
-  console.log(document.getElementById("libState").value);
+function sortByTime(element){
+  var ascending = element.value; 
   if(document.getElementById("libState").value == 0){
     prepareSortedLib()
     filteredLibrary.songs.sort((a,b) => (a.songLength > b.songLength) ? ascending: ascending*-1);
@@ -398,10 +423,12 @@ function sortByTime(ascending){
     suggestion.results.songs.sort((a,b) => (a.songLength > b.songLength) ? ascending: ascending*-1);
     listupSongs(suggestion.results, true, document.getElementById("libState").value)
   }
+  element.src = toggleImage(element.value);
+  element.value = element.value * -1;
 }
 
-function sortByName(ascending){
-  console.log(document.getElementById("libState").value);
+function sortByName(element){
+  var ascending = element.value; 
   if(document.getElementById("libState").value == 0){
     prepareSortedLib()
     filteredLibrary.songs.sort((a,b) => (a.songName > b.songName) ? ascending: ascending*-1);
@@ -412,6 +439,8 @@ function sortByName(ascending){
     suggestion.results.songs.sort((a,b) => (a.songName > b.songName) ? ascending: ascending*-1);
     listupSongs(suggestion.results, true, document.getElementById("libState").value)
   }
+  element.src = toggleImage(element.value);
+  element.value = element.value * -1;
 }
 
 

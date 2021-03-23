@@ -97,11 +97,16 @@
 
                 <div class="item-title item-library" id="libState" value="0">Song Library</div>
                 <div class="item-title">
-                    <button type="button" value="1" onclick="sortByName(this.value); this.value = this.value*-1">Title</button>
-                    <button type="button" value="1" onclick="sortByBpm(this.value); this.value = this.value*-1">BPM</button>
-                    <button type="button" value="1" onclick="sortByKey(this.value); this.value = this.value*-1">Key</button>
-                    <button type="button" value="1" onclick="sortByScale(this.value); this.value = this.value*-1">Scale</button>
-                    <button type="button" value="1" onclick="sortByTime(this.value); this.value = this.value*-1">Length</button>
+                    Title
+                    <input type="image" id="name" src="../img/sort-down.png" value="1" onclick="sortByName(this)"></button>
+                    BPM
+                    <input type="image" id="bpm" src="../img/sort-down.png" value="1" onclick="sortByBpm(this)"></button>
+                    Key
+                    <input type="image" id="key" src="../img/sort-down.png" value="1" onclick="sortByKey(this)"></button>
+                    Scale
+                    <input type="image" id="scale" src="../img/sort-down.png" value="1" onclick="sortByScale(this)"></button>
+                    Length
+                    <input type="image" id="length" src="../img/sort-down.png" value="1" onclick="sortByTime(this)"></button>
                 </div>
                 <div class="item-wraper"></div>  
                 <!--<div class="songList" id="songList"></div>  -->
