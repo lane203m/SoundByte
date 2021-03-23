@@ -306,7 +306,7 @@ async function sendSelected(callback){
       contentTarget.removeChild(contentTarget.firstChild);
     }
 
-    listupSongs(suggestion.results, true, 1);
+    listupSongs(suggestion.results, true, 2);
     sortByName(document.getElementById("name"));
   }
   else if(selectedSong >= 0){
@@ -323,7 +323,7 @@ async function sendSelected(callback){
       contentTarget.removeChild(contentTarget.firstChild);
     }
 
-    listupSongs(suggestion.results, true, 2);
+    listupSongs(suggestion.results, true, 1);
     sortByName(document.getElementById("name"));
   }
 }
