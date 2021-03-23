@@ -36,7 +36,7 @@
                 <div class="top-right"></div>
                 <div class="item-title item-underlined">Custom Input</div>
                 <div class="user-input">                    
-                    <p>Pick a song from the available list, or open one from the exploere.</p>
+                    <!--<p>Pick a song from the available list, or open one from the exploere.</p>
                     
                     <div class="fileUpload">               
                         <label class="file">
@@ -45,26 +45,31 @@
                         </label>
 
                     </div>
+                -->
                 </div>
                 <div class="criteria-wrapper">                    
                     <div class="criteria">
                         <div class="criteria-inputs">
                             <div class="input">               
                                 <label >tempo (bpm)</label>
-                                <input type="text" class="tempo"/>
+                                <input type="number" class="tempo" value="0" id="bpmIn" min="0.000" max="1021" onkeydown="javascript: return event.keyCode == 69 ? false : true" onkeyup="javascript: if(this.value>=1021){return this.value = 1020}if(this.value == ''){return this.value = 0} return this.value" />
                             </div>
     
                             <div class="input">               
                                 <label >key</label>
-                                <select class="key" >
-                                    <option value="">-</option>
+                                <select class="key" id="keyIn">
+                                    <option value="A">A</option>
+                                    <option value="Bb">Bb</option>
+                                    <option value="B">B</option>
                                     <option value="C">C</option>
+                                    <option value="C#">C#</option>
                                     <option value="D">D</option>
+                                    <option value="Eb">Eb</option>
                                     <option value="E">E</option>
                                     <option value="F">F</option>
+                                    <option value="F#">F#</option>
                                     <option value="G">G</option>
-                                    <option value="A">A</option>
-                                    <option value="B">B</option>
+                                    <option value="Ab">Ab</option>
     
                                 </select>
                                 <!--<input type="text" class="key"/>-->
@@ -72,10 +77,9 @@
     
                             <div class="input">               
                                 <label >scale</label>
-                                <select class="scale">
-                                    <option value="">-</option>
-                                    <option value="Major">Major</option>
-                                    <option value="Minor">Minor</option>
+                                <select class="scale" id="scaleIn">
+                                    <option value="major">Major</option>
+                                    <option value="minor">Minor</option>
                                 </select>
                                 <!--<input type="text" class="scale"/>-->
                             </div>

@@ -67,8 +67,15 @@ export class SuggestionWFeature extends Suggestion{
   }    
 
   public async runPythonShell(){
+    console.log(this.input);
     return new Promise((resolve, reject)=>{
-      pyshell.PythonShell.run('./Suggestion/suggestionWSong.py', null, function  (err, results)  {
+      let options = { 
+        mode: 'json', 
+        pythonOptions: ['-u'], // get print results in real-time 
+        args: ['shubhamk314'] //An argument which can be accessed in the script using sys.argv[1] 
+      }; 
+
+      pyshell.PythonShell.run('./Suggestion/suggestionWFeature.py', options, function  (err, results)  {
         if  (err){
           console.log('fail');
           reject(err);
@@ -84,7 +91,7 @@ export class SuggestionWFeature extends Suggestion{
     alert("starting");
     var output;
     await this.runPythonShell().then(data => {
-      output = JSON.parse(<string>data);
+      output = data;
       alert("done");
       console.log("done");
     })

@@ -108,10 +108,6 @@ var LibraryBuilder = /** @class */ (function () {
                             abortOnError: true,
                             closable: true,
                             remoteWindow: remote.BrowserWindow
-                            //browserWindow: {
-                            // webPreferences: {
-                            //   nodeIntegration: true
-                            // }
                         });
                         progressBar
                             .on('completed', function () {

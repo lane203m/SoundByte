@@ -130,8 +130,14 @@ var SuggestionWFeature = /** @class */ (function (_super) {
     SuggestionWFeature.prototype.runPythonShell = function () {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
+                console.log(this.input);
                 return [2 /*return*/, new Promise(function (resolve, reject) {
-                        pyshell.PythonShell.run('./Suggestion/suggestionWSong.py', null, function (err, results) {
+                        var options = {
+                            mode: 'json',
+                            pythonOptions: ['-u'],
+                            args: ['shubhamk314'] //An argument which can be accessed in the script using sys.argv[1] 
+                        };
+                        pyshell.PythonShell.run('./Suggestion/suggestionWFeature.py', options, function (err, results) {
                             if (err) {
                                 console.log('fail');
                                 reject(err);
@@ -152,7 +158,7 @@ var SuggestionWFeature = /** @class */ (function (_super) {
                     case 0:
                         alert("starting");
                         return [4 /*yield*/, this.runPythonShell().then(function (data) {
-                                output = JSON.parse(data);
+                                output = data;
                                 alert("done");
                                 console.log("done");
                             })];
