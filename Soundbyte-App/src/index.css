@@ -262,6 +262,10 @@ button:hover {
   font-weight: 600;
   font-size: 0.9rem;
 }
+.item-filter {
+  font-size: 0.8rem;
+  color: #646464;
+}
 
 .item-library {
   margin-top: 3rem;
