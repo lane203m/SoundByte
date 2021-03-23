@@ -22,20 +22,20 @@
                     <div class="navButton active">Suggestion</div>
                 </li>
                 <li>
-                    <span class="navButton">Criteria Search</span>
+                    <span class="navButton">Saved results</span>
                 </li>
                 <li>
-                    <span class="navButton">Auto Pairing</span>
+                    <span class="navButton">reset</span>
                 </li>
             </ul>
         </nav> 
         
         <div class="main-section-wrapper" >
             <div class="main-section">
-                <div class="top-right"><button class="setup-button">reset</button></div>
+                <div class="top-right"></div>
                 <div class="item-title item-underlined">Custom Input</div>
                 <div class="user-input">                    
-                    <p>Pick a song from the available list, or open one from the exploere.<p/>
+                    <p>Pick a song from the available list, or open one from the exploere.</p>
                     
                     <div class="fileUpload">               
                         <label class="file">
@@ -44,8 +44,52 @@
                         </label>
 
                     </div>
-                    <div class="user-song"></div>
                 </div>
+                <div class="criteria-wrapper">                    
+                    <div class="criteria">
+                        <div class="criteria-inputs">
+                            <div class="input">               
+                                <label >tempo (bpm)</label>
+                                <input type="text" class="tempo"/>
+                            </div>
+    
+                            <div class="input">               
+                                <label >key</label>
+                                <select class="key" >
+                                    <option value="">-</option>
+                                    <option value="C">C</option>
+                                    <option value="D">D</option>
+                                    <option value="E">E</option>
+                                    <option value="F">F</option>
+                                    <option value="G">G</option>
+                                    <option value="A">A</option>
+                                    <option value="B">B</option>
+    
+                                </select>
+                                <!--<input type="text" class="key"/>-->
+                            </div>
+    
+                            <div class="input">               
+                                <label >scale</label>
+                                <select class="scale">
+                                    <option value="">-</option>
+                                    <option value="Major">Major</option>
+                                    <option value="Minor">Minor</option>
+                                </select>
+                                <!--<input type="text" class="scale"/>-->
+                            </div>
+                        </div>
+                        
+
+                        <div class="checkbox"><input type="checkbox" value="" id="" onClick="buttonSelected(this.id)" /></div>
+                    </div>                    
+                </div>
+
+             
+                
+                
+
+
                 <div class="item-title item-library">Song Library</div>
                 <div class="item-wraper"></div>  
                 <!--<div class="songList" id="songList"></div>  -->

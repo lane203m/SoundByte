@@ -156,3 +156,87 @@
   
 
   /* File upload style - end */
+
+
+  .criteria-wrapper {
+    width: 527px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+  }
+
+  .criteria {
+    width: 527px;
+    display: flex;
+    align-items: center;
+    padding: 1rem 2rem 1rem 2rem;
+  }
+  
+  .criteria-inputs {
+    width: 440px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+  }
+
+  .criteria-inputs .input {  
+    height: 4rem; 
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .criteria-inputs .input label {
+    margin-bottom: 4px;
+    font-weight: 500;
+  }
+  
+  .criteria-inputs .input input {
+    width: 7rem;
+    height: 2.5rem;
+    padding: .5rem 1rem;
+    border: .075rem solid #ddd;
+    border-radius: .3rem;
+    box-shadow: inset 0 0.2rem 0.4rem rgba(0,0,0,.05);
+  }
+  
+  .key, .scale {
+    display: block;
+    width: 100%;
+    height: 2.5rem;
+    padding: .375rem 2.25rem .375rem .75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #212529;
+    background-color: #fff;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right .75rem center;
+    background-size: 16px 12px;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    font-family:'Montserrat', sans-serif;
+    box-shadow: inset 0 0.2rem 0.4rem rgba(0,0,0,.05);
+  }
+  
+  .filter {
+    width: 527px;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .criteria-wrapper {
+    width: 527px;
+    display: flex;
+  }
+
+  .checkbox {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
