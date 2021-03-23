@@ -2,21 +2,44 @@ const {LibraryData} = require("../Types/LibraryData");
 const fs = require('electron').remote.require('fs');
 const {Song} = require("../Types/Song");
 const {Feature} = require("../Types/Feature"); 
-const {SuggestionWSong} = require("../Suggestion/suggestions")
+const {SuggestionWSong, SuggestionWFeature, SuggestionWRandom} = require("../Suggestion/suggestions")
 const contentTarget = document.querySelector(".item-wraper");
 const fileCustom = document.querySelector(".file-custom");
 const playback = document.querySelector(".time-control")
 const path = require('path');
-
+let audio = new Audio();
 
 // get Initial library and the song path in the library
 // caution for the current directory ./ is equivalent to src/ directory
-
 const libraryPath = path.resolve("./Initialization/init.json"); 
+if(!fs.existsSync(libraryPath)){
+  alert("No Initialization File Found");
+  location.replace('../index.html');
+}
+if(libraryPath == undefined || libraryPath == null){
+  fs.unlinkSync('./initialization/init.json');
+  alert("No Initialization File Found");
+  location.replace('../index.html');
+}
 const songLibraryJSON = JSON.parse(fs.readFileSync(libraryPath));
+
 var songPath = songLibraryJSON.path;
+if(songPath == undefined || songPath == null || songPath == "" || !fs.existsSync(songPath)){
+  fs.unlinkSync('./initialization/init.json');
+  alert("Invalid Folder in ini");
+  location.replace('../index.html');
+}
 
 var songLibrary = new LibraryData();
+
+
+if(songLibrary == undefined || songLibrary == null || songLibrary.songs == null || songLibrary.songs == undefined || songLibrary.songs.length <=0){
+  fs.unlinkSync('./initialization/init.json');
+  alert("No songs in library");
+  location.replace('../index.html');
+}
+
+
 var filteredLibrary = songLibrary;
 var selectedSong = "-1";
 
@@ -40,6 +63,7 @@ const changeState = (state) => {
 }
 
 const addPlayback = (target) => {
+
   const playerTarget = document.querySelector(".player");
   let player = playback.cloneNode(true);
   let playerUrl = "";
@@ -60,8 +84,9 @@ const addPlayback = (target) => {
       if(childNode.getAttribute("data-isPlay") == 0) {
         childNode.firstChild.src = "../img/play-button.png";
         childNode.nextSibling.style.visibility='hidden';
-        audio.stop();
+        audio.pause();
       } else {
+        audio.pause();
         // console.log(songPath + childNode.getAttribute("data-filename"));
         childNode.firstChild.src = "../img/stop-button.png";
         childNode.parentNode.insertBefore(player, childNode.nextSibling);
@@ -72,9 +97,9 @@ const addPlayback = (target) => {
         //console.log(playerUrl.match(/(\/[^\/].*?\/)((?:[^\/]|\\\/)+?)(?:(<!\\)\s|$)/gm)[0]);
         //playerTarget.src = playerUrl.match(/(\/[^\/].*?\/)((?:[^\/]|\\\/)+?)(?:(<!\\)\s|$)/gm)[0];
         //playerTarget.play();
-      
+        
         console.log(playerUrl);
-        const audio = new Audio(playerUrl);
+        audio = new Audio(playerUrl);
         audio.play();
       }
 
@@ -154,8 +179,8 @@ const listupSongs = (library, isSuggestion) => {
     });
 
     if (lastCountM > 0 ) {
-      lastCheckbox.firstElementChild.value = lastCountM;
-      lastCheckbox.firstElementChild.id = lastCountM;
+      lastCheckbox.firstElementChild.value = -2;
+      lastCheckbox.firstElementChild.id = -2;
     }
 
     addPlayback(contentTarget);
@@ -163,7 +188,7 @@ const listupSongs = (library, isSuggestion) => {
 
 listupSongs(filteredLibrary, false);
 
-
+/*
 // Users pick a song from fiel input
 const customSongTarget = document.querySelector("#song-library");
 customSongTarget.addEventListener('input', (e) => {
@@ -205,16 +230,20 @@ customSongTarget.addEventListener('input', (e) => {
 
     addPlayback(contentTarget);
 });
-
+*/
 
 function buttonSelected(selectedID){
   if(selectedSong != -1){
+    
     deselectExisting(selectedSong);
   }
   if(selectedSong == selectedID){
+    document.getElementById('startButton').innerHTML = "Auto";
     selectedSong = -1;
   }
   else{
+    console.log(selectedID);
+    document.getElementById('startButton').innerHTML = "Start";
     selectedSong = selectedID;
     document.getElementById(selectedSong).checked = true;
   }
@@ -229,22 +258,50 @@ function buttonDeselected(){
 }
 
 async function sendSelected(callback){
-  if(selectedSong != -1){
+  audio.pause();
+  if(selectedSong == -1){
+    console.log("doing random");
+    suggestion = new SuggestionWRandom(filteredLibrary);
+    await suggestion.beginSuggestion();
+    console.log(suggestion);
+    callback();
+    //let songLibraryPath = path.resolve("./Libraries/songLibraries");
+    // console.log(songPath);
+
+    document.querySelector(".item-title.item-library").innerHTML = "Suggestions";
+    document.querySelector(".button").removeChild(document.querySelector(".button").firstChild);
+    while(contentTarget.firstChild) {
+      contentTarget.removeChild(contentTarget.firstChild);
+    }
+
+    listupSongs(suggestion.results, true);
+  }
+  else if(selectedSong == -2){
+    let features = new Feature(); 
+    features.setBpm(document.getElementById("bpmIn").value);
+    features.setKey(document.getElementById("keyIn").value);
+    features.setScale(document.getElementById("scaleIn").value);
+    console.log(features);
+    suggestion = new SuggestionWFeature(features);
+    await suggestion.beginSuggestion();
+    console.log(suggestion);
+    callback();
+
+    document.querySelector(".item-title.item-library").innerHTML = "Suggestions";
+    document.querySelector(".button").removeChild(document.querySelector(".button").firstChild);
+    while(contentTarget.firstChild) {
+      contentTarget.removeChild(contentTarget.firstChild);
+    }
+
+    listupSongs(suggestion.results, true);
+  }
+  else if(selectedSong >= 0){
     let song = filteredLibrary.songs[selectedSong];
     suggestion = new SuggestionWSong(song);
     await suggestion.beginSuggestion();
     // console.log(suggestion);
-    console.log(suggestion.results);
+    console.log(suggestion);
     callback();
-    
-    // console.log(suggestion);
-    // console.log(suggestion.results);
-
-    // song path has to be changed according to the context(in this case, it should be suggestion library)
-    // again the relative direcotry './' means 'src/' please notice this
-    // songPath = getLibraryPath("./Libraries/songLibrary/library.json");
-    songPath = path.resolve("./Libraries/songLibraries");
-    // console.log(songPath);
 
     document.querySelector(".item-title.item-library").innerHTML = "Suggestions";
     document.querySelector(".button").removeChild(document.querySelector(".button").firstChild);
@@ -270,8 +327,8 @@ document.querySelectorAll(".navButton")[0].addEventListener('click', () => {
 // configuration nav
 
 
-lastCheckbox.firstElementChild.value = lastCountM;
-lastCheckbox.firstElementChild.id = lastCountM;
+lastCheckbox.firstElementChild.value = -2;
+lastCheckbox.firstElementChild.id = -2;
 //console.log(lastCheckbox.firstElementChild);
 
 

@@ -63,17 +63,21 @@ exports.Suggestion = Suggestion;
 var SuggestionWSong = /** @class */ (function (_super) {
     __extends(SuggestionWSong, _super);
     function SuggestionWSong(song) {
-        var _this = _super.call(this) || this;
+        var _this = this;
+        console.log(song);
+        _this = _super.call(this) || this;
         _this.input = song;
+        console.log(_this.input);
         return _this;
     }
     //Call a python shell, send options to python for parameters. Await results. 
     SuggestionWSong.prototype.runPythonShell = function () {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
+                console.log(this.input);
                 return [2 /*return*/, new Promise(function (resolve, reject) {
                         var options = {
-                            mode: 'text',
+                            mode: 'json',
                             pythonOptions: ['-u'],
                             args: ['shubhamk314'] //An argument which can be accessed in the script using sys.argv[1] 
                         };
@@ -98,7 +102,7 @@ var SuggestionWSong = /** @class */ (function (_super) {
                     case 0:
                         alert("starting");
                         return [4 /*yield*/, this.runPythonShell().then(function (data) {
-                                output = JSON.parse(data);
+                                output = data;
                                 alert("done");
                                 console.log("done");
                             })];
@@ -126,8 +130,14 @@ var SuggestionWFeature = /** @class */ (function (_super) {
     SuggestionWFeature.prototype.runPythonShell = function () {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
+                console.log(this.input);
                 return [2 /*return*/, new Promise(function (resolve, reject) {
-                        pyshell.PythonShell.run('./Suggestion/suggestionWSong.py', null, function (err, results) {
+                        var options = {
+                            mode: 'json',
+                            pythonOptions: ['-u'],
+                            args: ['shubhamk314'] //An argument which can be accessed in the script using sys.argv[1] 
+                        };
+                        pyshell.PythonShell.run('./Suggestion/suggestionWFeature.py', options, function (err, results) {
                             if (err) {
                                 console.log('fail');
                                 reject(err);
@@ -148,7 +158,7 @@ var SuggestionWFeature = /** @class */ (function (_super) {
                     case 0:
                         alert("starting");
                         return [4 /*yield*/, this.runPythonShell().then(function (data) {
-                                output = JSON.parse(data);
+                                output = data;
                                 alert("done");
                                 console.log("done");
                             })];
@@ -168,7 +178,7 @@ exports.SuggestionWFeature = SuggestionWFeature;
 var SuggestionWRandom = /** @class */ (function (_super) {
     __extends(SuggestionWRandom, _super);
     function SuggestionWRandom(libraryData) {
-        return _super.call(this, libraryData.getSong(Math.random())) || this;
+        return _super.call(this, libraryData.getSong(Math.floor(Math.random() * libraryData.songs.length))) || this;
     }
     return SuggestionWRandom;
 }(SuggestionWSong));

@@ -8,7 +8,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com"> 
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="../index.css" />
-    <link rel="stylesheet" type="text/css" href="./index.css" />   
+    <link rel="stylesheet" type="text/css" href="./settings.css" />   
     
 </head>
 <body>
@@ -24,17 +24,18 @@
                     <span class="navButton">Criteria Search</span>
                 </li>
                 <li>
-                    <span class="navButton active">Auto Pairing</span>
+                    <span class="navButton active">Settings</span>
                 </li>
             </ul>
         </nav> 
         
         <div class="main-section-wrapper" >
             <div class="main-section">
-                <div class="top-right"><button class="setup-button">reset</button></div>
-                <div class="item-title item-underlined">Auto Pairing</div>
+                <div class="item-title">Settings</div>
                 <div class="user-input">                    
-                    <div class="margin-top"><button class="temp">Start Auto Pairing</button></div>
+                    
+                    <button class="temp" id="libraryReset" onclick="resetLibrary()">Update/Change Library</button>
+
                 </div>
                 <div class="item-title item-library">Results</div>
                 <div class="item-wraper"></div>
@@ -75,6 +76,6 @@
     </div>
 
     <script src="../nav.js" type="text/javascript"></script> 
-    <script src="./index.js" type="text/javascript"></script>     
+    <script src="./settings.js" type="text/javascript"></script>     
 </body>
 </html>

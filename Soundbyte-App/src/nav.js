@@ -11,5 +11,5 @@ document.querySelectorAll(".navButton")[1].addEventListener('click', () => {
 
 // Auto Pairing
 document.querySelectorAll(".navButton")[2].addEventListener('click', () => {
-  location.replace('../Initialization/setSettings/config.html');
+  location.replace('../settings/settings.html');
 });

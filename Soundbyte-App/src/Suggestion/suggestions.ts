@@ -4,7 +4,6 @@ import {Song} from "../Types/Song";
 import {LibraryData} from "../Types/LibraryData";
 import {ResultsData} from "../Types/ResultsData";
 var pyshell =  require('python-shell');
-
 //A suggestion will run and expects to fill results with data.
 export class Suggestion{
   results: ResultsData;
@@ -16,14 +15,17 @@ export class Suggestion{
 export class SuggestionWSong extends Suggestion{
   input: Song;
   constructor(song: Song){
+    console.log(song);
     super();
     this.input = song;
+    console.log(this.input);
   }  
     //Call a python shell, send options to python for parameters. Await results. 
   public async runPythonShell(){
+    console.log(this.input);
     return new Promise((resolve, reject)=>{
       let options = { 
-        mode: 'text', 
+        mode: 'json', 
         pythonOptions: ['-u'], // get print results in real-time 
         args: ['shubhamk314'] //An argument which can be accessed in the script using sys.argv[1] 
       }; 
@@ -44,7 +46,7 @@ export class SuggestionWSong extends Suggestion{
     alert("starting");
     var output;
     await this.runPythonShell().then(data => {
-      output = JSON.parse(<string>data);
+      output = data;
       alert("done");
       console.log("done");
     })
@@ -65,8 +67,15 @@ export class SuggestionWFeature extends Suggestion{
   }    
 
   public async runPythonShell(){
+    console.log(this.input);
     return new Promise((resolve, reject)=>{
-      pyshell.PythonShell.run('./Suggestion/suggestionWSong.py', null, function  (err, results)  {
+      let options = { 
+        mode: 'json', 
+        pythonOptions: ['-u'], // get print results in real-time 
+        args: ['shubhamk314'] //An argument which can be accessed in the script using sys.argv[1] 
+      }; 
+
+      pyshell.PythonShell.run('./Suggestion/suggestionWFeature.py', options, function  (err, results)  {
         if  (err){
           console.log('fail');
           reject(err);
@@ -82,7 +91,7 @@ export class SuggestionWFeature extends Suggestion{
     alert("starting");
     var output;
     await this.runPythonShell().then(data => {
-      output = JSON.parse(<string>data);
+      output = data;
       alert("done");
       console.log("done");
     })
@@ -94,6 +103,6 @@ export class SuggestionWFeature extends Suggestion{
 //send a random song for suggestion.
 export class SuggestionWRandom extends SuggestionWSong{
   constructor(libraryData: LibraryData){
-    super(libraryData.getSong(Math.random()));
+    super(libraryData.getSong(Math.floor(Math.random() * libraryData.songs.length)));
   }    
 }

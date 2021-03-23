@@ -12,7 +12,16 @@ document.querySelectorAll(".navButton")[2].addEventListener('click', () => {
   location.replace('./index.html');
 });
 
-// configuration nav
-document.querySelector(".setup-button").addEventListener('click', () => {
-  location.replace('../initialization/setSettings/config.html');
-});
+const move = (url) => {
+  location.replace(url)
+}
+
+function resetLibrary(){
+ 
+  try {
+    fs.unlinkSync("./initialization/init.json");
+    move(`../initialization/setSettings/initialization.html`);
+  } catch(err) {
+    console.error(err)
+  }
+}

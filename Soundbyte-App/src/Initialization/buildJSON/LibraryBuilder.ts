@@ -15,7 +15,9 @@ const fs = require('fs');
 const path = require('path');
 const { getAudioDurationInSeconds } = require('get-audio-duration'); //used incase metadata does not have duration
 const WavDecoder = require("wav-decoder");            //used to decode audio buffer of a wav. Will need mp3 equiv. mp3 is harder
-
+const {app, BrowserWindow, ipcMain} = require('electron');
+const remote = require('electron').remote;
+const ProgressBar = require('electron-progressbar');
 
 export class LibraryBuilder{
   iniDirectory: String;                               //our ini, reading and writing directories. 
@@ -26,12 +28,14 @@ export class LibraryBuilder{
     this.writingDirectory = writePath;
     this.fileDirectory = filePath;
   }
+  
 
   //Write a library object to JSON after building said library with getSongs.
   public async buildLibrary(){                      
     var writeTo = this.writingDirectory;
 
     await this.getSongs().then((library) => {
+      alert("Reading Done, songs read: " + library.songs.length); //inform of completion. To be replaced with loading popup
       fs.writeFileSync(writeTo, JSON.stringify(library, null, 2));
     }); 
 
@@ -45,17 +49,67 @@ export class LibraryBuilder{
     var files = await fs.readdirSync(fileDir);                  //get all files
     var library;
     var filePath
-    
+    var numValidFiles = 0;
+    for (var i = 0; i< files.length; i++){                      //for each file  
+      filePath=path.join(fileDir,files[i]); 
+      if (filePath.indexOf('wav')>=0) {                         //if the file is a wav, run and push the song to songs
+        numValidFiles++;
+      } 
+    }
+
+    var progressBar = new ProgressBar({
+      indeterminate: false,
+      text: 'Preparing data...',
+      detail: 'Wait...',
+      maxValue: numValidFiles,
+      closeOnComplete: true,
+      abortOnError: true,
+      closable: true,
+      remoteWindow: remote.BrowserWindow
+    });
+  
+    progressBar
+      .on('completed', function() {
+          console.info(`completed...`);
+          progressBar.detail = 'Task completed. Exiting...';
+      })
+      .on('aborted', function(value) {
+          console.info(`aborted... ${value}`);
+          try{
+            fs.unlinkSync('./initialization/init.json');
+          }catch(err){
+            console.log(err)
+            alert("error");
+          }
+          
+          location.replace('../../index.html');
+      })
+      .on('progress', function(value) {
+          progressBar.detail = `Value ${value} out of ${progressBar.getOptions().maxValue}...`;
+      });
+  
+  // launch a task and set the value of the progress bar each time a part of the task is done;
+  // the progress bar will be set as completed when it reaches its maxValue (default maxValue: 100);
+  // ps: setInterval is used here just to simulate a task being done
+    progressBar.value = 0;
     for (var i = 0; i< files.length; i++){                      //for each file
       filePath=path.join(fileDir,files[i]); 
       
       if (filePath.indexOf('wav')>=0) {                         //if the file is a wav, run and push the song to songs
-        songs.push(await this.buildSong(filePath)); 
+        console.log(i);
+        await songs.push(await this.buildSong(filePath)); 
+        progressBar.value++;
       }
+      
+      
+      
+      
     }
+    progressBar.setCompleted();
+    await progressBar.close();
 
     library = {songs};
-    alert("Reading Done, songs read: " + library.songs.length); //inform of completion. To be replaced with loading popup
+    
 
     return library;                                 
   }

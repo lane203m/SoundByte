@@ -2,6 +2,8 @@
 
 import { BrowserWindow } from 'electron';
 
+const {app} = require('electron');
+const ProgressBar = require('electron-progressbar');
 export default class Main {
     static mainWindow: Electron.BrowserWindow;
     static application: Electron.App;
@@ -22,6 +24,9 @@ export default class Main {
         Main.mainWindow
             .loadURL('file://' + __dirname + '/index.html');
         Main.mainWindow.on('closed', Main.onClose);
+        
+        
+
     }
 
     static main(app: Electron.App, browserWindow: typeof BrowserWindow) {

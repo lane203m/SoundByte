@@ -148,6 +148,9 @@
 
   .button button {
     margin-top: 2rem;
+    position: fixed;
+    top: 80%;
+    left: 80%;
   }
 
 /* player */

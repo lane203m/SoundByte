@@ -5,14 +5,17 @@ const fileInput = document.querySelector("#song-library");
 const fileCustom = document.querySelector(".file-custom"); 
 path = require('path')
 
+
 const move = (url) => {
   location.replace(url)
 }
 
 let currentPathName = "";
 let filename ="";
+let isBuilding = 0;
 
 fileInput.addEventListener('input', (e) => { 
+  
   // description: 
   // this function retrieves and returns directory name(absolute path) 
   // the user choose in the form input box 
@@ -44,47 +47,53 @@ form.addEventListener('submit', (e) => {
   //  this function write init.json or library.json file to initialize the app
   //  1. library path status: No currentPathName( empty string ) / custom directory (currentPathName is not empty )
   //  2. Platform/OS status: windows(win32) / linux like OSs 
-  e.preventDefault(); 
+  if(isBuilding == 0){
+    isBuilding = 1;
+    document.getElementById("submit").style.backgroundColor = "grey";
+    document.getElementById("submit").disabled = true;
+    document.getElementById("song-library").disabled = true;
+    
+    e.preventDefault(); 
 
-    // without giving songLibrary file
-  const configPath = {
-    path: './Libraries/songLibrary/library.json',
-  };
+      // without giving songLibrary file
+    const configPath = {
+      path: './Libraries/songLibrary/library.json',
+    };
 
-  if(currentPathName != '') { // this means if a user gives a library path or the configPath will be used as it was.
-    configPath.path = currentPathName;
+    if(currentPathName != '') { // this means if a user gives a library path or the configPath will be used as it was.
+      configPath.path = currentPathName;
+    }
+
+
+    if(process.platform === 'win32') {
+      configPath.path = path.join(configPath.path , '\\');
+    }
+    else{
+      configPath.path = path.join(configPath.path , '/');
+    }
+    
+    let data = JSON.stringify(configPath);
+    
+    let writePath = path.join(__dirname , '/..','/init.json');
+    if(process.platform === 'win32') {
+      writePath = path.join(__dirname , '\\..','\\init.json');
+    }
+
+    fs.writeFileSync(writePath, data);   //write directory to our init file
+
+    let libraryJSON = path.join(__dirname , '/../../Libraries/songLibrary/library.json');       //library json. where we save song data. implemented so that user may select their own in the future
+    if(process.platform === 'win32') {
+      libraryJSON = path.join(__dirname , '\\..\\..\\Libraries\\songLibrary\\library.json');
+    }
+
+    writeLibrary(writePath, libraryJSON, configPath.path, openIndex);   //get data, write to json, return to index.
   }
-
-
-  if(process.platform === 'win32') {
-    configPath.path = path.join(configPath.path , '\\');
-  }
-  else{
-    configPath.path = path.join(configPath.path , '/');
-  }
-  
-  let data = JSON.stringify(configPath);
-  
-  let writePath = path.join(__dirname , '/..','/init.json');
-  if(process.platform === 'win32') {
-    writePath = path.join(__dirname , '\\..','\\init.json');
-  }
-
- fs.writeFileSync(writePath, data);   //write directory to our init file
-
-  let libraryJSON = path.join(__dirname , '/../../Libraries/songLibrary/library.json');       //library json. where we save song data. implemented so that user may select their own in the future
-  if(process.platform === 'win32') {
-    libraryJSON = path.join(__dirname , '\\..\\..\\Libraries\\songLibrary\\library.json');
-  }
-
-  writeLibrary(writePath, libraryJSON, configPath.path, openIndex);   //get data, write to json, return to index.
-
   return;
 });
 
-function writeLibrary(writePath, libraryJSON, filePath, callback){
+async function writeLibrary(writePath, libraryJSON, filePath, callback){
   libraryBuilder = new LibraryBuilder(writePath, libraryJSON, filePath);  //build the library builder class with paths to use
-  var outcome = libraryBuilder.buildLibrary().then(()=>{                  //build the library
+  var outcome = await libraryBuilder.buildLibrary().then(()=>{                  //build the library
     console.log("done");                                                  
   });
   callback(outcome);                                                      //once finished, handle callback
@@ -92,6 +101,7 @@ function writeLibrary(writePath, libraryJSON, filePath, callback){
 
 function openIndex(out){                                                  //log status, wait 4000, restart (will enter song menu if correct)
   console.log(out);
-  setTimeout(() => {  move("../../index.html"); }, 4000);
+  move("../../index.html");
+  //setTimeout(() => {  move("../../index.html"); }, 1000);
   
 }

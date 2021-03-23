@@ -28,6 +28,7 @@
   "dependencies": {
     "audio-decode": "^1.4.0",
     "comlink": "^4.3.0",
+    "electron-progressbar": "^2.0.0",
     "electron-squirrel-startup": "^1.0.0",
     "essentia.js": "^0.1.0",
     "get-audio-duration": "^2.0.3",
