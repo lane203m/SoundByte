@@ -106,3 +106,5 @@ export class SuggestionWRandom extends SuggestionWSong{
     super(libraryData.getSong(Math.floor(Math.random() * libraryData.songs.length)));
   }    
 }
+
+

@@ -95,7 +95,14 @@
                 
 
 
-                <div class="item-title item-library">Song Library</div>
+                <div class="item-title item-library" id="libState" value="0">Song Library</div>
+                <div class="item-title">
+                    <button type="button" value="1" onclick="sortByName(this.value); this.value = this.value*-1">Title</button>
+                    <button type="button" value="1" onclick="sortByBpm(this.value); this.value = this.value*-1">BPM</button>
+                    <button type="button" value="1" onclick="sortByKey(this.value); this.value = this.value*-1">Key</button>
+                    <button type="button" value="1" onclick="sortByScale(this.value); this.value = this.value*-1">Scale</button>
+                    <button type="button" value="1" onclick="sortByTime(this.value); this.value = this.value*-1">Length</button>
+                </div>
                 <div class="item-wraper"></div>  
                 <!--<div class="songList" id="songList"></div>  -->
                 <div class="button"><button type='button' id='startButton' onclick="sendSelected(timeOutCallback)" >Auto</button></div>  

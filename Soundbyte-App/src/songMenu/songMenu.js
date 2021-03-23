@@ -8,6 +8,7 @@ const fileCustom = document.querySelector(".file-custom");
 const playback = document.querySelector(".time-control")
 const path = require('path');
 let audio = new Audio();
+let suggestion;
 
 // get Initial library and the song path in the library
 // caution for the current directory ./ is equivalent to src/ directory
@@ -49,7 +50,13 @@ var lastCountM = 0;
 
 //songLength helper function
 function convertMinSec(miliSec){
-  return (Math.floor(miliSec/60) + ":" +Math.floor(miliSec % 60));
+  if(miliSec % 60 < 10){
+    return (Math.floor(miliSec/60) + ":0" +Math.floor(miliSec % 60));
+  }
+  else{
+    return (Math.floor(miliSec/60) + ":" +Math.floor(miliSec % 60));
+  }
+  
 }
 
 //Playback functions by Bian on Feb 24, 2021
@@ -184,6 +191,8 @@ const listupSongs = (library, isSuggestion, inputType) => {
     }
 
     addPlayback(contentTarget);
+
+    document.getElementById("libState").value = inputType
 }
 
 listupSongs(filteredLibrary, false, 0);
@@ -335,3 +344,90 @@ lastCheckbox.firstElementChild.id = -2;
 
 
 
+function sortByBpm(ascending){
+  console.log(document.getElementById("libState").value);
+  if(document.getElementById("libState").value == 0){
+    prepareSortedLib()
+    filteredLibrary.songs.sort((a,b) => (a.features.bpm > b.features.bpm) ? ascending: ascending*-1);
+    listupSongs(filteredLibrary, false, 0);
+  }
+  else{
+    prepareSortedResults()
+    suggestion.results.songs.sort((a,b) => (a.features.bpm > b.features.bpm) ? ascending: ascending*-1);
+    listupSongs(suggestion.results, true, document.getElementById("libState").value)
+  }
+}
+
+function sortByKey(ascending){
+  console.log(document.getElementById("libState").value);
+  if(document.getElementById("libState").value == 0){
+    prepareSortedLib()
+    filteredLibrary.songs.sort((a,b) => (a.features.key > b.features.key) ? ascending: ascending*-1);
+    listupSongs(filteredLibrary, false, 0);
+  }
+  else{
+    prepareSortedResults()
+    suggestion.results.songs.sort((a,b) => (a.features.key > b.features.key) ? ascending: ascending*-1);
+    listupSongs(suggestion.results, true, document.getElementById("libState").value)
+  }
+}
+
+function sortByScale(ascending){
+  console.log(document.getElementById("libState").value);
+  if(document.getElementById("libState").value == 0){
+    prepareSortedLib()
+    filteredLibrary.songs.sort((a,b) => (a.features.scale > b.features.scale) ? ascending: ascending*-1);
+    listupSongs(filteredLibrary, false, 0);
+  }
+  else{
+    prepareSortedResults()
+    suggestion.results.songs.sort((a,b) => (a.features.scale > b.features.scale) ? ascending: ascending*-1);
+    listupSongs(suggestion.results, true, document.getElementById("libState").value)
+  }
+}
+
+function sortByTime(ascending){
+  console.log(document.getElementById("libState").value);
+  if(document.getElementById("libState").value == 0){
+    prepareSortedLib()
+    filteredLibrary.songs.sort((a,b) => (a.songLength > b.songLength) ? ascending: ascending*-1);
+    listupSongs(filteredLibrary, false, 0);
+  }
+  else{
+    prepareSortedResults()
+    suggestion.results.songs.sort((a,b) => (a.songLength > b.songLength) ? ascending: ascending*-1);
+    listupSongs(suggestion.results, true, document.getElementById("libState").value)
+  }
+}
+
+function sortByName(ascending){
+  console.log(document.getElementById("libState").value);
+  if(document.getElementById("libState").value == 0){
+    prepareSortedLib()
+    filteredLibrary.songs.sort((a,b) => (a.songName > b.songName) ? ascending: ascending*-1);
+    listupSongs(filteredLibrary, false, 0);
+  }
+  else{
+    prepareSortedResults()
+    suggestion.results.songs.sort((a,b) => (a.songName > b.songName) ? ascending: ascending*-1);
+    listupSongs(suggestion.results, true, document.getElementById("libState").value)
+  }
+}
+
+
+
+function prepareSortedLib(){
+  document.querySelector(".item-title.item-library").innerHTML = "Song Library";
+  //document.querySelector(".button").removeChild(document.querySelector(".button").firstChild);
+  while(contentTarget.firstChild) {
+    contentTarget.removeChild(contentTarget.firstChild);
+  }
+}
+
+function prepareSortedResults(){
+  document.querySelector(".item-title.item-library").innerHTML = "Suggestions";
+  //document.querySelector(".button").removeChild(document.querySelector(".button").firstChild);
+  while(contentTarget.firstChild) {
+    contentTarget.removeChild(contentTarget.firstChild);
+  }
+}
