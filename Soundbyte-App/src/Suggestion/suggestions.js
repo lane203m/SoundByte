@@ -85,9 +85,11 @@ var SuggestionWSong = /** @class */ (function (_super) {
                         pyshell.PythonShell.run('./Suggestion/suggestionWSong.py', options, function (err, results) {
                             if (err) {
                                 console.log('fail');
+                                console.log(err);
                                 reject(err);
                             }
                             else {
+                                console.log(results[0]);
                                 resolve(results[0]);
                             }
                         });

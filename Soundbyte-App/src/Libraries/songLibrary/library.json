@@ -1,114 +1,26 @@
 {
   "songs": [
     {
-      "songName": "Back In Black",
-      "author": "AC-DC",
-      "songFile": "AC-DC - Back In Black.wav",
+      "songName": "Splish Splash",
+      "author": "Bobby Darin",
+      "songFile": "01 - Splish Splash.wav",
       "features": {
-        "bpm": 94.37734985351562,
-        "key": "A",
+        "bpm": 100.73563385009766,
+        "key": "C",
         "scale": "major"
       },
-      "songLength": 255.634286
+      "songLength": 171.467755
     },
     {
-      "songName": "Givin The Dog A Bone",
-      "author": "AC-DC",
-      "songFile": "AC-DC - Givin The Dog A Bone.wav",
+      "songName": "Mack The Knife",
+      "author": "Bobby Darin",
+      "songFile": "06 - Mack The Knife.wav",
       "features": {
-        "bpm": 133.24925231933594,
-        "key": "A",
+        "bpm": 82.9272689819336,
+        "key": "C",
         "scale": "minor"
       },
-      "songLength": 211.774694
-    },
-    {
-      "songName": "Have A Drink On Me",
-      "author": "AC-DC",
-      "songFile": "AC-DC - Have A Drink On Me.wav",
-      "features": {
-        "bpm": 123.80248260498047,
-        "key": "A",
-        "scale": "minor"
-      },
-      "songLength": 238.471837
-    },
-    {
-      "songName": "Hells Bells",
-      "author": "AC-DC",
-      "songFile": "AC-DC - Hells Bells.wav",
-      "features": {
-        "bpm": 107.6865005493164,
-        "key": "A",
-        "scale": "minor"
-      },
-      "songLength": 312.42449
-    },
-    {
-      "songName": "Let Me Put My Love Into You",
-      "author": "AC-DC",
-      "songFile": "AC-DC - Let Me Put My Love Into You.wav",
-      "features": {
-        "bpm": 105.0744400024414,
-        "key": "E",
-        "scale": "minor"
-      },
-      "songLength": 255.320816
-    },
-    {
-      "songName": "Rock And Roll Ain't Noise Pollution",
-      "author": "AC-DC",
-      "songFile": "AC-DC - Rock And Roll Ain't Noise Pollution.wav",
-      "features": {
-        "bpm": 95.51827239990234,
-        "key": "A",
-        "scale": "major"
-      },
-      "songLength": 266.057143
-    },
-    {
-      "songName": "Shake A Leg",
-      "author": "AC-DC",
-      "songFile": "AC-DC - Shake A Leg.wav",
-      "features": {
-        "bpm": 76.79939270019531,
-        "key": "E",
-        "scale": "major"
-      },
-      "songLength": 245.681633
-    },
-    {
-      "songName": "Shoot To Thrill",
-      "author": "AC-DC",
-      "songFile": "AC-DC - Shoot To Thrill.wav",
-      "features": {
-        "bpm": 143.0791778564453,
-        "key": "D",
-        "scale": "major"
-      },
-      "songLength": 317.44
-    },
-    {
-      "songName": "What Do You Do For Money Honey",
-      "author": "AC-DC",
-      "songFile": "AC-DC - What Do You Do For Money Honey.wav",
-      "features": {
-        "bpm": 126.73735809326172,
-        "key": "A",
-        "scale": "minor"
-      },
-      "songLength": 215.588571
-    },
-    {
-      "songName": "You Shook Me All Night Long",
-      "author": "AC-DC",
-      "songFile": "AC-DC - You Shook Me All Night Long.wav",
-      "features": {
-        "bpm": 129.36521911621094,
-        "key": "G",
-        "scale": "major"
-      },
-      "songLength": 210.207347
+      "songLength": 230.347755
     }
   ]
 }
