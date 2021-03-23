@@ -23,10 +23,11 @@ export class SuggestionWSong extends Suggestion{
   public async runPythonShell(){
     return new Promise((resolve, reject)=>{
       let options = { 
-        mode: 'text', 
-        pythonOptions: ['-u'], // get print results in real-time 
-        args: ['shubhamk314'] //An argument which can be accessed in the script using sys.argv[1] 
+         
+        mode: 'json' ,pythonOptions: ['-u'], // get print results in real-time
+        args: [JSON.stringify(this.input)]
       }; 
+      console.log(JSON.stringify(this.input));
 
       pyshell.PythonShell.run('./Suggestion/suggestionWSong.py', options, function  (err, results)  {
         if  (err){

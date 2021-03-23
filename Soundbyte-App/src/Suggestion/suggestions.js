@@ -72,13 +72,14 @@ var SuggestionWSong = /** @class */ (function (_super) {
     //Call a python shell, send options to python for parameters. Await results. 
     SuggestionWSong.prototype.runPythonShell = function () {
         return __awaiter(this, void 0, void 0, function () {
+            var _this = this;
             return __generator(this, function (_a) {
                 return [2 /*return*/, new Promise(function (resolve, reject) {
                         var options = {
-                            mode: 'text',
-                            pythonOptions: ['-u'],
-                            args: ['shubhamk314'] //An argument which can be accessed in the script using sys.argv[1] 
+                            mode: 'json', pythonOptions: ['-u'],
+                            args: [JSON.stringify(_this.input)]
                         };
+                        console.log(JSON.stringify(_this.input));
                         pyshell.PythonShell.run('./Suggestion/suggestionWSong.py', options, function (err, results) {
                             if (err) {
                                 console.log('fail');
