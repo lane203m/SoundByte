@@ -12,10 +12,11 @@ let audio = new Audio();
 // get Initial library and the song path in the library
 // caution for the current directory ./ is equivalent to src/ directory
 const libraryPath = path.resolve("./Initialization/init.json"); 
+if(!fs.existsSync(libraryPath)){
+  alert("No Initialization File Found");
+  location.replace('../index.html');
+}
 if(libraryPath == undefined || libraryPath == null){
-  console.log(libraryPath);
-  console.log(fs.existsSync(libraryPath.path));
-  console.log(libraryPath.path);
   fs.unlinkSync('./initialization/init.json');
   alert("No Initialization File Found");
   location.replace('../index.html');
@@ -257,6 +258,7 @@ function buttonDeselected(){
 }
 
 async function sendSelected(callback){
+  audio.pause();
   if(selectedSong == -1){
     console.log("doing random");
     suggestion = new SuggestionWRandom(filteredLibrary);
