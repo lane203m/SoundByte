@@ -137,7 +137,7 @@ const listupSongs = (library, isSuggestion, inputType) => {
     detailSpan.innerText = Math.floor(song[m].features.bpm) + " bpm / " + song[m].features.key + " key / " + song[m].features.scale + " scale";
     durationDiv.innerText = convertMinSec(song[m].songLength);
 
-    scoreDiv.innerText = "Score: " + song[m].score.toFixed(3);;
+    scoreDiv.innerText = "Similarity: " + song[m].score.toFixed(3) + "%";
 
     node.classList.add("item");
     node.setAttribute("data-isPlay", 0);
@@ -182,7 +182,7 @@ const listupSongs = (library, isSuggestion, inputType) => {
     if(isSuggestion) {
       if(document.getElementById("score") == null || document.getElementById("score") == undefined){
         const filter = document.getElementById("filterType");
-        filter.innerHTML = filter.innerHTML + "Score <input type='image' id='score' src='../img/sort-down.png' value='1' onclick='sortByScore(this)'></button>";
+        filter.innerHTML = filter.innerHTML + "Similarity <input type='image' id='score' src='../img/sort-down.png' value='1' onclick='sortByScore(this)'></button>";
         document.getElementById("filterType").innerHTML = filter.innerHTML;
       }
       // When the list is for suggestion, get rid of custom input(criteria search)

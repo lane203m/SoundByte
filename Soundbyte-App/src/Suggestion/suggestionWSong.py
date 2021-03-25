@@ -4,9 +4,9 @@ import math
 
 def PercentBPM(InSong,LibSong):
     if (InSong > LibSong):
-        return (1 - LibSong/InSong)
+        return (LibSong/InSong)*100
     else:
-        return (LibSong/InSong - 1)
+        return (InSong/LibSong)*100
 
 def PercentComNotes(InKey,LibKey):
     if (InKey == LibKey):
