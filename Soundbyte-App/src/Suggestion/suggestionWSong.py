@@ -47,7 +47,7 @@ with open('./Libraries/songLibrary/library.json') as f:
 #for d in data:
 inputTemp = sys.argv[1]
 inputValue = json.loads(inputTemp)
-print(json.dumps(inputValue["songName"]))
+print(json.dumps(inputValue["features"]["bpm"]))
 #inputValue = json.loads(inputTemp)
 #print(inputValue["songName"])
 #output = json.dumps(data)
