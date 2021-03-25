@@ -59,7 +59,7 @@ function convertMinSec(miliSec){
   
 }
 
-//Playback functions by Bian on Feb 24, 2021
+// Playback functions by Bian on Feb 24, 2021
 // Change the player status each
 const changeState = (state) => {
   if(state.getAttribute("data-isPlay") == 0) {
@@ -75,12 +75,12 @@ const addPlayback = (target) => {
   let player = playback.cloneNode(true);
   let playerUrl = "";
   
-  //console.log(player.style.visibility);
+  // console.log(player.style.visibility);
   target.childNodes.forEach(childNode => {    
     childNode.firstChild.addEventListener('click', () => {
-      //console.log(childNode.getAttribute("data-isPlay"));
+      // console.log(childNode.getAttribute("data-isPlay"));
 
-      //other play buttons change to stop
+      // other play buttons change to stop
       target.childNodes.forEach(subChild => {        
         subChild.firstChild.src = "../img/play-button.png";
         if(subChild != childNode) subChild.setAttribute("data-isPlay", 0);
@@ -100,10 +100,7 @@ const addPlayback = (target) => {
         childNode.nextSibling.style.visibility='visible';
         
         playerUrl = songPath + childNode.getAttribute("data-filename");
-        //playerTarget.src = playerUrl.match(/(\/[^\/].*?\/)((?:[^\/]|\\\/)+?)(?:(?<!\\)\s|$)/gm)[0];
-        //console.log(playerUrl.match(/(\/[^\/].*?\/)((?:[^\/]|\\\/)+?)(?:(<!\\)\s|$)/gm)[0]);
-        //playerTarget.src = playerUrl.match(/(\/[^\/].*?\/)((?:[^\/]|\\\/)+?)(?:(<!\\)\s|$)/gm)[0];
-        //playerTarget.play();
+
         
         console.log(playerUrl);
         audio = new Audio(playerUrl);
@@ -113,29 +110,11 @@ const addPlayback = (target) => {
     });
   });
 }
-//Playback functions: End
+// Playback functions: End
 
-
-// no longer use of the function : comment out by Brian Feb 27, 2021
-/* function showSongs() {
-    let songLibrary = new LibraryData();
-    //songLibrary.songs.forEach((i,song) => console.log(songLibrary.songs.indexOf(i)));
-    for (let i = 0; i<songLibrary.songs.length; i++){
-        let node = document.createElement("BUTTON");
-        let textnode = document.createTextNode(songLibrary.songs[i].features.bpm);
-        node.appendChild(textnode);
-        document.getElementById("songList").appendChild(node);
-    }
-    
-} */
-
-//Added by Brian
-
+// Added by Brian
 const listupSongs = (library, isSuggestion, inputType) => {   
 
-    //let library = new LibraryData();
-    //console.log(library.songs);
-    //console.log(library);
     // initialize the count for 0 in order to get eligible id for criteria checkbox
     lastCountM = 0;
 
@@ -211,51 +190,6 @@ const listupSongs = (library, isSuggestion, inputType) => {
 listupSongs(filteredLibrary, false, 0);
 sortByName(document.getElementById("name"));
 
-
-/*
-// Users pick a song from fiel input
-const customSongTarget = document.querySelector("#song-library");
-customSongTarget.addEventListener('input', (e) => {
-    const targetDiv = document.querySelector(".user-song");
-    fileCustom.innerText = e.target.value.replace(/^.*[\\\/]/, '');
-    //console.log(e.target.value.replace(/^.*[\\\/]/, ''));
-
-    let node = document.createElement("div");
-    let img = new Image();  
-    let sname = document.createElement("h3");
-    let detailDiv = document.createElement("div");
-    let detailSpan = document.createElement("h4");
-    let durationDiv = document.createElement("div");
-    let checksDiv = document.createElement("div");
-    let checkInput = document.createElement("input");
-
-    sname.innerText = fileCustom.innerText;
-    img.src = "../img/play-button.png";
-    detailSpan.innerText = " bpm / key / scale";
-    durationDiv.innerText = "2:32";
-
-    node.classList.add("item");
-    detailDiv.classList.add("song-detail");
-    durationDiv.classList.add("duration");
-    checkInput.setAttribute("type", "checkbox");
-    checkInput.setAttribute("value", 1);
-    
-    checksDiv.appendChild(checkInput);
-    node.appendChild(img);
-    
-    detailDiv.appendChild(sname);
-    detailDiv.appendChild(detailSpan);
-    
-    node.appendChild(detailDiv);
-    node.appendChild(durationDiv);
-    node.appendChild(checksDiv);
-
-    targetDiv.appendChild(node);
-
-    addPlayback(contentTarget);
-});
-*/
-
 function buttonSelected(selectedID){
   if(selectedSong != -1){
     
@@ -289,7 +223,6 @@ async function sendSelected(callback){
     await suggestion.beginSuggestion();
     console.log(suggestion);
     callback();
-    //let songLibraryPath = path.resolve("./Libraries/songLibraries");
     // console.log(songPath);
 
     document.querySelector(".item-title.item-library").innerHTML = "Suggestions";
@@ -384,7 +317,6 @@ function sortByBpm(element){
     listupSongs(suggestion.results, true, document.getElementById("libState").value)
   }
 
-  //element.style.background="url('../img/sort-down.png')";
   
   element.src = toggleImage(element.value);
   element.value = element.value * -1;
