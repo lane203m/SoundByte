@@ -7,8 +7,6 @@ var __extends = (this && this.__extends) || (function () {
         return extendStatics(d, b);
     };
     return function (d, b) {
-        if (typeof b !== "function" && b !== null)
-            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
         extendStatics(d, b);
         function __() { this.constructor = d; }
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -53,6 +51,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.SuggestionWRandom = exports.SuggestionWFeature = exports.SuggestionWSong = exports.Suggestion = void 0;
 var ResultsData_1 = require("../Types/ResultsData");
+var path = require('path');
 var pyshell = require('python-shell');
 //A suggestion will run and expects to fill results with data.
 var Suggestion = /** @class */ (function () {
@@ -84,7 +83,8 @@ var SuggestionWSong = /** @class */ (function (_super) {
                             args: [JSON.stringify(_this.input)]
                         };
                         console.log(JSON.stringify(_this.input));
-                        pyshell.PythonShell.run('./Suggestion/suggestionWSong.py', options, function (err, results) {
+                        var shell = path.resolve(__dirname, './suggestionWSong.py');
+                        pyshell.PythonShell.run(shell, options, function (err, results) {
                             if (err) {
                                 console.log('fail');
                                 console.log(err);
@@ -142,7 +142,8 @@ var SuggestionWFeature = /** @class */ (function (_super) {
                             mode: 'json', pythonOptions: ['-u'],
                             args: [JSON.stringify(_this.input)]
                         };
-                        pyshell.PythonShell.run('./Suggestion/suggestionWFeature.py', options, function (err, results) {
+                        var shell = path.resolve(__dirname, './suggestionWFeature.py');
+                        pyshell.PythonShell.run(shell, options, function (err, results) {
                             if (err) {
                                 console.log('fail');
                                 console.log(err);

@@ -12,13 +12,13 @@ let suggestion;
 
 // get Initial library and the song path in the library
 // caution for the current directory ./ is equivalent to src/ directory
-const libraryPath = path.resolve("./Initialization/init.json"); 
+const libraryPath = path.resolve(__dirname, "../", "./Initialization/init.json"); 
 if(!fs.existsSync(libraryPath)){
   alert("No Initialization File Found");
   location.replace('../index.html');
 }
 if(libraryPath == undefined || libraryPath == null){
-  fs.unlinkSync('./initialization/init.json');
+  fs.unlinkSync(libraryPath);
   alert("No Initialization File Found");
   location.replace('../index.html');
 }
@@ -26,7 +26,7 @@ const songLibraryJSON = JSON.parse(fs.readFileSync(libraryPath));
 
 var songPath = songLibraryJSON.path;
 if(songPath == undefined || songPath == null || songPath == "" || !fs.existsSync(songPath)){
-  fs.unlinkSync('./initialization/init.json');
+  fs.unlinkSync(libraryPath);
   alert("Invalid Folder in ini");
   location.replace('../index.html');
 }
@@ -35,7 +35,7 @@ var songLibrary = new LibraryData();
 
 
 if(songLibrary == undefined || songLibrary == null || songLibrary.songs == null || songLibrary.songs == undefined || songLibrary.songs.length <=0){
-  fs.unlinkSync('./initialization/init.json');
+  fs.unlinkSync(libraryPath);
   alert("No songs in library");
   location.replace('../index.html');
 }
@@ -126,6 +126,7 @@ const listupSongs = (library, isSuggestion, inputType) => {
     let detailDiv = document.createElement("div");
     let detailSpan = document.createElement("h4");
     let durationDiv = document.createElement("div");
+    let scoreDiv = document.createElement("div");
     let checksDiv = document.createElement("div");
     let checkInput = document.createElement("input");
 
@@ -135,6 +136,8 @@ const listupSongs = (library, isSuggestion, inputType) => {
     img.src = "../img/play-button.png";
     detailSpan.innerText = Math.floor(song[m].features.bpm) + " bpm / " + song[m].features.key + " key / " + song[m].features.scale + " scale";
     durationDiv.innerText = convertMinSec(song[m].songLength);
+
+    scoreDiv.innerText = "Score: " + song[m].score.toFixed(3);;
 
     node.classList.add("item");
     node.setAttribute("data-isPlay", 0);
@@ -157,6 +160,11 @@ const listupSongs = (library, isSuggestion, inputType) => {
     
     node.appendChild(detailDiv);
     node.appendChild(durationDiv);
+    if(isSuggestion){
+      node.appendChild(scoreDiv);
+    }
+
+
     node.appendChild(checksDiv);
 
     contentTarget.appendChild(node);
@@ -172,6 +180,11 @@ const listupSongs = (library, isSuggestion, inputType) => {
     document.getElementById("libState").value = inputType
 
     if(isSuggestion) {
+      if(document.getElementById("score") == null || document.getElementById("score") == undefined){
+        const filter = document.getElementById("filterType");
+        filter.innerHTML = filter.innerHTML + "Score <input type='image' id='score' src='../img/sort-down.png' value='1' onclick='sortByScore(this)'></button>";
+        document.getElementById("filterType").innerHTML = filter.innerHTML;
+      }
       // When the list is for suggestion, get rid of custom input(criteria search)
       const title = document.querySelector("#sub-title");
       const inputs = document.querySelector(".criteria-wrapper");
@@ -184,6 +197,9 @@ const listupSongs = (library, isSuggestion, inputType) => {
       inputs?.remove();
 
       newTitle.classList.remove("item-library");
+      //let scoreButton = document.createElement("BUTTON");
+      //scoreButton.innerHTML = "TEST";
+      //document.getElementById("filterType").append(scoreButton);
     }
 }
 
@@ -234,7 +250,7 @@ async function sendSelected(callback){
     }
 
     listupSongs(suggestion.results, true, 1);
-    sortByName(document.getElementById("name"));
+    sortByScore(document.getElementById("name"));
   }
   else if(selectedSong == -2){
     let features = new Feature(); 
@@ -254,7 +270,7 @@ async function sendSelected(callback){
     }
 
     listupSongs(suggestion.results, true, 2);
-    sortByName(document.getElementById("name"));
+    sortByScore(document.getElementById("name"));
   }
   else if(selectedSong >= 0){
     let song = filteredLibrary.songs[selectedSong];
@@ -271,7 +287,7 @@ async function sendSelected(callback){
     }
 
     listupSongs(suggestion.results, true, 1);
-    sortByName(document.getElementById("name"));
+    sortByScore(document.getElementById("name"));
   }
 }
 
@@ -389,7 +405,21 @@ function sortByName(element){
   element.value = element.value * -1;
 }
 
-
+function sortByScore(element){
+  var ascending = element.value; 
+  if(document.getElementById("libState").value == 0){
+    prepareSortedLib()
+    filteredLibrary.songs.sort((a,b) => (a.score > b.score) ? ascending: ascending*-1);
+    listupSongs(filteredLibrary, false, 0);
+  }
+  else{
+    prepareSortedResults()
+    suggestion.results.songs.sort((a,b) => (a.score > b.score) ? ascending: ascending*-1);
+    listupSongs(suggestion.results, true, document.getElementById("libState").value)
+  }
+  element.src = toggleImage(element.value);
+  element.value = element.value * -1;
+}
 
 function prepareSortedLib(){
   document.querySelector(".item-title.item-library").innerHTML = "Song Library";

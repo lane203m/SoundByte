@@ -22,6 +22,7 @@ with open('./Libraries/songLibrary/library.json') as f:
 songResults = dict()
 for d in data['songs']:
     score = PercentBPM(d['features']['bpm'],inputValue['features']['bpm']) + PercentComNotes(d['features']['key'],inputValue['features']['key'])
+    d['score'] = score
     songResults[score] = d
 
 output = list()

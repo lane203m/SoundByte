@@ -2,7 +2,7 @@
   "name": "soundbyte-app",
   "version": "1.0.0",
   "description": "Soundbyte-App",
-  "main": "./Packages/main/main.js",
+  "main": "./src/app.js",
   "scripts": {
     "start": "electron-forge start",
     "package": "electron-forge package",

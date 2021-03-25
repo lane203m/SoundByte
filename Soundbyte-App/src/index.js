@@ -1,10 +1,11 @@
 /* 
 ** app setup sequence by Brian 
 */
-
+const path = require('path');
 const fs = require('electron').remote.require('fs');
 
-const exist = fs.existsSync(`./Initialization/init.json`);
+const initPath = path.resolve(__dirname, "./Initialization/init.json"); 
+const exist = fs.existsSync(initPath);
 
 const move = (url) => {
   location.replace(url)
