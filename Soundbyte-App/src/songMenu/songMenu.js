@@ -200,9 +200,9 @@ const listupSongs = (library, isSuggestion, inputType) => {
 
       const newTitle = document.querySelector("#libState");
     
-      spacer.remove();
-      title.remove();
-      inputs.remove();
+      spacer?.remove();
+      title?.remove();
+      inputs?.remove();
 
       newTitle.classList.remove("item-library");
     }
@@ -466,7 +466,7 @@ function prepareSortedLib(){
 }
 
 function prepareSortedResults(){
-  document.querySelector(".item-title.item-library").innerHTML = "Suggestions";
+  document.querySelector(".item-title").innerHTML = "Suggestions";
   //document.querySelector(".button").removeChild(document.querySelector(".button").firstChild);
   while(contentTarget.firstChild) {
     contentTarget.removeChild(contentTarget.firstChild);
