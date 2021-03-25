@@ -19,15 +19,22 @@ inputValue = json.loads(sys.argv[1])
 with open('./Libraries/songLibrary/library.json') as f:
     data = json.load(f)
 
-songResults = dict()
+songResults = list()
+pointer = 0
+for d in data['songs']:
+    if(d == inputValue):
+        data['songs'].pop(pointer)
+    pointer = pointer + 1
+    
+
 for d in data['songs']:
     score = PercentBPM(d['features']['bpm'],inputValue['features']['bpm']) + PercentComNotes(d['features']['key'],inputValue['features']['key'])
     d['score'] = score
-    songResults[score] = d
+    songResults.append(d)
 
-output = list()
-for song in songResults.values():
-    output.append(song)
+#output = list()
+#for song in songResults.values():
+    #output.append(song)
 
-print(json.dumps(output))
+print(json.dumps(songResults))
 sys.stdout.flush()

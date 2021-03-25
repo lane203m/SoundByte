@@ -177,6 +177,7 @@ var LibraryBuilder = /** @class */ (function () {
                         return [4 /*yield*/, this.getAudioDuration(song, filePath)];
                     case 3:
                         song = _a.sent(); //get song length
+                        song.score = 0;
                         return [2 /*return*/, song];
                 }
             });

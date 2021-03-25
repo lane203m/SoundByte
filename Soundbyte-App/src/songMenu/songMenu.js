@@ -254,7 +254,7 @@ async function sendSelected(callback){
   }
   else if(selectedSong == -2){
     let features = new Feature(); 
-    features.setBpm(document.getElementById("bpmIn").value);
+    features.setBpm(parseFloat(document.getElementById("bpmIn").value));
     features.setKey(document.getElementById("keyIn").value);
     features.setScale(document.getElementById("scaleIn").value);
     console.log(features);
