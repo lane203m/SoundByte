@@ -60,8 +60,6 @@ for song in songResults.values():
 print(json.dumps(output))
 #inputValue = json.loads(inputTemp)
 #print(inputValue["songName"])
-#output = json.dumps(data)
-#print(inputValue)
 #output = json.loads(sys.argv[0])
 #g.write(sys.argv[1])
 #print(sys.argv[1],flush =True)

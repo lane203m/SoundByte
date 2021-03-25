@@ -140,7 +140,7 @@ const listupSongs = (library, isSuggestion, inputType) => {
     lastCountM = 0;
 
     library.songs.forEach((i, m, song) => {
-        //console.log(song[m]);
+    //console.log(song[m]);
     let node = document.createElement("div");
     let img = new Image();  
     let sname = document.createElement("h3");
@@ -150,10 +150,7 @@ const listupSongs = (library, isSuggestion, inputType) => {
     let checksDiv = document.createElement("div");
     let checkInput = document.createElement("input");
 
-    
-
     //console.log(song[m].songFile);
-
     sname.innerText = song[m].songName;
     node.setAttribute("data-filename", song[m].songFile);
     img.src = "../img/play-button.png";
@@ -173,7 +170,7 @@ const listupSongs = (library, isSuggestion, inputType) => {
       checksDiv.appendChild(checkInput);
       lastCountM += 1;
     }
-    
+
     node.appendChild(img);    
         
     detailDiv.appendChild(sname);
@@ -194,6 +191,21 @@ const listupSongs = (library, isSuggestion, inputType) => {
     addPlayback(contentTarget);
 
     document.getElementById("libState").value = inputType
+
+    if(isSuggestion) {
+      // When the list is for suggestion, get rid of custom input(criteria search)
+      const title = document.querySelector("#sub-title");
+      const inputs = document.querySelector(".criteria-wrapper");
+      const spacer = document.querySelector("#spacer");
+
+      const newTitle = document.querySelector("#libState");
+    
+      spacer?.remove();
+      title?.remove();
+      inputs?.remove();
+
+      newTitle.classList.remove("item-library");
+    }
 }
 
 listupSongs(filteredLibrary, false, 0);
@@ -454,7 +466,7 @@ function prepareSortedLib(){
 }
 
 function prepareSortedResults(){
-  document.querySelector(".item-title.item-library").innerHTML = "Suggestions";
+  document.querySelector(".item-title").innerHTML = "Suggestions";
   //document.querySelector(".button").removeChild(document.querySelector(".button").firstChild);
   while(contentTarget.firstChild) {
     contentTarget.removeChild(contentTarget.firstChild);
