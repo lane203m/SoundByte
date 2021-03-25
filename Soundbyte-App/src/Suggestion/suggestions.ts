@@ -54,7 +54,7 @@ export class SuggestionWSong extends Suggestion{
     })
     console.log("done2");
     console.log(this.results);
-    this.results = new ResultsData(output.songs);
+    this.results = new ResultsData(output);
   
   }
 
