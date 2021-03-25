@@ -9,7 +9,8 @@
         "key": "C",
         "scale": "major"
       },
-      "songLength": 171.467755
+      "songLength": 171.467755,
+      "score": 0
     },
     {
       "songName": "Mack The Knife",
@@ -20,7 +21,8 @@
         "key": "C",
         "scale": "minor"
       },
-      "songLength": 230.347755
+      "songLength": 230.347755,
+      "score": 0
     }
   ]
 }

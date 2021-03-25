@@ -122,7 +122,7 @@ export class LibraryBuilder{
     song = await this.readMetadata(song, filePath);            //get tag data
     song = await this.extractSongFeatures(song, filePath);     //run essentia for features
     song = await this.getAudioDuration(song,filePath);         //get song length
-
+    song.score = 0;
     return song;
   } 
 

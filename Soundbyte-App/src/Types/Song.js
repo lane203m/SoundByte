@@ -10,6 +10,7 @@ var Song = /** @class */ (function () {
         this.songFile = songFile;
         this.features = features;
         this.songLength = songLength;
+        this.score = 0;
     }
     Song.prototype.getSongName = function () {
         return this.songName;
