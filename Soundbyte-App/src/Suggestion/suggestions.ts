@@ -3,6 +3,7 @@ import {Feature} from "../Types/Feature";
 import {Song} from "../Types/Song";
 import {LibraryData} from "../Types/LibraryData";
 import {ResultsData} from "../Types/ResultsData";
+const path = require('path');
 var pyshell =  require('python-shell');
 //A suggestion will run and expects to fill results with data.
 export class Suggestion{
@@ -29,8 +30,8 @@ export class SuggestionWSong extends Suggestion{
         args: [JSON.stringify(this.input)]
       }; 
       console.log(JSON.stringify(this.input));
-
-      pyshell.PythonShell.run('./Suggestion/suggestionWSong.py', options, function  (err, results)  {
+      let shell = path.resolve(__dirname, './suggestionWSong.py');
+      pyshell.PythonShell.run(shell, options, function  (err, results)  {
         if  (err){
           console.log('fail');
           console.log(err);
@@ -75,8 +76,8 @@ export class SuggestionWFeature extends Suggestion{
         mode: 'json' ,pythonOptions: ['-u'], // get print results in real-time
         args: [JSON.stringify(this.input)]
       }; 
-
-      pyshell.PythonShell.run('./Suggestion/suggestionWFeature.py', options, function  (err, results)  {
+      let shell = path.resolve(__dirname, './suggestionWFeature.py');
+      pyshell.PythonShell.run(shell, options, function  (err, results)  {
         if  (err){
           console.log('fail');
           console.log(err);

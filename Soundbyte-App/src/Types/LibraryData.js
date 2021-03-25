@@ -3,12 +3,14 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.LibraryData = void 0;
 var fs = require('electron').remote.require('fs');
+var path = require('path');
 //import * as data from "../Libraries/songLibrary/library.json"
 //library data. stores all songs. reads from JSON.
 var LibraryData = /** @class */ (function () {
     function LibraryData() {
         try {
-            var data = fs.readFileSync('./Libraries/songLibrary/library.json');
+            var libraryPath = path.resolve(__dirname, '../Libraries/songLibrary/library.json');
+            var data = fs.readFileSync(libraryPath);
             data = JSON.parse(data);
             this.songs = data.songs;
         }

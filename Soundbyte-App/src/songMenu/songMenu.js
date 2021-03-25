@@ -12,13 +12,13 @@ let suggestion;
 
 // get Initial library and the song path in the library
 // caution for the current directory ./ is equivalent to src/ directory
-const libraryPath = path.resolve("./Initialization/init.json"); 
+const libraryPath = path.resolve(__dirname, "../", "./Initialization/init.json"); 
 if(!fs.existsSync(libraryPath)){
   alert("No Initialization File Found");
   location.replace('../index.html');
 }
 if(libraryPath == undefined || libraryPath == null){
-  fs.unlinkSync('./initialization/init.json');
+  fs.unlinkSync(libraryPath);
   alert("No Initialization File Found");
   location.replace('../index.html');
 }
@@ -26,7 +26,7 @@ const songLibraryJSON = JSON.parse(fs.readFileSync(libraryPath));
 
 var songPath = songLibraryJSON.path;
 if(songPath == undefined || songPath == null || songPath == "" || !fs.existsSync(songPath)){
-  fs.unlinkSync('./initialization/init.json');
+  fs.unlinkSync(libraryPath);
   alert("Invalid Folder in ini");
   location.replace('../index.html');
 }
@@ -35,7 +35,7 @@ var songLibrary = new LibraryData();
 
 
 if(songLibrary == undefined || songLibrary == null || songLibrary.songs == null || songLibrary.songs == undefined || songLibrary.songs.length <=0){
-  fs.unlinkSync('./initialization/init.json');
+  fs.unlinkSync(libraryPath);
   alert("No songs in library");
   location.replace('../index.html');
 }
