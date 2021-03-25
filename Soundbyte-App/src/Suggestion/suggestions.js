@@ -132,20 +132,22 @@ var SuggestionWFeature = /** @class */ (function (_super) {
     }
     SuggestionWFeature.prototype.runPythonShell = function () {
         return __awaiter(this, void 0, void 0, function () {
+            var _this = this;
             return __generator(this, function (_a) {
                 console.log(this.input);
                 return [2 /*return*/, new Promise(function (resolve, reject) {
                         var options = {
-                            mode: 'json',
-                            pythonOptions: ['-u'],
-                            args: ['shubhamk314'] //An argument which can be accessed in the script using sys.argv[1] 
+                            mode: 'json', pythonOptions: ['-u'],
+                            args: [JSON.stringify(_this.input)]
                         };
                         pyshell.PythonShell.run('./Suggestion/suggestionWFeature.py', options, function (err, results) {
                             if (err) {
                                 console.log('fail');
+                                console.log(err);
                                 reject(err);
                             }
                             else {
+                                console.log(results[0]);
                                 resolve(results[0]);
                             }
                         });

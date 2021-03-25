@@ -190,6 +190,7 @@ const listupSongs = (library, isSuggestion, inputType) => {
 listupSongs(filteredLibrary, false, 0);
 sortByName(document.getElementById("name"));
 
+//Button selection handling - Mason Lane
 function buttonSelected(selectedID){
   if(selectedSong != -1){
     
@@ -215,6 +216,7 @@ function buttonDeselected(){
 
 }
 
+//Selected action handling - Mason Lane
 async function sendSelected(callback){
   audio.pause();
   if(selectedSong == -1){
@@ -291,7 +293,7 @@ lastCheckbox.firstElementChild.value = -2;
 lastCheckbox.firstElementChild.id = -2;
 //console.log(lastCheckbox.firstElementChild);
 
-
+//Library sorting logic - Mason Lane
 function toggleImage(value){
   let sortImg = new Image();
   if(value == 1){
@@ -404,3 +406,5 @@ function prepareSortedResults(){
     contentTarget.removeChild(contentTarget.firstChild);
   }
 }
+
+//End of sorting logic 

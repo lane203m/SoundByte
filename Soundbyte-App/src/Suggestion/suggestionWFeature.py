@@ -1,6 +1,8 @@
 #Temp python script, returns fake data.
 import sys
 import json
+
+g = open("./log.txt","w")
 thisdict = {
     "songs": [
         {
@@ -32,14 +34,25 @@ thisdict = {
         }
 
     ]
-
-
 }
 
+#inputFeatures = json.loads(sys.argv)
+#print(sys.argv[1])
+#input = sys.argv[1]
+#songFeat = json.loads(input) #input = sys.argv[1]
+
 with open('./Libraries/songLibrary/library.json') as f:
-        data = json.load(f)
+    data = json.load(f)
 
-
-output = json.dumps(thisdict)
+#for d in data:
+inputTemp = sys.argv[1]
+inputValue = json.loads(inputTemp)
+#print(json.dumps(inputValue["key"]))
+#inputValue = json.loads(inputTemp)
+#print(inputValue["songName"])
+output = json.dumps(data)
 print(output)
+#output = json.loads(sys.argv[0])
+#g.write(sys.argv[1])
+#print(sys.argv[1],flush =True)
 sys.stdout.flush()
