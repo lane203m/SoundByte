@@ -115,7 +115,7 @@ var SuggestionWSong = /** @class */ (function (_super) {
                         _a.sent();
                         console.log("done2");
                         console.log(this.results);
-                        this.results = new ResultsData_1.ResultsData(output.songs);
+                        this.results = new ResultsData_1.ResultsData(output);
                         return [2 /*return*/];
                 }
             });
