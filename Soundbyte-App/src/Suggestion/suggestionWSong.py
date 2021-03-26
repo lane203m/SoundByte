@@ -4,15 +4,15 @@ import math
 
 def PercentBPM(InSong,LibSong):
     if (InSong > LibSong):
-        return (LibSong/InSong)*100
+        return (LibSong/InSong - 1)*100
     else:
-        return (InSong/LibSong)*100
+        return (InSong/LibSong - 1)*100
 
 def PercentComNotes(InKey,LibKey):
     if (InKey == LibKey):
-        return 1
+        return 1*100
     else:
-        return 0.5
+        return 0.5*100
 
 inputValue = json.loads(sys.argv[1])
 
