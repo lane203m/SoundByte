@@ -10,6 +10,11 @@ const path = require('path');
 let audio = new Audio();
 let suggestion;
 
+let libraryForSave = {};
+const resultsPath = path.resolve("./Libraries/savedResults/libraryResults.json");
+let libraryResults = JSON.parse(fs.readFileSync(resultsPath));
+// console.log(libraryResults);
+
 // get Initial library and the song path in the library
 // caution for the current directory ./ is equivalent to src/ directory
 const libraryPath = path.resolve("./Initialization/init.json"); 
@@ -33,13 +38,11 @@ if(songPath == undefined || songPath == null || songPath == "" || !fs.existsSync
 
 var songLibrary = new LibraryData();
 
-
 if(songLibrary == undefined || songLibrary == null || songLibrary.songs == null || songLibrary.songs == undefined || songLibrary.songs.length <=0){
   fs.unlinkSync('./initialization/init.json');
   alert("No songs in library");
   location.replace('../index.html');
 }
-
 
 var filteredLibrary = songLibrary;
 var selectedSong = "-1";
@@ -101,8 +104,7 @@ const addPlayback = (target) => {
         
         playerUrl = songPath + childNode.getAttribute("data-filename");
 
-        
-        console.log(playerUrl);
+        // console.log(playerUrl);
         audio = new Audio(playerUrl);
         audio.play();
       }
@@ -112,54 +114,94 @@ const addPlayback = (target) => {
 }
 // Playback functions: End
 
-// Added by Brian
-const listupSongs = (library, isSuggestion, inputType) => {   
 
+// Added by Brian
+// description for the function: When the list is showing suggestions list, 
+// this function adds save the result(s) button if the user selected the checkbox(es)
+const saveResults = (e) => {
+  const targets = document.querySelectorAll(".save-for-select");
+  let amountCheck = 0
+  targets.forEach((target, index) => {
+    if (target.checked) amountCheck ++;
+    // console.log(target.checked);
+  });
+  
+  // console.log(amountCheck);
+  // console.log(libraryForSave);
+  if (amountCheck == 0){
+    alert("No result(s) is(are) selected");
+    return;
+  } else {
+
+    for (let i = 0; i < targets.length; i++) {     
+      let flag = false; 
+      if(targets[i].checked) {
+        for (let j = 0; j < libraryResults.songs.length; j++) {          
+          if (libraryResults.songs[j].songName == libraryForSave.songs[i].songName) flag = true;
+        }
+
+        // console.log(flag);
+        if(!flag) libraryResults.songs.push(libraryForSave.songs[i]);
+      }
+    }
+
+    fs.writeFileSync(resultsPath, JSON.stringify(libraryResults));
+
+  }
+}
+
+const listupSongs = (library, isSuggestion, inputType) => {   
+    // console.log(library.songs);
     // initialize the count for 0 in order to get eligible id for criteria checkbox
     lastCountM = 0;
 
     library.songs.forEach((i, m, song) => {
-    //console.log(song[m]);
-    let node = document.createElement("div");
-    let img = new Image();  
-    let sname = document.createElement("h3");
-    let detailDiv = document.createElement("div");
-    let detailSpan = document.createElement("h4");
-    let durationDiv = document.createElement("div");
-    let checksDiv = document.createElement("div");
-    let checkInput = document.createElement("input");
+      //console.log(song[m]);
+      let node = document.createElement("div");
+      let img = new Image();  
+      let sname = document.createElement("h3");
+      let detailDiv = document.createElement("div");
+      let detailSpan = document.createElement("h4");
+      let durationDiv = document.createElement("div");
+      let checksDiv = document.createElement("div");
+      let checkInput = document.createElement("input");
 
-    //console.log(song[m].songFile);
-    sname.innerText = song[m].songName;
-    node.setAttribute("data-filename", song[m].songFile);
-    img.src = "../img/play-button.png";
-    detailSpan.innerText = Math.floor(song[m].features.bpm) + " bpm / " + song[m].features.key + " key / " + song[m].features.scale + " scale";
-    durationDiv.innerText = convertMinSec(song[m].songLength);
+      //console.log(song[m].songFile);
+      sname.innerText = song[m].songName;
+      node.setAttribute("data-filename", song[m].songFile);
+      img.src = "../img/play-button.png";
+      detailSpan.innerText = Math.floor(song[m].features.bpm) + " bpm / " + song[m].features.key + " key / " + song[m].features.scale + " scale";
+      durationDiv.innerText = convertMinSec(song[m].songLength);
 
-    node.classList.add("item");
-    node.setAttribute("data-isPlay", 0);
-    detailDiv.classList.add("song-detail");
-    durationDiv.classList.add("duration");
-    
-    if(!isSuggestion) {
+      node.classList.add("item");
+      node.setAttribute("data-isPlay", 0);
+      detailDiv.classList.add("song-detail");
+      durationDiv.classList.add("duration");
+      
+      
       checkInput.setAttribute("type", "checkbox");
       checkInput.setAttribute("value", m);
       checkInput.setAttribute("id", m);
-      checkInput.setAttribute("onClick", "buttonSelected(this.id)");
+      
+      if(!isSuggestion) {
+        checkInput.setAttribute("onClick", "buttonSelected(this.id)");      
+        lastCountM += 1;
+      } else {
+        checkInput.setAttribute("class", "save-for-select");
+      }
+
       checksDiv.appendChild(checkInput);
-      lastCountM += 1;
-    }
 
-    node.appendChild(img);    
-        
-    detailDiv.appendChild(sname);
-    detailDiv.appendChild(detailSpan);
-    
-    node.appendChild(detailDiv);
-    node.appendChild(durationDiv);
-    node.appendChild(checksDiv);
+      node.appendChild(img);    
+          
+      detailDiv.appendChild(sname);
+      detailDiv.appendChild(detailSpan);
+      
+      node.appendChild(detailDiv);
+      node.appendChild(durationDiv);
+      node.appendChild(checksDiv);
 
-    contentTarget.appendChild(node);
+      contentTarget.appendChild(node);
     });
 
     if (lastCountM > 0 ) {
@@ -172,11 +214,11 @@ const listupSongs = (library, isSuggestion, inputType) => {
     document.getElementById("libState").value = inputType
 
     if(isSuggestion) {
+      // console.log(isSuggestion);
       // When the list is for suggestion, get rid of custom input(criteria search)
       const title = document.querySelector("#sub-title");
       const inputs = document.querySelector(".criteria-wrapper");
-      const spacer = document.querySelector("#spacer");
-
+      const spacer = document.querySelector(".user-input");
       const newTitle = document.querySelector("#libState");
     
       spacer.remove();
@@ -184,6 +226,18 @@ const listupSongs = (library, isSuggestion, inputType) => {
       inputs.remove();
 
       newTitle.classList.remove("item-library");
+
+      // Add save results button
+      const button = document.createElement("button");
+      const buttonDiv = document.createElement("div");
+      //buttonDiv.setAttribute("class", "item-wraper"); 
+      button.setAttribute("type", "button");
+      button.setAttribute("onClick", "saveResults()");
+      button.innerText = "Save Results";
+      buttonDiv.appendChild(button);
+
+      contentTarget.parentNode.appendChild(buttonDiv);
+      //console.log(buttonDiv);
     }
 }
 
@@ -200,7 +254,7 @@ function buttonSelected(selectedID){
     selectedSong = -1;
   }
   else{
-    console.log(selectedID);
+    // console.log(selectedID);
     document.getElementById('startButton').innerHTML = "Start";
     selectedSong = selectedID;
     document.getElementById(selectedSong).checked = true;
@@ -230,7 +284,7 @@ async function sendSelected(callback){
     while(contentTarget.firstChild) {
       contentTarget.removeChild(contentTarget.firstChild);
     }
-
+    libraryForSave = suggestion.results;
     listupSongs(suggestion.results, true, 1);
     sortByName(document.getElementById("name"));
   }
@@ -251,6 +305,7 @@ async function sendSelected(callback){
       contentTarget.removeChild(contentTarget.firstChild);
     }
 
+    libraryForSave = suggestion.results;
     listupSongs(suggestion.results, true, 1);
     sortByName(document.getElementById("name"));
   }
@@ -259,7 +314,7 @@ async function sendSelected(callback){
     suggestion = new SuggestionWSong(song);
     await suggestion.beginSuggestion();
     // console.log(suggestion);
-    console.log(suggestion);
+    // console.log(suggestion);
     callback();
 
     document.querySelector(".item-title.item-library").innerHTML = "Suggestions";
@@ -268,6 +323,7 @@ async function sendSelected(callback){
       contentTarget.removeChild(contentTarget.firstChild);
     }
 
+    libraryForSave = suggestion.results;
     listupSongs(suggestion.results, true, 2);
     sortByName(document.getElementById("name"));
   }
@@ -285,12 +341,9 @@ document.querySelectorAll(".navButton")[0].addEventListener('click', () => {
 });
 
 // configuration nav
-
-
 lastCheckbox.firstElementChild.value = -2;
 lastCheckbox.firstElementChild.id = -2;
 //console.log(lastCheckbox.firstElementChild);
-
 
 function toggleImage(value){
   let sortImg = new Image();
@@ -301,7 +354,6 @@ function toggleImage(value){
     return "../img/sort-down.png"; 
   }
 }
-
 
 function sortByBpm(element){
   var ascending = element.value; 
@@ -398,7 +450,7 @@ function prepareSortedLib(){
 }
 
 function prepareSortedResults(){
-  document.querySelector(".item-title.item-library").innerHTML = "Suggestions";
+  document.querySelector("#libState").innerText = "Suggestions";
   //document.querySelector(".button").removeChild(document.querySelector(".button").firstChild);
   while(contentTarget.firstChild) {
     contentTarget.removeChild(contentTarget.firstChild);
