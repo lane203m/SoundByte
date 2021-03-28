@@ -51,6 +51,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.SuggestionWRandom = exports.SuggestionWFeature = exports.SuggestionWSong = exports.Suggestion = void 0;
 var ResultsData_1 = require("../Types/ResultsData");
+var path = require('path');
 var pyshell = require('python-shell');
 //A suggestion will run and expects to fill results with data.
 var Suggestion = /** @class */ (function () {
@@ -73,20 +74,24 @@ var SuggestionWSong = /** @class */ (function (_super) {
     //Call a python shell, send options to python for parameters. Await results. 
     SuggestionWSong.prototype.runPythonShell = function () {
         return __awaiter(this, void 0, void 0, function () {
+            var _this = this;
             return __generator(this, function (_a) {
                 console.log(this.input);
                 return [2 /*return*/, new Promise(function (resolve, reject) {
                         var options = {
-                            mode: 'json',
-                            pythonOptions: ['-u'],
-                            args: ['shubhamk314'] //An argument which can be accessed in the script using sys.argv[1] 
+                            mode: 'json', pythonOptions: ['-u'],
+                            args: [JSON.stringify(_this.input)]
                         };
-                        pyshell.PythonShell.run('./Suggestion/suggestionWSong.py', options, function (err, results) {
+                        console.log(JSON.stringify(_this.input));
+                        var shell = path.resolve(__dirname, './suggestionWSong.py');
+                        pyshell.PythonShell.run(shell, options, function (err, results) {
                             if (err) {
                                 console.log('fail');
+                                console.log(err);
                                 reject(err);
                             }
                             else {
+                                console.log(results[0]);
                                 resolve(results[0]);
                             }
                         });
@@ -110,7 +115,7 @@ var SuggestionWSong = /** @class */ (function (_super) {
                         _a.sent();
                         console.log("done2");
                         console.log(this.results);
-                        this.results = new ResultsData_1.ResultsData(output.songs);
+                        this.results = new ResultsData_1.ResultsData(output);
                         return [2 /*return*/];
                 }
             });
@@ -129,20 +134,23 @@ var SuggestionWFeature = /** @class */ (function (_super) {
     }
     SuggestionWFeature.prototype.runPythonShell = function () {
         return __awaiter(this, void 0, void 0, function () {
+            var _this = this;
             return __generator(this, function (_a) {
                 console.log(this.input);
                 return [2 /*return*/, new Promise(function (resolve, reject) {
                         var options = {
-                            mode: 'json',
-                            pythonOptions: ['-u'],
-                            args: ['shubhamk314'] //An argument which can be accessed in the script using sys.argv[1] 
+                            mode: 'json', pythonOptions: ['-u'],
+                            args: [JSON.stringify(_this.input)]
                         };
-                        pyshell.PythonShell.run('./Suggestion/suggestionWFeature.py', options, function (err, results) {
+                        var shell = path.resolve(__dirname, './suggestionWFeature.py');
+                        pyshell.PythonShell.run(shell, options, function (err, results) {
                             if (err) {
                                 console.log('fail');
+                                console.log(err);
                                 reject(err);
                             }
                             else {
+                                console.log(results[0]);
                                 resolve(results[0]);
                             }
                         });
@@ -165,7 +173,7 @@ var SuggestionWFeature = /** @class */ (function (_super) {
                     case 1:
                         _a.sent();
                         console.log("done2");
-                        this.results = new ResultsData_1.ResultsData(output.songs);
+                        this.results = new ResultsData_1.ResultsData(output);
                         return [2 /*return*/];
                 }
             });

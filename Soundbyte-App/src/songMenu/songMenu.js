@@ -17,13 +17,13 @@ let libraryResults = JSON.parse(fs.readFileSync(resultsPath));
 
 // get Initial library and the song path in the library
 // caution for the current directory ./ is equivalent to src/ directory
-const libraryPath = path.resolve("./Initialization/init.json"); 
+const libraryPath = path.resolve(__dirname, "../", "./Initialization/init.json"); 
 if(!fs.existsSync(libraryPath)){
   alert("No Initialization File Found");
   location.replace('../index.html');
 }
 if(libraryPath == undefined || libraryPath == null){
-  fs.unlinkSync('./initialization/init.json');
+  fs.unlinkSync(libraryPath);
   alert("No Initialization File Found");
   location.replace('../index.html');
 }
@@ -31,7 +31,7 @@ const songLibraryJSON = JSON.parse(fs.readFileSync(libraryPath));
 
 var songPath = songLibraryJSON.path;
 if(songPath == undefined || songPath == null || songPath == "" || !fs.existsSync(songPath)){
-  fs.unlinkSync('./initialization/init.json');
+  fs.unlinkSync(libraryPath);
   alert("Invalid Folder in ini");
   location.replace('../index.html');
 }
@@ -39,7 +39,7 @@ if(songPath == undefined || songPath == null || songPath == "" || !fs.existsSync
 var songLibrary = new LibraryData();
 
 if(songLibrary == undefined || songLibrary == null || songLibrary.songs == null || songLibrary.songs == undefined || songLibrary.songs.length <=0){
-  fs.unlinkSync('./initialization/init.json');
+  fs.unlinkSync(libraryPath);
   alert("No songs in library");
   location.replace('../index.html');
 }
@@ -178,7 +178,6 @@ const listupSongs = (library, isSuggestion, inputType) => {
       detailDiv.classList.add("song-detail");
       durationDiv.classList.add("duration");
       
-      
       checkInput.setAttribute("type", "checkbox");
       checkInput.setAttribute("value", m);
       checkInput.setAttribute("id", m);
@@ -214,16 +213,20 @@ const listupSongs = (library, isSuggestion, inputType) => {
     document.getElementById("libState").value = inputType
 
     if(isSuggestion) {
-      // console.log(isSuggestion);
+      if(document.getElementById("score") == null || document.getElementById("score") == undefined){
+        const filter = document.getElementById("filterType");
+        filter.innerHTML = filter.innerHTML + "Similarity <input type='image' id='score' src='../img/sort-down.png' value='1' onclick='sortByScore(this)'></button>";
+        document.getElementById("filterType").innerHTML = filter.innerHTML;
+      }
       // When the list is for suggestion, get rid of custom input(criteria search)
       const title = document.querySelector("#sub-title");
       const inputs = document.querySelector(".criteria-wrapper");
       const spacer = document.querySelector(".user-input");
       const newTitle = document.querySelector("#libState");
     
-      spacer.remove();
-      title.remove();
-      inputs.remove();
+      spacer?.remove();
+      title?.remove();
+      inputs?.remove();
 
       newTitle.classList.remove("item-library");
 
@@ -244,6 +247,7 @@ const listupSongs = (library, isSuggestion, inputType) => {
 listupSongs(filteredLibrary, false, 0);
 sortByName(document.getElementById("name"));
 
+//Button selection handling - Mason Lane
 function buttonSelected(selectedID){
   if(selectedSong != -1){
     
@@ -269,6 +273,7 @@ function buttonDeselected(){
 
 }
 
+//Selected action handling - Mason Lane
 async function sendSelected(callback){
   audio.pause();
   if(selectedSong == -1){
@@ -286,11 +291,11 @@ async function sendSelected(callback){
     }
     libraryForSave = suggestion.results;
     listupSongs(suggestion.results, true, 1);
-    sortByName(document.getElementById("name"));
+    sortByScore(document.getElementById("name"));
   }
   else if(selectedSong == -2){
     let features = new Feature(); 
-    features.setBpm(document.getElementById("bpmIn").value);
+    features.setBpm(parseFloat(document.getElementById("bpmIn").value));
     features.setKey(document.getElementById("keyIn").value);
     features.setScale(document.getElementById("scaleIn").value);
     console.log(features);
@@ -305,9 +310,8 @@ async function sendSelected(callback){
       contentTarget.removeChild(contentTarget.firstChild);
     }
 
-    libraryForSave = suggestion.results;
-    listupSongs(suggestion.results, true, 1);
-    sortByName(document.getElementById("name"));
+    listupSongs(suggestion.results, true, 2);
+    sortByScore(document.getElementById("name"));
   }
   else if(selectedSong >= 0){
     let song = filteredLibrary.songs[selectedSong];
@@ -323,9 +327,8 @@ async function sendSelected(callback){
       contentTarget.removeChild(contentTarget.firstChild);
     }
 
-    libraryForSave = suggestion.results;
-    listupSongs(suggestion.results, true, 2);
-    sortByName(document.getElementById("name"));
+    listupSongs(suggestion.results, true, 1);
+    sortByScore(document.getElementById("name"));
   }
 }
 
@@ -345,6 +348,7 @@ lastCheckbox.firstElementChild.value = -2;
 lastCheckbox.firstElementChild.id = -2;
 //console.log(lastCheckbox.firstElementChild);
 
+//Library sorting logic - Mason Lane
 function toggleImage(value){
   let sortImg = new Image();
   if(value == 1){
@@ -439,7 +443,21 @@ function sortByName(element){
   element.value = element.value * -1;
 }
 
-
+function sortByScore(element){
+  var ascending = element.value; 
+  if(document.getElementById("libState").value == 0){
+    prepareSortedLib()
+    filteredLibrary.songs.sort((a,b) => (a.score > b.score) ? ascending: ascending*-1);
+    listupSongs(filteredLibrary, false, 0);
+  }
+  else{
+    prepareSortedResults()
+    suggestion.results.songs.sort((a,b) => (a.score > b.score) ? ascending: ascending*-1);
+    listupSongs(suggestion.results, true, document.getElementById("libState").value)
+  }
+  element.src = toggleImage(element.value);
+  element.value = element.value * -1;
+}
 
 function prepareSortedLib(){
   document.querySelector(".item-title.item-library").innerHTML = "Song Library";
@@ -451,8 +469,11 @@ function prepareSortedLib(){
 
 function prepareSortedResults(){
   document.querySelector("#libState").innerText = "Suggestions";
+
   //document.querySelector(".button").removeChild(document.querySelector(".button").firstChild);
   while(contentTarget.firstChild) {
     contentTarget.removeChild(contentTarget.firstChild);
   }
 }
+
+//End of sorting logic 

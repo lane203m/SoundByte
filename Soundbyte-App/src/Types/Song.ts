@@ -9,6 +9,7 @@ export class Song {
   songFile: string;
   songLength: number;
   features: Feature;
+  score: number;
 
   constructor(songName: string, author: string, songFile: string, features: Feature, songLength: number){
     this.songName = songName;
@@ -16,6 +17,7 @@ export class Song {
     this.songFile = songFile;
     this.features = features;
     this.songLength = songLength;
+    this.score = 0;
 
   }
 
