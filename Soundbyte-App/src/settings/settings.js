@@ -16,12 +16,12 @@ const move = (url) => {
   location.replace(url)
 }
 
-function resetLibrary(){
- 
+function resetLibrary() {
+
   try {
     fs.unlinkSync("./initialization/init.json");
     move(`../initialization/setSettings/initialization.html`);
-  } catch(err) {
+  } catch (err) {
     console.error(err)
   }
 }

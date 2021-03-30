@@ -107,15 +107,15 @@ const addPlayback = (target) => {
         audio.play();
       }
 
-      if(target.id != "spacer" && document.getElementById("libState").value != 0){
+      if (target.id != "spacer" && document.getElementById("libState").value != 0) {
         let inputSong = document.getElementById("spacer");
         inputSong.childNodes.forEach(subChild => {
           subChild.firstChild.src = "../img/play-button.png";
           subChild.setAttribute("data-isPlay", 0);
-          
+
         });
       }
-      else if (document.getElementById("libState").value != 0){
+      else if (document.getElementById("libState").value != 0) {
         let resultsSong = document.getElementById("item-wraper");
         resultsSong.childNodes.forEach(subChild => {
           subChild.firstChild.src = "../img/play-button.png";

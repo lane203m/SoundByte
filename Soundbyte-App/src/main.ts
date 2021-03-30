@@ -2,7 +2,7 @@
 
 import { BrowserWindow } from 'electron';
 
-const {app} = require('electron');
+const { app } = require('electron');
 const ProgressBar = require('electron-progressbar');
 export default class Main {
     static mainWindow: Electron.BrowserWindow;
@@ -20,12 +20,12 @@ export default class Main {
     }
 
     private static onReady() {
-        Main.mainWindow = new Main.BrowserWindow({ width: 800, height: 600, webPreferences: {nodeIntegration: true, enableRemoteModule: true, nodeIntegrationInWorker: true} });
+        Main.mainWindow = new Main.BrowserWindow({ width: 800, height: 600, webPreferences: { nodeIntegration: true, enableRemoteModule: true, nodeIntegrationInWorker: true } });
         Main.mainWindow
             .loadURL('file://' + __dirname + '/index.html');
         Main.mainWindow.on('closed', Main.onClose);
-        
-        
+
+
 
     }
 

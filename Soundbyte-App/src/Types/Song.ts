@@ -1,6 +1,6 @@
 //Song object - Mason Lane
 
-import {Feature} from "./Feature"
+import { Feature } from "./Feature"
 
 //Song object. Contains song information and feature object.
 export class Song {
@@ -11,7 +11,7 @@ export class Song {
   features: Feature;
   score: number;
 
-  constructor(songName: string, author: string, songFile: string, features: Feature, songLength: number){
+  constructor(songName: string, author: string, songFile: string, features: Feature, songLength: number) {
     this.songName = songName;
     this.author = author;
     this.songFile = songFile;
@@ -21,43 +21,43 @@ export class Song {
 
   }
 
-  getSongName(){
+  getSongName() {
     return this.songName;
   }
 
-  getAuthor(){
+  getAuthor() {
     return this.author;
   }
 
-  getSongFile(){
+  getSongFile() {
     return this.songFile;
   }
 
-  getFeatures(){
+  getFeatures() {
     return this.features;
   }
 
-  getDuration(){
+  getDuration() {
     return this.songLength;
   }
 
-  setSongName(songName: string){
+  setSongName(songName: string) {
     this.songName = songName;
   }
 
-  setAuthor(author: string){
+  setAuthor(author: string) {
     this.author = author;
   }
 
-  setSongFile(songFile: string){
+  setSongFile(songFile: string) {
     this.songFile = songFile;
   }
 
-  setFeatures(features: Feature){
+  setFeatures(features: Feature) {
     this.features = features;
   }
 
-  setLength(songLength: number){
+  setLength(songLength: number) {
     this.songLength = songLength;
   }
 

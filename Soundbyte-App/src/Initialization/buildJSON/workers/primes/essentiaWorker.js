@@ -12,15 +12,15 @@ addEventListener('message', e => {
   let audio = e.data.channelData[0];                      //make essentia readable (js does not have vectors, 
   let inputSignalVector = essentia.arrayToVector(audio);  //but c++ does. essentia needs vector)                                                     
 
-  let key = essentia.KeyExtractor(inputSignalVector);     
+  let key = essentia.KeyExtractor(inputSignalVector);
   let bpm = essentia.RhythmExtractor(inputSignalVector);
 
   //our object (same format as feature object)
   let data = {
-      bpm : bpm.bpm, 
-      key : key.key,
-      scale : key.scale
-    }
+    bpm: bpm.bpm,
+    key: key.key,
+    scale: key.scale
+  }
 
   postMessage(data);
 });
