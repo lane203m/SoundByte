@@ -1,51 +1,51 @@
 //Suggestion class/functions & python shell initialization - Mason Lane
-import { Feature } from "../Types/Feature";
-import { Song } from "../Types/Song";
-import { LibraryData } from "../Types/LibraryData";
-import { ResultsData } from "../Types/ResultsData";
+import {Feature} from "../Types/Feature";
+import {Song} from "../Types/Song";
+import {LibraryData} from "../Types/LibraryData";
+import {ResultsData} from "../Types/ResultsData";
 const path = require('path');
-var pyshell = require('python-shell');
+var pyshell =  require('python-shell');
 //A suggestion will run and expects to fill results with data.
-export class Suggestion {
+export class Suggestion{
   results: ResultsData;
-  constructor() {
-  }
+  constructor(){
+  }    
 }
 
 //suggestions with songs will require an aditional variable - input: Song. 
-export class SuggestionWSong extends Suggestion {
+export class SuggestionWSong extends Suggestion{
   input: Song;
-  constructor(song: Song) {
+  constructor(song: Song){
     console.log(song);
     super();
     this.input = song;
     console.log(this.input);
-  }
-  //Call a python shell, send options to python for parameters. Await results. 
-  public async runPythonShell() {
+  }  
+    //Call a python shell, send options to python for parameters. Await results. 
+  public async runPythonShell(){
     console.log(this.input);
-    return new Promise((resolve, reject) => {
-      let options = {
-        mode: 'json', pythonOptions: ['-u'], // get print results in real-time
+    return new Promise((resolve, reject)=>{
+      let options = {  
+        mode: 'json' ,pythonOptions: ['-u'], // get print results in real-time
         args: [JSON.stringify(this.input)]
-      };
+      }; 
       console.log(JSON.stringify(this.input));
       let shell = path.resolve(__dirname, './suggestionWSong.py');
-      pyshell.PythonShell.run(shell, options, function (err, results) {
-        if (err) {
+      pyshell.PythonShell.run(shell, options, function  (err, results)  {
+        if  (err){
           console.log('fail');
           console.log(err);
           reject(err);
-        }
+        }  
         else {
           console.log(results[0]);
           resolve(results[0]);
         }
       });
-
+          
     });
   }
-  public async beginSuggestion() {
+  public async beginSuggestion(){
     alert("starting");
     var output;
     await this.runPythonShell().then(data => {
@@ -56,42 +56,42 @@ export class SuggestionWSong extends Suggestion {
     console.log("done2");
     console.log(this.results);
     this.results = new ResultsData(output);
-
+  
   }
 
 }
 
 //same as above, only now python will recieve features as input instead of a song. 
-export class SuggestionWFeature extends Suggestion {
+export class SuggestionWFeature extends Suggestion{
   input: Feature;
-  constructor(features: Feature) {
+  constructor(features: Feature){
     super();
     this.input = features;
-  }
+  }    
 
-  public async runPythonShell() {
+  public async runPythonShell(){
     console.log(this.input);
-    return new Promise((resolve, reject) => {
-      let options = {
-        mode: 'json', pythonOptions: ['-u'], // get print results in real-time
+    return new Promise((resolve, reject)=>{
+      let options = {  
+        mode: 'json' ,pythonOptions: ['-u'], // get print results in real-time
         args: [JSON.stringify(this.input)]
-      };
+      }; 
       let shell = path.resolve(__dirname, './suggestionWFeature.py');
-      pyshell.PythonShell.run(shell, options, function (err, results) {
-        if (err) {
+      pyshell.PythonShell.run(shell, options, function  (err, results)  {
+        if  (err){
           console.log('fail');
           console.log(err);
           reject(err);
-        }
+        }  
         else {
           console.log(results[0]);
           resolve(results[0]);
         }
       });
-
+          
     });
   }
-  public async beginSuggestion() {
+  public async beginSuggestion(){
     alert("starting");
     var output;
     await this.runPythonShell().then(data => {
@@ -105,10 +105,10 @@ export class SuggestionWFeature extends Suggestion {
 }
 
 //send a random song for suggestion.
-export class SuggestionWRandom extends SuggestionWSong {
-  constructor(libraryData: LibraryData) {
+export class SuggestionWRandom extends SuggestionWSong{
+  constructor(libraryData: LibraryData){
     super(libraryData.getSong(Math.floor(Math.random() * libraryData.songs.length)));
-  }
+  }    
 }
 
 
