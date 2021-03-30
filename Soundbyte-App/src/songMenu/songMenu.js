@@ -153,7 +153,7 @@ const listupSongs = (library, isSuggestion, inputType) => {
     detailSpan.innerText = Math.floor(song[m].features.bpm) + " bpm / " + song[m].features.key + " key / " + song[m].features.scale + " scale";
     durationDiv.innerText = convertMinSec(song[m].songLength);
 
-    scoreDiv.innerText = "Score: " + song[m].score.toFixed(3);;
+    scoreDiv.innerText = "Similarity: " + song[m].score.toFixed(3) + "%";
 
     node.classList.add("item");
     node.setAttribute("data-isPlay", 0);
@@ -195,11 +195,29 @@ const listupSongs = (library, isSuggestion, inputType) => {
 
   document.getElementById("libState").value = inputType
 
-  if (isSuggestion) {
-    if (document.getElementById("score") == null || document.getElementById("score") == undefined) {
-      const filter = document.getElementById("filterType");
-      filter.innerHTML = filter.innerHTML + "Similarity <input type='image' id='score' src='../img/sort-down.png' value='1' onclick='sortByScore(this)'></button>";
-      document.getElementById("filterType").innerHTML = filter.innerHTML;
+
+    if(isSuggestion) {
+      if(document.getElementById("score") == null || document.getElementById("score") == undefined){
+        const filter = document.getElementById("filterType");
+        filter.innerHTML = filter.innerHTML + "Similarity <input type='image' id='score' src='../img/sort-down.png' value='1' onclick='sortByScore(this)'></button>";
+        document.getElementById("filterType").innerHTML = filter.innerHTML;
+      }
+      // When the list is for suggestion, get rid of custom input(criteria search)
+      const title = document.querySelector("#sub-title");
+      const inputs = document.querySelector(".criteria-wrapper");
+      const spacer = document.querySelector("#spacer");
+
+      const newTitle = document.querySelector("#libState");
+    
+      spacer?.remove();
+      title?.remove();
+      inputs?.remove();
+
+      newTitle.classList.remove("item-library");
+      //let scoreButton = document.createElement("BUTTON");
+      //scoreButton.innerHTML = "TEST";
+      //document.getElementById("filterType").append(scoreButton);
+
     }
     // When the list is for suggestion, get rid of custom input(criteria search)
     const title = document.querySelector("#sub-title");
@@ -265,8 +283,8 @@ const listupSongs = (library, isSuggestion, inputType) => {
     //let scoreButton = document.createElement("BUTTON");
     //scoreButton.innerHTML = "TEST";
     //document.getElementById("filterType").append(scoreButton);
-  }
 }
+
 
 listupSongs(filteredLibrary, false, 0);
 sortByName(document.getElementById("name"));
@@ -318,8 +336,9 @@ async function sendSelected(callback) {
     sortByScore(document.getElementById("name"));
   }
 
-  else if (selectedSong == -2) {
-    let features = new Feature();
+  else if(selectedSong == -2){
+    let features = new Feature(); 
+
     features.setBpm(parseFloat(document.getElementById("bpmIn").value));
     features.setKey(document.getElementById("keyIn").value);
     features.setScale(document.getElementById("scaleIn").value);

@@ -100,7 +100,7 @@ export class SuggestionWFeature extends Suggestion{
       console.log("done");
     })
     console.log("done2");
-    this.results = new ResultsData(output.songs);
+    this.results = new ResultsData(output);
   }
 }
 

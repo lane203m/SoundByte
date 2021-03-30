@@ -173,7 +173,7 @@ var SuggestionWFeature = /** @class */ (function (_super) {
                     case 1:
                         _a.sent();
                         console.log("done2");
-                        this.results = new ResultsData_1.ResultsData(output.songs);
+                        this.results = new ResultsData_1.ResultsData(output);
                         return [2 /*return*/];
                 }
             });
