@@ -1,8 +1,8 @@
-const {LibraryData} = require("../Types/LibraryData");
+const { LibraryData } = require("../Types/LibraryData");
 const fs = require('electron').remote.require('fs');
-const {Song} = require("../Types/Song");
-const {Feature} = require("../Types/Feature"); 
-const {SuggestionWSong, SuggestionWFeature, SuggestionWRandom} = require("../Suggestion/suggestions")
+const { Song } = require("../Types/Song");
+const { Feature } = require("../Types/Feature");
+const { SuggestionWSong, SuggestionWFeature, SuggestionWRandom } = require("../Suggestion/suggestions")
 const contentTarget = document.querySelector(".item-wraper");
 const fileCustom = document.querySelector(".file-custom");
 const playback = document.querySelector(".time-control")
@@ -12,12 +12,12 @@ let suggestion;
 
 // get Initial library and the song path in the library
 // caution for the current directory ./ is equivalent to src/ directory
-const libraryPath = path.resolve(__dirname, "../", "./Initialization/init.json"); 
-if(!fs.existsSync(libraryPath)){
+const libraryPath = path.resolve(__dirname, "../", "./Initialization/init.json");
+if (!fs.existsSync(libraryPath)) {
   alert("No Initialization File Found");
   location.replace('../index.html');
 }
-if(libraryPath == undefined || libraryPath == null){
+if (libraryPath == undefined || libraryPath == null) {
   fs.unlinkSync(libraryPath);
   alert("No Initialization File Found");
   location.replace('../index.html');
@@ -25,7 +25,7 @@ if(libraryPath == undefined || libraryPath == null){
 const songLibraryJSON = JSON.parse(fs.readFileSync(libraryPath));
 
 var songPath = songLibraryJSON.path;
-if(songPath == undefined || songPath == null || songPath == "" || !fs.existsSync(songPath)){
+if (songPath == undefined || songPath == null || songPath == "" || !fs.existsSync(songPath)) {
   fs.unlinkSync(libraryPath);
   alert("Invalid Folder in ini");
   location.replace('../index.html');
@@ -34,7 +34,7 @@ if(songPath == undefined || songPath == null || songPath == "" || !fs.existsSync
 var songLibrary = new LibraryData();
 
 
-if(songLibrary == undefined || songLibrary == null || songLibrary.songs == null || songLibrary.songs == undefined || songLibrary.songs.length <=0){
+if (songLibrary == undefined || songLibrary == null || songLibrary.songs == null || songLibrary.songs == undefined || songLibrary.songs.length <= 0) {
   fs.unlinkSync(libraryPath);
   alert("No songs in library");
   location.replace('../index.html');
@@ -49,20 +49,20 @@ const lastCheckbox = document.querySelector(".checkbox");
 var lastCountM = 0;
 
 //songLength helper function
-function convertMinSec(miliSec){
-  if(miliSec % 60 < 10){
-    return (Math.floor(miliSec/60) + ":0" +Math.floor(miliSec % 60));
+function convertMinSec(miliSec) {
+  if (miliSec % 60 < 10) {
+    return (Math.floor(miliSec / 60) + ":0" + Math.floor(miliSec % 60));
   }
-  else{
-    return (Math.floor(miliSec/60) + ":" +Math.floor(miliSec % 60));
+  else {
+    return (Math.floor(miliSec / 60) + ":" + Math.floor(miliSec % 60));
   }
-  
+
 }
 
 // Playback functions by Bian on Feb 24, 2021
 // Change the player status each
 const changeState = (state) => {
-  if(state.getAttribute("data-isPlay") == 0) {
+  if (state.getAttribute("data-isPlay") == 0) {
     state.setAttribute("data-isPlay", 1);
   } else {
     state.setAttribute("data-isPlay", 0);
@@ -74,37 +74,53 @@ const addPlayback = (target) => {
   const playerTarget = document.querySelector(".player");
   let player = playback.cloneNode(true);
   let playerUrl = "";
-  
+
   // console.log(player.style.visibility);
-  target.childNodes.forEach(childNode => {    
+  target.childNodes.forEach(childNode => {
     childNode.firstChild.addEventListener('click', () => {
       // console.log(childNode.getAttribute("data-isPlay"));
 
       // other play buttons change to stop
-      target.childNodes.forEach(subChild => {        
+      target.childNodes.forEach(subChild => {
         subChild.firstChild.src = "../img/play-button.png";
-        if(subChild != childNode) subChild.setAttribute("data-isPlay", 0);
+        if (subChild != childNode) subChild.setAttribute("data-isPlay", 0);
       });
-      
+
       changeState(childNode);
 
-      if(childNode.getAttribute("data-isPlay") == 0) {
+      if (childNode.getAttribute("data-isPlay") == 0) {
         childNode.firstChild.src = "../img/play-button.png";
-        childNode.nextSibling.style.visibility='hidden';
+        childNode.nextSibling.style.visibility = 'hidden';
         audio.pause();
       } else {
         audio.pause();
         // console.log(songPath + childNode.getAttribute("data-filename"));
         childNode.firstChild.src = "../img/stop-button.png";
         childNode.parentNode.insertBefore(player, childNode.nextSibling);
-        childNode.nextSibling.style.visibility='visible';
-        
+        //childNode.nextSibling.style.visibility = 'visible';
+
         playerUrl = songPath + childNode.getAttribute("data-filename");
 
-        
+
         console.log(playerUrl);
         audio = new Audio(playerUrl);
         audio.play();
+      }
+
+      if(target.id != "spacer" && document.getElementById("libState").value != 0){
+        let inputSong = document.getElementById("spacer");
+        inputSong.childNodes.forEach(subChild => {
+          subChild.firstChild.src = "../img/play-button.png";
+          subChild.setAttribute("data-isPlay", 0);
+          
+        });
+      }
+      else if (document.getElementById("libState").value != 0){
+        let resultsSong = document.getElementById("item-wraper");
+        resultsSong.childNodes.forEach(subChild => {
+          subChild.firstChild.src = "../img/play-button.png";
+          subChild.setAttribute("data-isPlay", 0);
+        });
       }
 
     });
@@ -113,15 +129,15 @@ const addPlayback = (target) => {
 // Playback functions: End
 
 // Added by Brian
-const listupSongs = (library, isSuggestion, inputType) => {   
+const listupSongs = (library, isSuggestion, inputType) => {
 
-    // initialize the count for 0 in order to get eligible id for criteria checkbox
-    lastCountM = 0;
+  // initialize the count for 0 in order to get eligible id for criteria checkbox
+  lastCountM = 0;
 
-    library.songs.forEach((i, m, song) => {
+  library.songs.forEach((i, m, song) => {
     //console.log(song[m]);
     let node = document.createElement("div");
-    let img = new Image();  
+    let img = new Image();
     let sname = document.createElement("h3");
     let detailDiv = document.createElement("div");
     let detailSpan = document.createElement("h4");
@@ -137,14 +153,14 @@ const listupSongs = (library, isSuggestion, inputType) => {
     detailSpan.innerText = Math.floor(song[m].features.bpm) + " bpm / " + song[m].features.key + " key / " + song[m].features.scale + " scale";
     durationDiv.innerText = convertMinSec(song[m].songLength);
 
-    scoreDiv.innerText = "Similarity: " + song[m].score.toFixed(3) + "%";
+    scoreDiv.innerText = "Score: " + song[m].score.toFixed(3);;
 
     node.classList.add("item");
     node.setAttribute("data-isPlay", 0);
     detailDiv.classList.add("song-detail");
     durationDiv.classList.add("duration");
-    
-    if(!isSuggestion) {
+
+    if (!isSuggestion) {
       checkInput.setAttribute("type", "checkbox");
       checkInput.setAttribute("value", m);
       checkInput.setAttribute("id", m);
@@ -153,14 +169,14 @@ const listupSongs = (library, isSuggestion, inputType) => {
       lastCountM += 1;
     }
 
-    node.appendChild(img);    
-        
+    node.appendChild(img);
+
     detailDiv.appendChild(sname);
     detailDiv.appendChild(detailSpan);
-    
+
     node.appendChild(detailDiv);
     node.appendChild(durationDiv);
-    if(isSuggestion){
+    if (isSuggestion) {
       node.appendChild(scoreDiv);
     }
 
@@ -168,55 +184,104 @@ const listupSongs = (library, isSuggestion, inputType) => {
     node.appendChild(checksDiv);
 
     contentTarget.appendChild(node);
-    });
+  });
 
-    if (lastCountM > 0 ) {
-      lastCheckbox.firstElementChild.value = -2;
-      lastCheckbox.firstElementChild.id = -2;
+  if (lastCountM > 0) {
+    lastCheckbox.firstElementChild.value = -2;
+    lastCheckbox.firstElementChild.id = -2;
+  }
+
+  addPlayback(contentTarget);
+
+  document.getElementById("libState").value = inputType
+
+  if (isSuggestion) {
+    if (document.getElementById("score") == null || document.getElementById("score") == undefined) {
+      const filter = document.getElementById("filterType");
+      filter.innerHTML = filter.innerHTML + "Similarity <input type='image' id='score' src='../img/sort-down.png' value='1' onclick='sortByScore(this)'></button>";
+      document.getElementById("filterType").innerHTML = filter.innerHTML;
+    }
+    // When the list is for suggestion, get rid of custom input(criteria search)
+    const title = document.querySelector("#sub-title");
+    title.innerHTML = "Input";
+    const inputs = document.querySelector(".criteria-wrapper");
+    const spacer = document.querySelector("#spacer");
+
+    let inputNode = document.createElement("div");
+    let inputImg = new Image();
+    let inputName = document.createElement("h3");
+    let inputDetailDiv = document.createElement("div");
+    let inputDetailSpan = document.createElement("h4");
+    let inputDurationDiv = document.createElement("div");
+    let inputScore = document.createElement("div");
+
+
+    if (inputType == 1) {
+      inputName.innerText = suggestion.input.songName;
+      inputNode.setAttribute("data-filename", suggestion.input.songFile);
+      inputImg.src = "../img/play-button.png";
+      inputDetailSpan.innerText = Math.floor(suggestion.input.features.bpm) + " bpm / " + suggestion.input.features.key + " key / " + suggestion.input.features.scale + " scale";
+      inputDurationDiv.innerText = convertMinSec(suggestion.input.songLength);
+
+      inputNode.classList.add("item");
+      inputNode.setAttribute("data-isPlay", 0);
+      inputDetailDiv.classList.add("song-detail");
+      inputDurationDiv.classList.add("duration");
+
+      inputNode.appendChild(inputImg);
+
+      inputDetailDiv.appendChild(inputName);
+      inputDetailDiv.appendChild(inputDetailSpan);
+
+      inputNode.appendChild(inputDetailDiv);
+      inputNode.appendChild(inputDurationDiv);
+
+      spacer.innerHTML = "";
+      spacer.appendChild(inputNode);
+      addPlayback(spacer);
+    } else if (inputType == 2) {
+      inputDetailSpan = document.createElement("div");
+      inputDetailSpan.innerText = Math.floor(suggestion.input.bpm) + " bpm / " + suggestion.input.key + " key / " + suggestion.input.scale + " scale";
+
+      inputNode.classList.add("item");
+      inputDetailDiv.classList.add("song-detail");
+
+      inputDetailDiv.appendChild(inputDetailSpan);
+
+      inputNode.appendChild(inputDetailDiv);
+      inputNode.appendChild(inputDurationDiv);
+
+      spacer.innerHTML = "";
+      spacer.appendChild(inputNode);
     }
 
-    addPlayback(contentTarget);
+    //const newTitle = document.querySelector("#libState");
 
-    document.getElementById("libState").value = inputType
+    //spacer?.remove();
+    //title?.remove();
+    inputs?.remove();
 
-    if(isSuggestion) {
-      if(document.getElementById("score") == null || document.getElementById("score") == undefined){
-        const filter = document.getElementById("filterType");
-        filter.innerHTML = filter.innerHTML + "Similarity <input type='image' id='score' src='../img/sort-down.png' value='1' onclick='sortByScore(this)'></button>";
-        document.getElementById("filterType").innerHTML = filter.innerHTML;
-      }
-      // When the list is for suggestion, get rid of custom input(criteria search)
-      const title = document.querySelector("#sub-title");
-      const inputs = document.querySelector(".criteria-wrapper");
-      const spacer = document.querySelector("#spacer");
-
-      const newTitle = document.querySelector("#libState");
-    
-      spacer?.remove();
-      title?.remove();
-      inputs?.remove();
-
-      newTitle.classList.remove("item-library");
-      //let scoreButton = document.createElement("BUTTON");
-      //scoreButton.innerHTML = "TEST";
-      //document.getElementById("filterType").append(scoreButton);
-    }
+    //newTitle.classList.remove("item-library");
+    //let scoreButton = document.createElement("BUTTON");
+    //scoreButton.innerHTML = "TEST";
+    //document.getElementById("filterType").append(scoreButton);
+  }
 }
 
 listupSongs(filteredLibrary, false, 0);
 sortByName(document.getElementById("name"));
 
 //Button selection handling - Mason Lane
-function buttonSelected(selectedID){
-  if(selectedSong != -1){
-    
+function buttonSelected(selectedID) {
+  if (selectedSong != -1) {
+
     deselectExisting(selectedSong);
   }
-  if(selectedSong == selectedID){
+  if (selectedSong == selectedID) {
     document.getElementById('startButton').innerHTML = "Auto";
     selectedSong = -1;
   }
-  else{
+  else {
     console.log(selectedID);
     document.getElementById('startButton').innerHTML = "Start";
     selectedSong = selectedID;
@@ -224,18 +289,18 @@ function buttonSelected(selectedID){
   }
 }
 
-function deselectExisting(deselectedID){
+function deselectExisting(deselectedID) {
   document.getElementById(deselectedID).checked = false;
 }
 
-function buttonDeselected(){
+function buttonDeselected() {
 
 }
 
 //Selected action handling - Mason Lane
-async function sendSelected(callback){
+async function sendSelected(callback) {
   audio.pause();
-  if(selectedSong == -1){
+  if (selectedSong == -1) {
     console.log("doing random");
     suggestion = new SuggestionWRandom(filteredLibrary);
     await suggestion.beginSuggestion();
@@ -245,15 +310,15 @@ async function sendSelected(callback){
 
     document.querySelector(".item-title.item-library").innerHTML = "Suggestions";
     document.querySelector(".button").removeChild(document.querySelector(".button").firstChild);
-    while(contentTarget.firstChild) {
+    while (contentTarget.firstChild) {
       contentTarget.removeChild(contentTarget.firstChild);
     }
 
     listupSongs(suggestion.results, true, 1);
     sortByScore(document.getElementById("name"));
   }
-  else if(selectedSong == -2){
-    let features = new Feature(); 
+  else if (selectedSong == -2) {
+    let features = new Feature();
     features.setBpm(parseFloat(document.getElementById("bpmIn").value));
     features.setKey(document.getElementById("keyIn").value);
     features.setScale(document.getElementById("scaleIn").value);
@@ -265,14 +330,14 @@ async function sendSelected(callback){
 
     document.querySelector(".item-title.item-library").innerHTML = "Suggestions";
     document.querySelector(".button").removeChild(document.querySelector(".button").firstChild);
-    while(contentTarget.firstChild) {
+    while (contentTarget.firstChild) {
       contentTarget.removeChild(contentTarget.firstChild);
     }
 
     listupSongs(suggestion.results, true, 2);
     sortByScore(document.getElementById("name"));
   }
-  else if(selectedSong >= 0){
+  else if (selectedSong >= 0) {
     let song = filteredLibrary.songs[selectedSong];
     suggestion = new SuggestionWSong(song);
     await suggestion.beginSuggestion();
@@ -282,7 +347,7 @@ async function sendSelected(callback){
 
     document.querySelector(".item-title.item-library").innerHTML = "Suggestions";
     document.querySelector(".button").removeChild(document.querySelector(".button").firstChild);
-    while(contentTarget.firstChild) {
+    while (contentTarget.firstChild) {
       contentTarget.removeChild(contentTarget.firstChild);
     }
 
@@ -291,7 +356,7 @@ async function sendSelected(callback){
   }
 }
 
-function timeOutCallback(){
+function timeOutCallback() {
   setTimeout(() => { console.log("calling back"); }, 3000);
 }
 
@@ -310,129 +375,129 @@ lastCheckbox.firstElementChild.id = -2;
 //console.log(lastCheckbox.firstElementChild);
 
 //Library sorting logic - Mason Lane
-function toggleImage(value){
+function toggleImage(value) {
   let sortImg = new Image();
-  if(value == 1){
-    return "../img/sort-up.png"; 
+  if (value == 1) {
+    return "../img/sort-up.png";
   }
-  else{
-    return "../img/sort-down.png"; 
+  else {
+    return "../img/sort-down.png";
   }
 }
 
 
-function sortByBpm(element){
-  var ascending = element.value; 
+function sortByBpm(element) {
+  var ascending = element.value;
   console.log(document.getElementById("libState").value);
-  if(document.getElementById("libState").value == 0){
+  if (document.getElementById("libState").value == 0) {
     prepareSortedLib()
-    filteredLibrary.songs.sort((a,b) => (a.features.bpm > b.features.bpm) ? ascending: ascending*-1);
+    filteredLibrary.songs.sort((a, b) => (a.features.bpm > b.features.bpm) ? ascending : ascending * -1);
     listupSongs(filteredLibrary, false, 0);
   }
-  else{
+  else {
     prepareSortedResults()
-    suggestion.results.songs.sort((a,b) => (a.features.bpm > b.features.bpm) ? ascending: ascending*-1);
+    suggestion.results.songs.sort((a, b) => (a.features.bpm > b.features.bpm) ? ascending : ascending * -1);
     listupSongs(suggestion.results, true, document.getElementById("libState").value)
   }
 
-  
+
   element.src = toggleImage(element.value);
   element.value = element.value * -1;
-  
+
 }
 
-function sortByKey(element){
-  var ascending = element.value; 
-  if(document.getElementById("libState").value == 0){
+function sortByKey(element) {
+  var ascending = element.value;
+  if (document.getElementById("libState").value == 0) {
     prepareSortedLib()
-    filteredLibrary.songs.sort((a,b) => (a.features.key > b.features.key) ? ascending: ascending*-1);
+    filteredLibrary.songs.sort((a, b) => (a.features.key > b.features.key) ? ascending : ascending * -1);
     listupSongs(filteredLibrary, false, 0);
   }
-  else{
+  else {
     prepareSortedResults()
-    suggestion.results.songs.sort((a,b) => (a.features.key > b.features.key) ? ascending: ascending*-1);
-    listupSongs(suggestion.results, true, document.getElementById("libState").value)
-  }
-  element.src = toggleImage(element.value);
-  element.value = element.value * -1;
-}
-
-function sortByScale(element){
-  var ascending = element.value; 
-  if(document.getElementById("libState").value == 0){
-    prepareSortedLib()
-    filteredLibrary.songs.sort((a,b) => (a.features.scale > b.features.scale) ? ascending: ascending*-1);
-    listupSongs(filteredLibrary, false, 0);
-  }
-  else{
-    prepareSortedResults()
-    suggestion.results.songs.sort((a,b) => (a.features.scale > b.features.scale) ? ascending: ascending*-1);
+    suggestion.results.songs.sort((a, b) => (a.features.key > b.features.key) ? ascending : ascending * -1);
     listupSongs(suggestion.results, true, document.getElementById("libState").value)
   }
   element.src = toggleImage(element.value);
   element.value = element.value * -1;
 }
 
-function sortByTime(element){
-  var ascending = element.value; 
-  if(document.getElementById("libState").value == 0){
+function sortByScale(element) {
+  var ascending = element.value;
+  if (document.getElementById("libState").value == 0) {
     prepareSortedLib()
-    filteredLibrary.songs.sort((a,b) => (a.songLength > b.songLength) ? ascending: ascending*-1);
+    filteredLibrary.songs.sort((a, b) => (a.features.scale > b.features.scale) ? ascending : ascending * -1);
     listupSongs(filteredLibrary, false, 0);
   }
-  else{
+  else {
     prepareSortedResults()
-    suggestion.results.songs.sort((a,b) => (a.songLength > b.songLength) ? ascending: ascending*-1);
+    suggestion.results.songs.sort((a, b) => (a.features.scale > b.features.scale) ? ascending : ascending * -1);
     listupSongs(suggestion.results, true, document.getElementById("libState").value)
   }
   element.src = toggleImage(element.value);
   element.value = element.value * -1;
 }
 
-function sortByName(element){
-  var ascending = element.value; 
-  if(document.getElementById("libState").value == 0){
+function sortByTime(element) {
+  var ascending = element.value;
+  if (document.getElementById("libState").value == 0) {
     prepareSortedLib()
-    filteredLibrary.songs.sort((a,b) => (a.songName > b.songName) ? ascending: ascending*-1);
+    filteredLibrary.songs.sort((a, b) => (a.songLength > b.songLength) ? ascending : ascending * -1);
     listupSongs(filteredLibrary, false, 0);
   }
-  else{
+  else {
     prepareSortedResults()
-    suggestion.results.songs.sort((a,b) => (a.songName > b.songName) ? ascending: ascending*-1);
+    suggestion.results.songs.sort((a, b) => (a.songLength > b.songLength) ? ascending : ascending * -1);
     listupSongs(suggestion.results, true, document.getElementById("libState").value)
   }
   element.src = toggleImage(element.value);
   element.value = element.value * -1;
 }
 
-function sortByScore(element){
-  var ascending = element.value; 
-  if(document.getElementById("libState").value == 0){
+function sortByName(element) {
+  var ascending = element.value;
+  if (document.getElementById("libState").value == 0) {
     prepareSortedLib()
-    filteredLibrary.songs.sort((a,b) => (a.score > b.score) ? ascending: ascending*-1);
+    filteredLibrary.songs.sort((a, b) => (a.songName > b.songName) ? ascending : ascending * -1);
     listupSongs(filteredLibrary, false, 0);
   }
-  else{
+  else {
     prepareSortedResults()
-    suggestion.results.songs.sort((a,b) => (a.score > b.score) ? ascending: ascending*-1);
+    suggestion.results.songs.sort((a, b) => (a.songName > b.songName) ? ascending : ascending * -1);
     listupSongs(suggestion.results, true, document.getElementById("libState").value)
   }
   element.src = toggleImage(element.value);
   element.value = element.value * -1;
 }
 
-function prepareSortedLib(){
+function sortByScore(element) {
+  var ascending = element.value;
+  if (document.getElementById("libState").value == 0) {
+    prepareSortedLib()
+    filteredLibrary.songs.sort((a, b) => (a.score > b.score) ? ascending : ascending * -1);
+    listupSongs(filteredLibrary, false, 0);
+  }
+  else {
+    prepareSortedResults()
+    suggestion.results.songs.sort((a, b) => (a.score > b.score) ? ascending : ascending * -1);
+    listupSongs(suggestion.results, true, document.getElementById("libState").value)
+  }
+  element.src = toggleImage(element.value);
+  element.value = element.value * -1;
+}
+
+function prepareSortedLib() {
   document.querySelector(".item-title.item-library").innerHTML = "Song Library";
   //document.querySelector(".button").removeChild(document.querySelector(".button").firstChild);
-  while(contentTarget.firstChild) {
+  while (contentTarget.firstChild) {
     contentTarget.removeChild(contentTarget.firstChild);
   }
 }
 
-function prepareSortedResults(){
+function prepareSortedResults() {
   document.querySelector(".item-title").innerHTML = "Suggestions";
   //document.querySelector(".button").removeChild(document.querySelector(".button").firstChild);
-  while(contentTarget.firstChild) {
+  while (contentTarget.firstChild) {
     contentTarget.removeChild(contentTarget.firstChild);
   }
 }
