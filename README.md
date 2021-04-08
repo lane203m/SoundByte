@@ -29,6 +29,11 @@ In most cases, a DJ will manage their library of songs - curating a list that wi
 
 As stated in our golden circle, this would aid hobbyists and performers while maintaining a level of needed oversight to ensure quality. If an algorithm can predict complementary tracks, this could provide users with inspiration or solutions to those with less musical familiarity or means.
 
+## Commercial 
+
+[![SoundByteCommercial - Click to watch](https://img.youtube.com/vi/o8gGpELt3sw/hqdefault.jpg)](https://youtu.be/o8gGpELt3sw)
+
+## Vlogs
 ### Project Vlog Intro Link
 
 [![Project Vlog Intro Link - Click to watch](https://img.youtube.com/vi/1oX0xEtuw2I/hqdefault.jpg)](https://youtu.be/1oX0xEtuw2I)
