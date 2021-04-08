@@ -50,3 +50,6 @@ As stated in our golden circle, this would aid hobbyists and performers while ma
 
 ### Project Vlog5
 [![Project Vlog5 Link - Click to watch](https://img.youtube.com/vi/zFGwhyd821c/hqdefault.jpg)](https://www.youtube.com/watch?v=zFGwhyd821c)
+
+### Project Vlog6
+[![Project Vlog5 Link - Click to watch](https://img.youtube.com/vi/9OD5mM6Qv8w/hqdefault.jpg)](https://youtu.be/9OD5mM6Qv8w)
