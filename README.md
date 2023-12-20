@@ -1,5 +1,5 @@
 # SoundByte
-U of R SSE Capstone Project, reccmomending music to mix through machine learning & possible sample generation. 
+U of R SSE Capstone Project, recommending music to mix through machine learning & possible sample generation. 
 
 ## Meet the Team
 
